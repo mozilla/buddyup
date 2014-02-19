@@ -16,9 +16,11 @@ window.onload = function() {
 
   function doAjax() {
     
-    var url = 'http://placekitten.com/g/200/300'; //?q=' + Math.random();
-    var request = new XMLHttpRequest();
-    
+    var url = 'http://placekitten.com/g/200/300/?q=' + Math.random();
+    // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
+    // You can read more about CORS here: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
+    var request = new XMLHttpRequest({ mozSystem: true });
+
     request.open('get', url, true);
     request.responseType = 'blob';
 
@@ -30,9 +32,7 @@ window.onload = function() {
 
       var blob = request.response;
       var url = URL.createObjectURL(blob);
-      var img = document.createElement('img');
-      img.src = url;
-      loadedImage.appendChild(img);
+      loadedImage.src = url;
 
     };
 
