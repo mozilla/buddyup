@@ -18,11 +18,11 @@ window.onload = function() {
     var term = searchInput.value;
 
     if(term.length === 0) {
-      term = 'cat';
+      term = 'javascript';
     }
 
-    var url = 'http://en.wiktionary.org/w/api.php?action=query&prop=extracts&exchars=2000&format=json&exsectionformat=plain&titles=' + term;
-
+    var url = 'https://developer.mozilla.org/en-US/search.json?q=' + term;
+    
     definitionText.innerHTML = '<p>Searching...</p>';
 
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
@@ -39,15 +39,19 @@ window.onload = function() {
     request.onload = function() {
 
       try {
-        // The way we get to the actual definition text is a little convoluted due to the way results are formatted
+
         var response = JSON.parse(request.responseText);
-        var text = response.query.pages;
-        var textKeys = Object.keys(text);
-        text = text[textKeys[0]].extract;
-        definitionText.innerHTML = text;
+        var doc = response.documents[0];
+        var text = doc.excerpt;
+        var title = doc.title;
+
+        definitionText.innerHTML = '<h2>' + title + '</h2>' + text;
+
       } catch(e) {
+
         statusMsg.innerHTML = 'Error loading definition';
         console.log('BOOM', e);
+
       }
 
     };
