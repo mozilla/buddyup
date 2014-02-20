@@ -21,7 +21,9 @@ window.onload = function() {
       term = 'cat';
     }
 
-    var url = 'http://en.wiktionary.org/w/api.php?action=query&prop=extracts&exchars=1000&format=json&exsectionformat=plain&titles=' + term;
+    var url = 'http://en.wiktionary.org/w/api.php?action=query&prop=extracts&exchars=2000&format=json&exsectionformat=plain&titles=' + term;
+
+    definitionText.innerHTML = '<p>Searching...</p>';
 
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
     // You can read more about CORS here: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
