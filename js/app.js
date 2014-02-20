@@ -1,28 +1,34 @@
-// check the console.log bug
-// update + debug workflow broken - breakpoints are lost
 window.onload = function() {
 
   var statusMsg = document.getElementById('status');
-  var loadedImage = document.getElementById('loadedImage');
-  var loadImageButton = document.getElementById('loadImage');
+  var searchInput = document.getElementById('term');
+  var searchButton = document.getElementById('search');
+  var definitionText = document.getElementById('definitionText');
 
   statusMsg.innerHTML = 'Ready';
 
-  loadImageButton.addEventListener('click', doAjax, false);
+  searchButton.addEventListener('click', search, false);
 
-  doAjax();
+  search();
 
   // ---
 
-  function doAjax() {
+  function search() {
     
-    var url = 'http://placekitten.com/g/200/300/?q=' + Math.random();
+    var term = searchInput.value;
+
+    if(term.length === 0) {
+      term = 'cat';
+    }
+
+    var url = 'http://en.wiktionary.org/w/api.php?action=query&prop=extracts&exchars=1000&format=json&exsectionformat=plain&titles=' + term;
+
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
     // You can read more about CORS here: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
     var request = new XMLHttpRequest({ mozSystem: true });
 
     request.open('get', url, true);
-    request.responseType = 'blob';
+    request.responseType = 'application/json';
 
     request.onerror = function(e) {
       statusMsg.innerHTML = request.statusText;
@@ -30,12 +36,19 @@ window.onload = function() {
 
     request.onload = function() {
 
-      var blob = request.response;
-      var url = URL.createObjectURL(blob);
-      loadedImage.src = url;
+      try {
+        // The way we get to the actual definition text is a little convoluted due to the way results are formatted
+        var response = JSON.parse(request.responseText);
+        var text = response.query.pages;
+        var textKeys = Object.keys(text);
+        text = text[textKeys[0]].extract;
+        definitionText.innerHTML = text;
+      } catch(e) {
+        statusMsg.innerHTML = 'Error loading definition';
+        console.log('BOOM', e);
+      }
 
     };
-
 
 
     request.send();
