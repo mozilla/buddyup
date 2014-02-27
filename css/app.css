@@ -3,6 +3,11 @@ html, body {
     padding: 0.5rem;
 }
 
+body {
+    font-size: 1rem;
+    background: #fff;
+}
+
 h1 {
     margin: 0 0 1rem 0;
 }
@@ -10,5 +15,9 @@ h1 {
 #status {
     color: #666;
     font-family: monospace;
+}
+
+input, button, code, p {
+    font-size: inherit;
 }
 
