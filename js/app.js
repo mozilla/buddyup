@@ -7,14 +7,18 @@ window.onload = function() {
 
   statusMsg.innerHTML = 'Ready';
 
-  searchButton.addEventListener('click', search, false);
-
+  var form = document.querySelector('form');
+  form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      search();
+  }, false);
+  
   search();
 
   // ---
 
   function search() {
-    
+
     var term = searchInput.value;
 
     if(term.length === 0) {
@@ -22,7 +26,7 @@ window.onload = function() {
     }
 
     var url = 'https://developer.mozilla.org/en-US/search.json?q=' + term;
-    
+
     definitionText.innerHTML = '<p>Searching...</p>';
 
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
@@ -51,6 +55,7 @@ window.onload = function() {
       } catch(e) {
 
         statusMsg.innerHTML = 'Error loading definition';
+        definitionText.classList.add('hidden');
         console.log('BOOM', e);
 
       }
