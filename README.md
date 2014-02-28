@@ -1,6 +1,6 @@
 # Privileged app stub
 
-This is a privileged app template that demonstrates the usage of `XMLHTTPRequest` and `systemXHR`, and includes a properly configured manifest file with the right app type (privileged) and required permissions, in order to use those APIs.
+This is a privileged app template that demonstrates the usage of `XMLHttpRequest` and `systemXHR`, and includes a properly configured manifest file with the right app type (`privileged`) and required permissions, in order to use those APIs.
 
 This is part of the [mortar](https://github.com/mozilla/mortar/) template collection for building [Open Web Apps](https://developer.mozilla.org/en-US/Apps).
 
