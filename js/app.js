@@ -1,12 +1,12 @@
 window.onload = function() {
 
-  var statusMsg = document.getElementById('status');
+  var apiURL = 'https://developer.mozilla.org/en-US/search.json?q=';
+  var defaultSearchTerm = 'javascript';
+  var errorMsg = document.getElementById('error');
   var searchInput = document.getElementById('term');
   var searchButton = document.getElementById('search');
   var definitionText = document.getElementById('definitionText');
   var request = null;
-
-  statusMsg.innerHTML = 'Ready';
 
   var form = document.querySelector('form');
   form.addEventListener('submit', function(e) {
@@ -26,15 +26,16 @@ window.onload = function() {
     }
 
 
-    var term = searchInput.value;
+    definitionText.innerHTML = '<p>Searching...</p>';
+    errorMsg.classList.add('hidden');
 
+
+    var term = searchInput.value;
     if(term.length === 0) {
-      term = 'javascript';
+      term = defaultSearchTerm;
     }
 
-    var url = 'https://developer.mozilla.org/en-US/search.json?q=' + term;
-
-    definitionText.innerHTML = '<p>Searching...</p>';
+    var url = apiURL + term;
 
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
     // You can read more about CORS here: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
@@ -44,11 +45,13 @@ window.onload = function() {
     request.responseType = 'application/json';
 
     request.onerror = function(e) {
-      statusMsg.innerHTML = request.statusText;
+      showError(request.errorText);
     };
 
     request.onload = function() {
 
+      definitionText.classList.remove('hidden');
+      
       try {
 
         var response = JSON.parse(request.responseText);
@@ -57,21 +60,26 @@ window.onload = function() {
         var title = doc.title;
 
         definitionText.innerHTML = '<h2>' + title + '</h2>' + text;
-        definitionText.classList.remove('hidden');
+
 
       } catch(e) {
 
-        statusMsg.innerHTML = 'Error loading definition';
-        definitionText.classList.add('hidden');
+        definitionText.innerHTML = '<p>No results</p>';
         console.log('BOOM', e);
 
       }
 
     };
 
-
     request.send();
 
+  }
+
+
+  function showError(text) {
+    errorMsg.innerHTML = text;
+    errorMsg.classList.remove('hidden');
+    definitionText.classList.add('hidden');
   }
 
 };

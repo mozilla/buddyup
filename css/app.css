@@ -16,9 +16,10 @@ h2 {
     font-size: 1.25rem;
 }
 
-#status {
-    color: #666;
+#error {
+    color: #f00;
     font-family: monospace;
+    transition: all 1s;
 }
 
 form {
