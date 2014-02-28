@@ -46,6 +46,7 @@ window.onload = function() {
         var title = doc.title;
 
         definitionText.innerHTML = '<h2>' + title + '</h2>' + text;
+        definitionText.classList.remove('hidden');
 
       } catch(e) {
 
