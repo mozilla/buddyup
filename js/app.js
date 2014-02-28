@@ -4,6 +4,7 @@ window.onload = function() {
   var searchInput = document.getElementById('term');
   var searchButton = document.getElementById('search');
   var definitionText = document.getElementById('definitionText');
+  var request = null;
 
   statusMsg.innerHTML = 'Ready';
 
@@ -12,12 +13,18 @@ window.onload = function() {
       e.preventDefault();
       search();
   }, false);
-  
+
   search();
 
   // ---
 
   function search() {
+
+    // Are we searching already? Then stop that search
+    if(request && request.abort) {
+      request.abort();
+    }
+
 
     var term = searchInput.value;
 
@@ -31,7 +38,7 @@ window.onload = function() {
 
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
     // You can read more about CORS here: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
-    var request = new XMLHttpRequest({ mozSystem: true });
+    request = new XMLHttpRequest({ mozSystem: true });
 
     request.open('get', url, true);
     request.responseType = 'application/json';
