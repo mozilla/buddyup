@@ -7,6 +7,7 @@ window.onload = function() {
   var searchButton = document.getElementById('search');
   var definitionText = document.getElementById('definitionText');
   var request = null;
+  var translate = document.webL10n.get;
 
   var form = document.querySelector('form');
   form.addEventListener('submit', function(e) {
@@ -26,7 +27,7 @@ window.onload = function() {
     }
 
 
-    definitionText.innerHTML = '<p>Searching...</p>';
+    definitionText.innerHTML = '<p>' + translate('searching') + '</p>';
     errorMsg.classList.add('hidden');
 
 
@@ -64,7 +65,7 @@ window.onload = function() {
 
       } catch(e) {
 
-        definitionText.innerHTML = '<p>No results</p>';
+        definitionText.innerHTML = '<p>' + translate('search_no_results') + '</p>';
         console.log('BOOM', e);
 
       }
