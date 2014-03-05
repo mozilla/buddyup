@@ -1,7 +1,7 @@
 {
   "version": "0.1",
-  "name": "Privileged App Stub",
-  "description": "A privileged app",
+  "name": "Privileged App",
+  "description": "Demonstrates how to use permissions to load remote content",
   "launch_path": "/index.html",
   "icons": {
     "16": "/img/icons/mortar-16.png",
@@ -22,10 +22,16 @@
   "installs_allowed_from": ["*"],
   "locales": {
     "es": {
-      "description": "Una aplicación privilegiada",
+      "name": "Aplicación privilegiada",
+      "description": "Demuestra cómo utilizar permisos para cargar contenido remoto",
       "developer": {
         "url": "http://mozilla.org"
-      }
+      },
+	  "permissions": {
+		"systemXHR": {
+			"description": "Requerido para cargar contenido remoto"
+		}
+	  }
     }
   },
   "default_locale": "en"
