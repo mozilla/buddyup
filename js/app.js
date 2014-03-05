@@ -46,7 +46,11 @@ window.onload = function() {
     request.responseType = 'application/json';
 
     request.onerror = function(e) {
-      showError(request.errorText);
+      var errorMessage = request.error;
+      if(!errorMessage) {
+        errorMessage = 'Error while searching';
+      }
+      showError(errorMessage);
     };
 
     request.onload = function() {
