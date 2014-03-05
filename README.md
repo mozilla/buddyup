@@ -1,6 +1,6 @@
 # Privileged app stub
 
-This is a privileged app template that demonstrates the usage of `XMLHttpRequest` and `systemXHR`, and includes a properly configured manifest file with the right app type (`privileged`) and required permissions, in order to use those APIs.
+This is a privileged app template that demonstrates the usage of [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) and (`systemXHR`)[https://developer.mozilla.org/en-US/Apps/Reference/Firefox_OS_device_APIs#systemXHR] to load remote content from a server, and includes a properly configured manifest file with the right app type (`privileged`) and required permissions, in order to use those APIs.
 
 This is part of the [mortar](https://github.com/mozilla/mortar/) template collection for building [Open Web Apps](https://developer.mozilla.org/en-US/Apps).
 
@@ -23,11 +23,9 @@ Import the app into the [App Manager](https://developer.mozilla.org/en-US/Firefo
 
 ## Code walkthrough
 
-The `manifest.webapp` file contains metadata about the app, such as its name, description, icon and required permissions for running under Firefox OS.
+The `manifest.webapp` file contains metadata about the app, such as its name, description, icon and required permissions for running under Firefox OS. Of particular interest for this app is the `systemXHR` permission, which is what enables us to load data from other domains, whether they have enabled CORS or not.
 
-The app logic is defined in `js/app.js`. This is where we define the app's behaviour. In the interest of keeping things tidy and easy to follow, we have extracted the code for app installation onto `js/install.js` that we then reference in `index.html`, right before `js/app.js`.
-
-If you plan on building a packaged app, you can delete all the install portions, as packaged apps are installed using a different mechanism (mostly a ZIP file with the app contents). Similarly, you can remove the mentions to `appcache` both in `index.html` and `manifest.webapp` in this case too, as the entire app is copied to the device when installed, and no caching mechanism is in place.
+The app logic is defined in `js/app.js`. This is where we define the app's behaviour.
 
 The appearance is defined in `css/app.css`. There are just some very basic rules.
 
