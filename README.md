@@ -1,8 +1,8 @@
 # Privileged app stub
 
-This is a privileged app template that demonstrates the usage of [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) and [`systemXHR`](https://developer.mozilla.org/en-US/Apps/Reference/Firefox_OS_device_APIs#systemXHR) to load remote content from a server, and includes a properly configured manifest file with the right app type (`privileged`) and required permissions, in order to use those APIs.
+This is a privileged app template that demonstrates the usage of [`XMLHttpRequest`](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest) and [`systemXHR`](https://developer.mozilla.org/Apps/Reference/Firefox_OS_device_APIs#systemXHR) to load remote content from a server, and includes a properly configured manifest file with the right app type (`privileged`) and required permissions, in order to use those APIs.
 
-This is part of the [mortar](https://github.com/mozilla/mortar/) template collection for building [Open Web Apps](https://developer.mozilla.org/en-US/Apps).
+This is part of the [mortar](https://github.com/mozilla/mortar/) template collection for building [Open Web Apps](https://developer.mozilla.org/Apps).
 
 ## Obtaining
 
@@ -19,7 +19,7 @@ Or download the latest version in this [ZIP file](https://github.com/mozilla/mor
 
 ## Usage
 
-Import the app into the [App Manager](https://developer.mozilla.org/en-US/Firefox_OS/Using_the_App_Manager). Then you can run it in the simulator, or in a Firefox OS device.
+Import the app into the [App Manager](https://developer.mozilla.org/Firefox_OS/Using_the_App_Manager). Then you can run it in the simulator, or in a Firefox OS device.
 
 ## Code walkthrough
 

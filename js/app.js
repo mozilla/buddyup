@@ -1,6 +1,6 @@
 window.onload = function() {
 
-  var apiURL = 'https://developer.mozilla.org/en-US/search.json?q=';
+  var apiURL = 'https://developer.mozilla.org/search.json?q=';
   var defaultSearchTerm = 'javascript';
   var errorMsg = document.getElementById('error');
   var searchInput = document.getElementById('term');
@@ -39,7 +39,7 @@ window.onload = function() {
     var url = apiURL + term;
 
     // If you don't set the mozSystem option, you'll get CORS errors (Cross Origin Resource Sharing)
-    // You can read more about CORS here: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
+    // You can read more about CORS here: https://developer.mozilla.org/docs/HTTP/Access_control_CORS
     request = new XMLHttpRequest({ mozSystem: true });
 
     request.open('get', url, true);
