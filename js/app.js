@@ -5,7 +5,7 @@ window.onload = function() {
   var errorMsg = document.getElementById('error');
   var searchInput = document.getElementById('term');
   var searchButton = document.getElementById('search');
-  var definitionText = document.getElementById('definitionText');
+  var results = document.getElementById('results');
   var request = null;
   var translate = document.webL10n.get;
 
@@ -27,7 +27,7 @@ window.onload = function() {
     }
 
 
-    definitionText.innerHTML = '<p>' + translate('searching') + '</p>';
+    results.textContent = translate('searching');
     errorMsg.classList.add('hidden');
 
 
@@ -48,26 +48,40 @@ window.onload = function() {
     request.onerror = function(e) {
       var errorMessage = request.error;
       if(!errorMessage) {
-        errorMessage = 'Error while searching';
+        errorMessage = 'Error while searching'; // TODO translate
       }
       showError(errorMessage);
     };
 
     request.onload = function() {
 
-      definitionText.classList.remove('hidden');
+      results.textContent = '';
+      results.classList.remove('hidden');
       
       var response = request.response;
-      var documents = response.documents;
+      var documents;
       
-      if(documents.length) {
-        var doc = response.documents[0];
-        var text = doc.excerpt;
-        var title = doc.title;
-
-        definitionText.innerHTML = '<h2>' + title + '</h2>' + text;
+      if(response !== null) {
+        documents = response.documents;
+      }
+      
+      if(response !== null && documents.length) {
+        
+        documents.forEach(function(doc) {
+          
+          var h2 = document.createElement('h2');
+          h2.textContent = doc.title;
+          
+          results.appendChild(h2);
+          
+        });
+        
       } else {
-        definitionText.innerHTML = '<p>' + translate('search_no_results') + '</p>';
+        
+        var p = document.createElement('p');
+        p.textContent = translate('search_no_results');
+        results.appendChild(p);
+        
       }
 
     };
@@ -78,9 +92,9 @@ window.onload = function() {
 
 
   function showError(text) {
-    errorMsg.innerHTML = text;
+    errorMsg.textContent = text;
     errorMsg.classList.remove('hidden');
-    definitionText.classList.add('hidden');
+    results.classList.add('hidden');
   }
 
 };
