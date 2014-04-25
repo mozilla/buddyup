@@ -6,6 +6,22 @@
         <meta name="description" content="A privileged app stub">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/app.css">
+        
+        <!--
+        Inline JavaScript code is not allowed for privileged and certified apps,
+        due to Content Security Policy restrictions.
+        You can read more about it here: https://developer.mozilla.org/Apps/CSP
+        Plus keeping your JavaScript separated from your HTML is always a good practice!
+        -->
+        <script type="text/javascript" src="js/app.js" defer></script>
+
+        <!--
+        The following two lines are for loading the localisations library
+        and the localisation data-so people can use the app in their
+        own language (as long as you provide translations).
+        -->
+        <script type="text/javascript" src="js/libs/l10n.js" defer></script>
+        <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
     </head>
     <body>
         <section>
@@ -17,21 +33,5 @@
             </form>
         </section>
         <section id="definitionText" class="hidden"></section>
-
-        <!--
-        Inline JavaScript code is not allowed for privileged and certified apps,
-        due to Content Security Policy restrictions.
-        You can read more about it here: https://developer.mozilla.org/Apps/CSP
-        Plus keeping your JavaScript separated from your HTML is always a good practice!
-        -->
-        <script type="text/javascript" src="js/app.js"></script>
-
-        <!--
-        The following two lines are for loading the localisations library
-        and the localisation data-so people can use the app in their
-        own language (as long as you provide translations).
-        -->
-        <script type="text/javascript" src="js/libs/l10n.js"></script>
-        <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
     </body>
 </html>
