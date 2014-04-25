@@ -43,7 +43,7 @@ window.onload = function() {
     request = new XMLHttpRequest({ mozSystem: true });
 
     request.open('get', url, true);
-    request.responseType = 'application/json';
+    request.responseType = 'json';
 
     request.onerror = function(e) {
       var errorMessage = request.error;
@@ -57,21 +57,17 @@ window.onload = function() {
 
       definitionText.classList.remove('hidden');
       
-      try {
-
-        var response = JSON.parse(request.responseText);
+      var response = request.response;
+      var documents = response.documents;
+      
+      if(documents.length) {
         var doc = response.documents[0];
         var text = doc.excerpt;
         var title = doc.title;
 
         definitionText.innerHTML = '<h2>' + title + '</h2>' + text;
-
-
-      } catch(e) {
-
+      } else {
         definitionText.innerHTML = '<p>' + translate('search_no_results') + '</p>';
-        console.log('BOOM', e);
-
       }
 
     };
