@@ -44,6 +44,12 @@
             <p data-l10n-id="app_description">This app demonstrates the usage of <code>XMLHttpRequest</code> and the <code>systemXHR</code> permission.</p>
             <p id="error" class="hidden">...</p>
             <form>
+              <!-- A placeholder attribute allows us to prefill the input box with some
+                text, so the user gets an idea of what sort of text they should enter
+                into that field. Once they start typing in something, the browser will
+                automatically remove the placeholder text. More info:
+                https://developer.mozilla.org/Web/HTML/Element/Input#attr-placeholder
+              -->
               <input type="search" placeholder="javascript" id="term" /><button id="search" data-l10n-id="search">Search</button>
             </form>
         </section>
