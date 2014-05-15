@@ -66,22 +66,26 @@ window.onload = function() {
       }
       
       if(response !== null && documents.length) {
-        
+
         documents.forEach(function(doc) {
-          
+
           var h2 = document.createElement('h2');
-          h2.textContent = doc.title;
-          
+          var docLink = document.createElement('a');
+
+          docLink.textContent = doc.title;
+          docLink.href = doc.url;
+
+          h2.appendChild(docLink);
           results.appendChild(h2);
-          
+
         });
-        
+
       } else {
-        
+
         var p = document.createElement('p');
         p.textContent = translate('search_no_results');
         results.appendChild(p);
-        
+
       }
 
     };
