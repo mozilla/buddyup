@@ -75,6 +75,11 @@ window.onload = function() {
           docLink.textContent = doc.title;
           docLink.href = doc.url;
 
+          docLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open(this.href, 'overlay');
+          }, false);
+
           h2.appendChild(docLink);
           results.appendChild(h2);
 
