@@ -30,7 +30,7 @@ window.onload = function() {
   // ---
 
   function search() {
-
+    
     // Are we searching already? Then stop that search
     if(request && request.abort) {
       request.abort();
@@ -38,7 +38,11 @@ window.onload = function() {
 
 
     results.textContent = translate('searching');
-    errorMsg.classList.add('hidden');
+
+    // We will be using the 'hidden' attribute throughout the app rather than a
+    // 'hidden' CSS class because it enhances accessibility.
+    // See: http://www.whatwg.org/specs/web-apps/current-work/multipage/editing.html#the-hidden-attribute
+    errorMsg.hidden = true;
 
 
     var term = searchInput.value;
@@ -66,7 +70,7 @@ window.onload = function() {
     request.onload = function() {
 
       results.textContent = '';
-      results.classList.remove('hidden');
+      results.hidden = false;
       
       var response = request.response;
       var documents;
@@ -123,8 +127,8 @@ window.onload = function() {
 
   function showError(text) {
     errorMsg.textContent = text;
-    errorMsg.classList.remove('hidden');
-    results.classList.add('hidden');
+    errorMsg.hidden = false;
+    results.hidden = true;
   }
 
 };
