@@ -30,10 +30,6 @@ input, button, code, p {
   font-size: inherit;
 }
 
-.hidden {
-  opacity: 0;
-}
-
 #results {
   background: #ccc;
   margin-top: 1.5rem;
@@ -46,9 +42,7 @@ input, button, code, p {
 #results:before {
   position: absolute;
   display: inline-block;
-  border-left: 1rem solid transparent;
-  border-top: 1rem solid transparent;
-  border-right: 1rem solid transparent;
+  border: 1rem solid transparent;
   border-bottom: 1rem solid #ccc;
   margin-top: -3rem;
   content: '';
