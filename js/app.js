@@ -8,13 +8,23 @@ window.onload = function() {
   var results = document.getElementById('results');
   var request = null;
   var translate = document.webL10n.get;
-
   var form = document.querySelector('form');
+
+  // Forms will take the values in the input fields their contain
+  // and send them to a server for further processing,
+  // but since we want to stay in this page AND make a request to another server,
+  // we will listen to the 'submit' event, and prevent the form from doing what
+  // it would usually do, using preventDefault.
+  // Read more about it here:
+  // https://developer.mozilla.org/Web/API/event.preventDefault
+  //
+  // Then we search without leaving this page, just as we wanted.
   form.addEventListener('submit', function(e) {
       e.preventDefault();
       search();
   }, false);
 
+  // And initiate a search already
   search();
 
   // ---
@@ -75,6 +85,17 @@ window.onload = function() {
           docLink.textContent = doc.title;
           docLink.href = doc.url;
 
+          // We want the links to open in a pop up window with a 'close'
+          // button, so that the user can consult the result and then close it and
+          // be brought back to our app.
+          // If we did nothing, these external links would take over the entirety
+          // our app and there would be no way for a user to go back to the app.
+          // But Firefox OS allows us to open ONE new window per app; these new
+          // windows will have a close button, so the user can close the overlay
+          // when they're happy with what they've read.
+          // Therefore we will capture click events on links, stop them from
+          // doing their usual thing using preventDefault(),
+          // and then open the link but in a new window.
           docLink.addEventListener('click', function(e) {
             e.preventDefault();
             window.open(this.href, 'overlay');
