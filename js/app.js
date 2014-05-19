@@ -24,8 +24,12 @@ window.onload = function() {
       search();
   }, false);
 
-  // And initiate a search already
-  search();
+  // We'll wait until the localisations library has loaded all the strings.
+  // It will let us know by dispatching the 'localized' event.
+  window.addEventListener('localized', function() {
+    // Then we'll initiate a search
+    search();
+  }, false);
 
   // ---
 
@@ -62,7 +66,7 @@ window.onload = function() {
     request.onerror = function(e) {
       var errorMessage = request.error;
       if(!errorMessage) {
-        errorMessage = 'Error while searching'; // TODO translate
+        errorMessage = translate('searching_error');
       }
       showError(errorMessage);
     };
