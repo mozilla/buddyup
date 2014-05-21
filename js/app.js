@@ -34,7 +34,7 @@ window.onload = function() {
   // ---
 
   function search() {
-    
+
     // Are we searching already? Then stop that search
     if(request && request.abort) {
       request.abort();
@@ -75,14 +75,14 @@ window.onload = function() {
 
       results.textContent = '';
       results.hidden = false;
-      
+
       var response = request.response;
       var documents;
-      
+
       if(response !== null) {
         documents = response.documents;
       }
-      
+
       if(response !== null && documents.length) {
 
         documents.forEach(function(doc) {
