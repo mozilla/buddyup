@@ -4,10 +4,10 @@
   "description": "Demonstrates how to use permissions to load remote content",
   "launch_path": "/index.html",
   "icons": {
-    "16": "/img/icons/icon-16.png",
-    "48": "/img/icons/icon-48.png",
-    "60": "/img/icons/icon-60.png",
-    "128": "/img/icons/icon-128.png"
+    "16": "/img/icons/icon16x16.png",
+    "48": "/img/icons/icon48x48.png",
+    "60": "/img/icons/icon60x60.png",
+    "128": "/img/icons/icon128x128.png"
   },
   "developer": {
     "name": "Mozilla",
@@ -27,11 +27,11 @@
       "developer": {
         "url": "http://mozilla.org"
       },
-	  "permissions": {
-		"systemXHR": {
-			"description": "Requerido para cargar contenido remoto"
-		}
-	  }
+      "permissions": {
+        "systemXHR": {
+          "description": "Requerido para cargar contenido remoto"
+        }
+      }
     }
   },
   "default_locale": "en"
