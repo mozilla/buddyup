@@ -1,16 +1,16 @@
 window.onload = function() {
 
+  'use strict';
+
   var apiURL = 'https://developer.mozilla.org/search.json?q=';
-  var defaultSearchTerm = 'javascript';
   var errorMsg = document.getElementById('error');
   var searchInput = document.getElementById('term');
-  var searchButton = document.getElementById('search');
   var results = document.getElementById('results');
   var request = null;
   var translate = document.webL10n.get;
   var form = document.querySelector('form');
 
-  // Forms will take the values in the input fields their contain
+  // Forms will take the values in the input fields they contain
   // and send them to a server for further processing,
   // but since we want to stay in this page AND make a request to another server,
   // we will listen to the 'submit' event, and prevent the form from doing what
@@ -46,12 +46,13 @@ window.onload = function() {
     // We will be using the 'hidden' attribute throughout the app rather than a
     // 'hidden' CSS class because it enhances accessibility.
     // See: http://www.whatwg.org/specs/web-apps/current-work/multipage/editing.html#the-hidden-attribute
+    results.hidden = false;
     errorMsg.hidden = true;
 
 
     var term = searchInput.value;
     if(term.length === 0) {
-      term = defaultSearchTerm;
+      term = searchInput.placeholder;
     }
 
     var url = apiURL + term;
