@@ -90,23 +90,28 @@ window.onload = function() {
 
   function onRequestLoad() {
 
-    results.textContent = '';
-    results.hidden = false;
-
     var response = request.response;
-    var documents;
 
-    if(response !== null) {
-      documents = response.documents;
+    if(response === null) {
+      showError(translate('searching_error'));
+      return;
     }
 
-    if(response !== null && documents.length) {
+    results.textContent = '';
+
+    var documents = response.documents;
+
+    if(documents.length === 0) {
+
+      var p = document.createElement('p');
+      p.textContent = translate('search_no_results');
+      results.appendChild(p);
+
+    } else {
 
       documents.forEach(function(doc) {
 
-        var h2 = document.createElement('h2');
         var docLink = document.createElement('a');
-
         docLink.textContent = doc.title;
         docLink.href = doc.url;
 
@@ -126,18 +131,16 @@ window.onload = function() {
           window.open(this.href, 'overlay');
         }, false);
 
+        var h2 = document.createElement('h2');
         h2.appendChild(docLink);
         results.appendChild(h2);
 
       });
 
-    } else {
-
-      var p = document.createElement('p');
-      p.textContent = translate('search_no_results');
-      results.appendChild(p);
-
     }
+
+    // And once we have all the content in place, we can show it.
+    results.hidden = false;
 
   }
 
