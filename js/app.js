@@ -1,5 +1,7 @@
 window.onload = function() {
 
+  // We'll ask the browser to use strict code to help us catch errors earlier.
+  // https://developer.mozilla.org/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
   'use strict';
 
   var apiURL = 'https://developer.mozilla.org/search.json?q=';
@@ -64,68 +66,78 @@ window.onload = function() {
     request.open('get', url, true);
     request.responseType = 'json';
 
-    request.onerror = function(e) {
-      var errorMessage = request.error;
+    // We're setting some handlers here for dealing with both error and
+    // data received. We could just declare the functions here, but they are in
+    // separate functions so that search() is shorter, and more readable.
+    request.onerror = onRequestError;
+    request.onload = onRequestLoad;
+
+    request.send();
+
+  }
+
+
+  function onRequestError() {
+
+    var errorMessage = request.error;
       if(!errorMessage) {
         errorMessage = translate('searching_error');
       }
       showError(errorMessage);
-    };
 
-    request.onload = function() {
+  }
 
-      results.textContent = '';
-      results.hidden = false;
 
-      var response = request.response;
-      var documents;
+  function onRequestLoad() {
 
-      if(response !== null) {
-        documents = response.documents;
-      }
+    results.textContent = '';
+    results.hidden = false;
 
-      if(response !== null && documents.length) {
+    var response = request.response;
+    var documents;
 
-        documents.forEach(function(doc) {
+    if(response !== null) {
+      documents = response.documents;
+    }
 
-          var h2 = document.createElement('h2');
-          var docLink = document.createElement('a');
+    if(response !== null && documents.length) {
 
-          docLink.textContent = doc.title;
-          docLink.href = doc.url;
+      documents.forEach(function(doc) {
 
-          // We want the links to open in a pop up window with a 'close'
-          // button, so that the user can consult the result and then close it and
-          // be brought back to our app.
-          // If we did nothing, these external links would take over the entirety
-          // our app and there would be no way for a user to go back to the app.
-          // But Firefox OS allows us to open ONE new window per app; these new
-          // windows will have a close button, so the user can close the overlay
-          // when they're happy with what they've read.
-          // Therefore we will capture click events on links, stop them from
-          // doing their usual thing using preventDefault(),
-          // and then open the link but in a new window.
-          docLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.open(this.href, 'overlay');
-          }, false);
+        var h2 = document.createElement('h2');
+        var docLink = document.createElement('a');
 
-          h2.appendChild(docLink);
-          results.appendChild(h2);
+        docLink.textContent = doc.title;
+        docLink.href = doc.url;
 
-        });
+        // We want the links to open in a pop up window with a 'close'
+        // button, so that the user can consult the result and then close it and
+        // be brought back to our app.
+        // If we did nothing, these external links would take over the entirety
+        // our app and there would be no way for a user to go back to the app.
+        // But Firefox OS allows us to open ONE new window per app; these new
+        // windows will have a close button, so the user can close the overlay
+        // when they're happy with what they've read.
+        // Therefore we will capture click events on links, stop them from
+        // doing their usual thing using preventDefault(),
+        // and then open the link but in a new window.
+        docLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.open(this.href, 'overlay');
+        }, false);
 
-      } else {
+        h2.appendChild(docLink);
+        results.appendChild(h2);
 
-        var p = document.createElement('p');
-        p.textContent = translate('search_no_results');
-        results.appendChild(p);
+      });
 
-      }
+    } else {
 
-    };
+      var p = document.createElement('p');
+      p.textContent = translate('search_no_results');
+      results.appendChild(p);
 
-    request.send();
+    }
 
   }
 
