@@ -10,8 +10,8 @@
     "128": "/img/icons/icon128x128.png"
   },
   "developer": {
-    "name": "Mozilla",
-    "url": "http://mozilla.org"
+    "name": "Your name",
+    "url": "http://example.com"
   },
   "type": "privileged",
   "permissions": {
@@ -24,9 +24,6 @@
     "es": {
       "name": "Aplicación privilegiada",
       "description": "Demuestra cómo utilizar permisos para cargar contenido remoto",
-      "developer": {
-        "url": "http://mozilla.org"
-      },
       "permissions": {
         "systemXHR": {
           "description": "Requerido para cargar contenido remoto"
