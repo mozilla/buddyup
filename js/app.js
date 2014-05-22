@@ -129,7 +129,7 @@ window.onload = function() {
         docLink.addEventListener('click', function(e) {
           e.preventDefault();
           window.open(this.href, 'overlay');
-        }, false);
+        });
 
         var h2 = document.createElement('h2');
         h2.appendChild(docLink);
