@@ -1,4 +1,4 @@
-window.onload = function() {
+window.addEventListener('DOMContentLoaded', function() {
 
   // We'll ask the browser to use strict code to help us catch errors earlier.
   // https://developer.mozilla.org/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
@@ -69,8 +69,8 @@ window.onload = function() {
     // We're setting some handlers here for dealing with both error and
     // data received. We could just declare the functions here, but they are in
     // separate functions so that search() is shorter, and more readable.
-    request.onerror = onRequestError;
-    request.onload = onRequestLoad;
+    request.addEventListener('error', onRequestError);
+    request.addEventListener('load', onRequestLoad);
 
     request.send();
 
@@ -126,9 +126,9 @@ window.onload = function() {
         // Therefore we will capture click events on links, stop them from
         // doing their usual thing using preventDefault(),
         // and then open the link but in a new window.
-        docLink.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.open(this.href, 'overlay');
+        docLink.addEventListener('click', function(evt) {
+          evt.preventDefault();
+          window.open(evt.target.href, 'overlay');
         });
 
         var h2 = document.createElement('h2');
@@ -151,4 +151,4 @@ window.onload = function() {
     results.hidden = true;
   }
 
-};
+});
