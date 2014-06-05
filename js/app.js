@@ -111,6 +111,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
       documents.forEach(function(doc) {
 
+        // We're using textContent because inserting content from external sources into your page using innerHTML can be dangerous.
+        // https://developer.mozilla.org/Web/API/Element.innerHTML#Security_considerations
         var docLink = document.createElement('a');
         docLink.textContent = doc.title;
         docLink.href = doc.url;
