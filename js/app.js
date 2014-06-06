@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', function() {
   var searchInput = document.getElementById('term');
   var results = document.getElementById('results');
   var request = null;
-  var translate = document.webL10n.get;
+  var translate = navigator.mozL10n.get;
   var form = document.querySelector('form');
 
   // Forms will take the values in the input fields they contain
@@ -28,10 +28,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // We'll wait until the localisations library has loaded all the strings.
   // It will let us know by dispatching the 'localized' event.
-  window.addEventListener('localized', function() {
-    // Then we'll initiate a search
-    search();
-  }, false);
+  navigator.mozL10n.once(search);
 
   // ---
 
