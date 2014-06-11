@@ -1,4 +1,4 @@
-# Privileged app stub
+# Privileged remote app
 
 This is a privileged app template that demonstrates the usage of [`XMLHttpRequest`](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest) and [`systemXHR`](https://developer.mozilla.org/Apps/Reference/Firefox_OS_device_APIs#systemXHR) to load remote content from a server, and includes a properly configured manifest file with the right app type (`privileged`) and required permissions, in order to use those APIs.
 
