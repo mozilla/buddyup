@@ -30,8 +30,8 @@ window.addEventListener('DOMContentLoaded', function() {
       search();
   }, false);
 
-  // We'll wait until the localisations library has loaded all the strings.
-  // It will let us know by dispatching the 'localized' event.
+  // We want to wait until the localisations library has loaded all the strings.
+  // So we'll tell it to let us know once it's ready.
   navigator.mozL10n.once(search);
 
   // ---
