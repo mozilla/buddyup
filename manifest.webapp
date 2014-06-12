@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2.0",
   "name": "Privileged App",
   "description": "Demonstrates how to use permissions to load remote content",
   "launch_path": "/index.html",
