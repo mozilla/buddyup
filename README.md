@@ -11,10 +11,10 @@ There are a few ways to get this template:
 If you use [Git](http://www.git-scm.com/):
 
 ````bash
-git clone https://github.com/mozilla/mortar-privileged-app-stub.git
+git clone https://github.com/mozilla/mortar-privileged-remote-app.git
 ````
 
-Or download the latest version in this [ZIP file](https://github.com/mozilla/mortar-privileged-app-stub/archive/master.zip).
+Or download the latest version in this [ZIP file](https://github.com/mozilla/mortar-privileged-remote-app/archive/master.zip).
 
 
 ## Usage
@@ -41,7 +41,7 @@ var translate = document.webL10n.get;
 
 ## Getting help
 
-If you find something that doesn't quite work as you'd expect, we'd appreciate if you [filed a bug](https://github.com/mozilla/mortar-privileged-app-stub/issues)!
+If you find something that doesn't quite work as you'd expect, we'd appreciate if you [filed a bug](https://github.com/mozilla/mortar-privileged-remote-app/issues)!
 
 We need your help in order to help you. Therefore:
 
@@ -56,7 +56,7 @@ Ultimately it all boils down to the fact that if we can't reproduce it, we can't
 
 Contributions are always welcome! If you want to collaborate, whether that is with a new feature or fixing a bug, we recommend you...
 
-1. Have a look at the [issue tracker](https://github.com/mozilla/mortar-privileged-app-stub/issues) first--to make sure there isn't anyone working on that already.
+1. Have a look at the [issue tracker](https://github.com/mozilla/mortar-privileged-remote-app/issues) first--to make sure there isn't anyone working on that already.
 * If it's a new issue/feature, or no one is working on it already, fork the project in GitHub (you'll need an account if you don't have it yet).
 * Create the bug to let us know you want to work on this. That way we are aware of and can keep an eye on it, or maybe tell you that it is not a bug but an intended feature, and save you the hassle of working on something that is not needed.
 * Clone your fork to your computer (i.e. get the code onto your computer)
