@@ -6,15 +6,18 @@ module.exports = function(grunt) {
 		less: {
             dev: {
                 files: {
-                    'css/sandstone/sandstone-resp.css' : 'less/sandstone/sandstone-resp.less'
+                    'css/sandstone.css' : 'less/sandstone/sandstone-resp.less',
+					'css/buddyup.css' : 'less/buddyup.less'
                 }
             },
             prod: {
                 options: {
-                    compress: true
+                    cleancss: true,
+					report: 'min'
                 },
                 files: {
-                    'css/sandstone/sandstone-resp.min.css' : 'less/sandstone/sandstone-resp.less'
+                    'css/sandstone.css' : 'less/sandstone/sandstone-resp.less',
+					'css/buddyup.css' : 'less/buddyup.less'
                 }
             }
         }
@@ -22,5 +25,6 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-less');
 
-	grunt.registerTask('build', ['less:dev']);
+	grunt.registerTask('default', ['less:dev']);
+	grunt.registerTask('dist', ['less:prod']);
 };
