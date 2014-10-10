@@ -1,0 +1,55 @@
+var fs = require('fs');
+var path = require('path');
+
+module.exports = {
+    // run the following from the command line:
+    // volo add_building_blocks -nostamp -f blocks=(comma separated list of one or more building blocks)
+    add_building_blocks: {
+        run: function(d, v, namedArgs) {
+            var blocks = namedArgs.blocks.split(',');
+            var blocksTotal = blocks.length;
+
+            if(!blocksTotal) {
+                console.log('Please specify the building block(s) you wish to add.');
+                return;
+            }
+
+            function finishedMessage() {
+                console.log('\nBuilding blocks added successfully.');
+            }
+
+            v.command('add', 'buildingfirefoxos/Building-Blocks/gh-pages', 'tmp')
+             .then(function() {
+
+                var srcFolder = 'js/tmp/style/';
+                var targetFolder = process.cwd() + '/css/building_blocks/';
+
+                console.log('Adding block(s)...');
+
+                for (var i = 0; i < blocksTotal; i++) {
+                    var blockName = blocks[i];
+
+                    console.log('Adding block ' + blockName + '...');
+
+                    var cssFile = blockName + '.css';
+                    var imagesFolder = blockName + '/images/';
+
+                    try {
+                        v.copyFile(srcFolder + cssFile, targetFolder + cssFile);
+                        v.copyDir(srcFolder + imagesFolder, targetFolder + blockName);
+                    } catch(error) {
+                        console.log('Error while adding building block ' + blockName + ':', error);
+                        // cleanup and return
+                        v.rm('js/tmp');
+                        return;
+                    }
+                }
+
+                console.log('Removing temporary files.');
+                v.rm('js/tmp');
+
+                finishedMessage();
+            });
+        }
+    }
+};
