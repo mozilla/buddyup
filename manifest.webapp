@@ -1,17 +1,17 @@
 {
-  "version": "0.2.0",
-  "name": "Privileged App",
-  "description": "Demonstrates how to use permissions to load remote content",
+  "version": "0.1.0",
+  "name": "BuddyUP",
+  "description": "Realtime help system for FirefoxOS",
   "launch_path": "/index.html",
   "icons": {
-    "16": "/img/icons/icon16x16.png",
-    "48": "/img/icons/icon48x48.png",
-    "60": "/img/icons/icon60x60.png",
-    "128": "/img/icons/icon128x128.png"
+    "16": "/media/icons/icon16x16.png",
+    "48": "/media/icons/icon48x48.png",
+    "60": "/media/icons/icon60x60.png",
+    "128": "/media/icons/icon128x128.png"
   },
   "developer": {
-    "name": "Your name",
-    "url": "http://example.com"
+    "name": "Mozilla",
+    "url": "https://mozilla.org"
   },
   "type": "privileged",
   "permissions": {
@@ -20,16 +20,6 @@
     }
   },
   "installs_allowed_from": ["*"],
-  "locales": {
-    "es": {
-      "name": "Aplicación privilegiada",
-      "description": "Demuestra cómo utilizar permisos para cargar contenido remoto",
-      "permissions": {
-        "systemXHR": {
-          "description": "Requerido para cargar contenido remoto"
-        }
-      }
-    }
-  },
+  "locales": {},
   "default_locale": "en"
 }
