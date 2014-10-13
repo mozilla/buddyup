@@ -14,11 +14,7 @@
     "url": "https://mozilla.org"
   },
   "type": "privileged",
-  "permissions": {
-    "systemXHR": {
-        "description": "Required to load remote content"
-    }
-  },
+  "permissions": {},
   "installs_allowed_from": ["*"],
   "locales": {},
   "default_locale": "en"

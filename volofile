@@ -36,7 +36,7 @@ module.exports = {
 
                     try {
                         v.copyFile(srcFolder + cssFile, targetFolder + cssFile);
-                        v.copyDir(srcFolder + imagesFolder, targetFolder + blockName);
+                        v.copyDir(srcFolder + imagesFolder, targetFolder + imagesFolder);
                     } catch(error) {
                         console.log('Error while adding building block ' + blockName + ':', error);
                         // cleanup and return
