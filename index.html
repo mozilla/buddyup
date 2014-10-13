@@ -5,10 +5,11 @@
         <meta name="description" content="SUMO real time support app for FirefoxOS" />
         <meta name="viewport" content="width=device-width" />
 
-        <title>BuddyUp</title>
+        <title>BuddyUP</title>
 
         <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
 
         <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
 
@@ -23,8 +24,19 @@
                     <h1>Ask A Question</h1>
                 </section>
             </header>
+            <section class="fit scroll sticky">
+                <article>
+                    <p>To get start, ask a question below or read the frequently asked questions.</p>
+                    <p>A notification will inform you once a Helper has answered your question.</p>
+                </article>
+            </section>
             <footer class="gaia-footer">
-
+                <form name="submit" id="submit" action="" method="get">
+                    <p>
+                        <input type="text" placeholder="Enter Question" required="" />
+                        <button type="reset">Clear</button>
+                    </p>
+                </form>
             </footer>
         </section>
         <script type="text/javascript" src="js/app.js" defer></script>
