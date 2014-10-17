@@ -1,9 +1,6 @@
-var fs = require('fs');
-var path = require('path');
-
 module.exports = {
     // run the following from the command line:
-    // volo add_building_blocks -nostamp -f blocks=(comma separated list of one or more building blocks)
+    // volo add_building_blocks -nostamp -f blocks=headers,layout,lists,input_areas
     add_building_blocks: {
         run: function(d, v, namedArgs) {
             var blocks = namedArgs.blocks.split(',');
