@@ -1,0 +1,96 @@
+body {
+    font-family: 'Fira Sans';
+}
+.body p {
+    padding: .5rem 1rem;
+}
+.body h2 {
+    background-color: gray;
+    color: white;
+    margin: 0;
+    padding: .2rem 1rem;
+    font-weight: 300;
+}
+.body .all-questions span {
+    float: right;
+}
+[data-type="budyup-list"] a:link,
+[data-type="budyup-list"] a:visited {
+    display: inline-block;
+    color: #333;
+    padding: .7rem 1rem;
+    border-top: 1px solid #edecec;
+    width: 90%;
+    text-decoration: none;
+}
+/* footer */
+footer button:hover {
+    cursor: pointer;
+}
+footer input + button[type="reset"] {
+    position: absolute;
+    top: 0px;
+    right: -0.3rem;
+    background: transparent url('building_blocks/input_areas/images/clear.png') 50% 50% no-repeat;
+    width: 4rem;
+    height: 4rem;
+    padding: 0px;
+    border: medium none;
+    font-size: 0px;
+    opacity: 0;
+    pointer-events: none;
+}
+form input:focus + button[type="reset"] {
+    right: 2rem;
+    opacity: 1;
+    pointer-events: all;
+}
+footer .send {
+    display: inline-block;
+    background: none;
+    margin: 0;
+    border: 0;
+    width: 10%;
+    vertical-align: middle;
+}
+footer .send [data-icon]:before {
+    font-size: 3.5rem;
+}
+form[name="submit"] {
+    position: relative;
+}
+/* utils */
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+/* overrides */
+input[type="text"] {
+    display: inline-block;
+    margin: 0;
+    border: 0;
+    width: 85%;
+}
+section.skin-organic[role="region"] > header:first-child,
+.skin-organic section[role="region"] > header:first-child {
+    background-color: gray;
+    color: white;
+    border-bottom: 1px solid #333;
+}
+section.skin-organic section[role="region"] > header:first-child h1,
+.skin-organic section[role="region"] > header:first-child h1 {
+    color: white;
+    padding: 0;
+    font-size: 1.7rem;
+    font-style: normal;
+    text-align: inherit;
+}
+.gaia-footer {
+    padding: 0;
+}
