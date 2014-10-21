@@ -1,27 +1,80 @@
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: 'Fira Sans';
 }
-.body p {
-    padding: .5rem 1rem;
+header {
+    text-align: center;
 }
-.body h2 {
+h2 {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+.intro {
+    padding: .2rem 1rem;
+}
+.questions,
+.help-articles {
+    margin-top: 1rem;
+}
+.questions h2,
+.top-helpers h2,
+.help-articles h2 {
     background-color: gray;
     color: white;
     margin: 0;
     padding: .2rem 1rem;
-    font-weight: 300;
 }
-.body .all-questions span {
-    float: right;
+.top-helpers ul {
+    margin: 1rem 0;
+    padding: 0;
+    list-style: none;
 }
+.top-helpers li {
+    display: inline;
+}
+.top-helpers a:link,
+.top-helpers a:visited {
+    display: inline-block;
+    background-color: #edecec;
+    margin-left: 1rem;
+    border-radius: 30px;
+    width:55px;
+    height: 55px;
+}
+/* lists */
 [data-type="budyup-list"] a:link,
 [data-type="budyup-list"] a:visited {
     display: inline-block;
     color: #333;
     padding: .7rem 1rem;
     border-top: 1px solid #edecec;
-    width: 90%;
+    width: 100%;
     text-decoration: none;
+}
+/* buttons */
+button {
+    cursor: pointer;
+    font-size: 1rem;
+}
+.button-blue {
+    background-color: #0095DD;
+    color: white;
+    padding: .7rem;
+    border: 1px solid #333;
+    width: 100%;
+    text-align: left;
+}
+[data-icon="forward"] {
+    background: #edecec url(building_blocks/buttons/images/next.png) 100% 6px no-repeat;
+    padding: .7rem;
+    border: 1px solid #333;
+    width: 100%;
+    text-align: left;
+}
+.my-favourites {
+    border-top: 0;
 }
 /* footer */
 footer button:hover {

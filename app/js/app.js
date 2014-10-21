@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', function() {
         var json = JSON.parse(this.responseText);
         var results = json.results;
 
-        for (var i = 0; i < results.length; i++) {
+        for (var i = 0; i < 3; i++) {
             questions += '<li><a href="">' + results[i].title + '</a></li>';
         }
         myQuestions.innerHTML = questions;
