@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // this will be read from device config maybe?
-    var PRODUCT = 4;
+    var PRODUCT = 2;
     var LOCALE = 'en-US';
 
     var questions = '';
@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var request = new XMLHttpRequest();
 
     function buildURL() {
-        var base = 'https://support.mozilla.org/api/2/question/?format=json';
+        var base = 'https://support.allizom.org/api/2/question/?format=json';
         return base + '&product=' + PRODUCT + '&locale=' + LOCALE;
     }
 
