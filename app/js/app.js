@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // this will be read from device config maybe?
-    var PRODUCT = 2;
+    var PRODUCT = 'firefox-os';
     var LOCALE = 'en-US';
 
     var questions = '';
