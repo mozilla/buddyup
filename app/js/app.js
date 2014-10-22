@@ -15,24 +15,28 @@ window.addEventListener('DOMContentLoaded', function() {
     var questions = '';
     var myQuestions = document.querySelector('#myquestions');
 
-    var request = new XMLHttpRequest();
-
     function buildURL() {
         var base = 'https://support.allizom.org/api/2/question/?format=json';
         return base + '&product=' + PRODUCT + '&locale=' + LOCALE;
     }
 
-    request.open('GET', buildURL());
-    request.onload = function() {
-        var json = JSON.parse(this.responseText);
-        var results = json.results;
+    // only attempt to load questions if we have a container.
+    if(myQuestions) {
+        var request = new XMLHttpRequest();
 
-        for (var i = 0; i < 3; i++) {
-            questions += '<li><a href="">' + results[i].title + '</a></li>';
+        request.open('GET', buildURL());
+        request.onload = function() {
+            var json = JSON.parse(this.responseText);
+            var results = json.results;
+            var resultCount = myQuestions.dataset['all'] ? results.length : 3;
+
+            for (var i = 0; i < resultCount; i++) {
+                questions += '<li><a href="">' + results[i].title + '</a></li>';
+            }
+            myQuestions.innerHTML = questions;
         }
-        myQuestions.innerHTML = questions;
-    }
 
-    request.send();
+        request.send();
+    }
 
 });
