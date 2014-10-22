@@ -1,0 +1,21 @@
+{
+    "name": "BuddyUp",
+    "description": "Near realtime SUMO FirefoxOS support app",
+    "repository": {
+        "url": "https://github.com/mozilla/buddyup",
+        "license": "MPL2"
+    },
+    "bugs": {
+        "list": "http://mzl.la/1nztDai",
+        "report": "https://bugzilla.mozilla.org/enter_bug.cgi?product=support.mozilla.org&component=BuddyUp"
+    },
+    "urls": {
+        "prod": "https://support.mozilla.org/"
+    },
+    "keywords": [
+        "javascript",
+        "css",
+        "json",
+        "firefoxos"
+    ]
+}
