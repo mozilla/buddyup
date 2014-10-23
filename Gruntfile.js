@@ -37,6 +37,18 @@ module.exports = function(grunt) {
                 }
             }
         },
+        nunjucks: {
+            precompile: {
+                baseDir: 'app/views/',
+                src: 'app/views/*',
+                dest: 'app/js/templates.js',
+                options: {
+                    name: function(filename) {
+                        return filename;
+                    }
+                }
+            }
+        },
         connect: {
             server: {
                 default_options: {}
@@ -44,18 +56,20 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: '*.js',
-                tasks: ['jshint']
+                files: ['js/app.js', 'views/*'],
+                tasks: ['nunjucks']
             }
         }
     });
 
+    grunt.loadNpmTasks('grunt-nunjucks');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.loadNpmTasks('grunt-contrib-jshint')
     grunt.loadNpmTasks('grunt-css');
 
-    grunt.registerTask('default', ['connect', 'watch']);
+    grunt.registerTask('default', ['nunjucks', 'connect', 'watch']);
     grunt.registerTask('lintify', ['jshint', 'csslint']);
+    grunt.registerTask('precompile', ['nunjucks:precompile']);
 };
