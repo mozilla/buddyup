@@ -8,8 +8,6 @@ window.addEventListener('DOMContentLoaded', function() {
     // https://developer.mozilla.org/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
     'use strict';
 
-    console.log('Inside it');
-
     // this will be read from device config maybe?
     var API_V1 = 'https://support.allizom.org/api/1/';
     var API_V2 = 'https://support.allizom.org/api/2/';

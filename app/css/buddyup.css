@@ -28,29 +28,11 @@ h2 {
     margin-top: 0;
 }
 .questions h2,
-.top-helpers h2,
 .help-articles h2 {
     background-color: gray;
     color: white;
     margin: 0;
     padding: .2rem 1rem;
-}
-.top-helpers ul {
-    margin: 1rem 0;
-    padding: 0;
-    list-style: none;
-}
-.top-helpers li {
-    display: inline;
-}
-.top-helpers a:link,
-.top-helpers a:visited {
-    display: inline-block;
-    background-color: #edecec;
-    margin-left: 1rem;
-    border-radius: 30px;
-    width:55px;
-    height: 55px;
 }
 .interaction {
     display: inline;
