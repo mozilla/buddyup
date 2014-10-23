@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="SUMO real time support app for FirefoxOS" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>My Questions - BuddyUP</title>
+
+    <link rel="stylesheet" href="css/building_blocks/layout.css" media="screen" />
+    <link rel="stylesheet" href="css/building_blocks/headers.css" media="screen" />
+    <link rel="stylesheet" href="css/building_blocks/lists.css" media="screen" />
+
+    <link rel="stylesheet" href="css/fira.css" media="screen" />
+    <link rel="stylesheet" href="css/gaia-icons.css" media="screen" />
+    <link rel="stylesheet" href="css/buddyup.css" media="screen" />
+
+    <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+    <script src="js/libs/l10n.js" defer></script>
+  </head>
+  <body class="skin-organic">
+    <section role="region" class="vbox fit">
+      <header>
+        <h1>My Question</h1>
+        <a href="index.html" id="back" class="back-link" data-icon="back-light">
+          <span class="visuallyhidden">Back</span>
+        </a>
+      </header>
+      <main class="fit scroll">
+        <form id="question_form" class="hbox">
+          <input id="question_field" class="fit">
+          <button type="submit" data-icon-after="send"></button>
+        </form>
+      </main>
+    </section>
+
+    <script src="js/sumo_db.js" defer></script>
+    <script src="js/question_controller.js"></script>
+</body>
+</html>
