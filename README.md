@@ -5,7 +5,15 @@ The UI repo for the buddy-up realtime support FirefoxOS app
 
 # Development Workflow
 
-Inside the buddyup root directory run:
+First, let's install the required dependencies. From the command line, run:
+
+```bash
+npm install
+# https://github.com/gruntjs/grunt-cli#grunt-cli-
+npm install -g grunt-cli
+```
+
+Once the above completes, run:
 
 ```bash
 grunt
