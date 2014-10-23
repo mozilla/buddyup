@@ -12,7 +12,7 @@ grunt
 ```
 
 This will precompile the nunjucks templates, start up the server, and start watching
-for changes to either app.js or any of the templates in views/. If any of the templates
+for changes to either app.js or any of the templates in app/views/. If any of the templates
 changes, it will auto-reload them.
 
 To access the app via a browser:
