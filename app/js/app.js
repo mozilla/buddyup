@@ -8,6 +8,8 @@ window.addEventListener('DOMContentLoaded', function() {
     // https://developer.mozilla.org/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
     'use strict';
 
+    console.log('Inside it');
+
     // this will be read from device config maybe?
     var API_V1 = 'https://support.allizom.org/api/1/';
     var API_V2 = 'https://support.allizom.org/api/2/';
@@ -17,7 +19,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var questions = '';
     var myQuestions = document.querySelector('#myquestions');
 
-    nunjucks.configure('/views', { autoescape: true });
+    nunjucks.configure({ autoescape: true });
 
     function buildURL() {
         var base = API_V2 + 'question/?format=json';
@@ -30,13 +32,20 @@ window.addEventListener('DOMContentLoaded', function() {
 
         request.open('GET', buildURL());
         request.onload = function() {
+            var results;
+            var showAll = false;
             var json = JSON.parse(this.responseText);
-            var results = myQuestions.dataset['all'] ? json.results : json.results.slice(0, 3);
 
-            myQuestions.innerHTML = nunjucks.render('questions.html', { results });
+            if (myQuestions.dataset['all']) {
+                results = json.results;
+                showAll = true;
+            } else {
+                results = json.results.slice(0, 3);
+            }
+
+            var html = nunjucks.render('questions.html', { results: results, all: showAll });
+            myQuestions.innerHTML = html;
         }
-
         request.send();
     }
-
 });
