@@ -15,7 +15,8 @@
     "grunt-contrib-connect": ">=0.8.x",
     "grunt-contrib-uglify": ">=0.6.x",
     "grunt-contrib-watch": ">=0.6.x",
-    "grunt-processhtml": ">=0.3.x"
+    "grunt-processhtml": ">=0.3.x",
+    "grunt-nunjucks": ">=0.1.x"
   },
   "engine": "node >= 0.10.x",
   "volo": {
