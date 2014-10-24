@@ -1,0 +1,30 @@
+/* buttons */
+button {
+    cursor: pointer;
+    font-size: 1rem;
+}
+.button-blue,
+.button-gray {
+    display: block;
+    padding: .7rem;
+    border: 1px solid #333;
+    text-align: left;
+    width: 100%;
+}
+.button-blue {
+    background-color: #0095DD;
+    color: white;
+}
+.button-gray {
+    background-color: #edecec;
+}
+.button-blue:link,
+.button-blue:visited {
+    color: white;
+    text-decoration: none;
+}
+.button-gray:link,
+.button-gray:visited {
+    color: #333;
+    text-decoration: none;
+}

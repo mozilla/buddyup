@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/building_blocks/layout.css" media="screen" />
     <link rel="stylesheet" href="css/building_blocks/headers.css" media="screen" />
     <link rel="stylesheet" href="css/building_blocks/lists.css" media="screen" />
+    <link rel="stylesheet" href="css/building_blocks/confirm.css" media="screen" />
 
     <link rel="stylesheet" href="css/fira.css" media="screen" />
     <link rel="stylesheet" href="css/gaia-icons.css" media="screen" />
@@ -27,13 +28,51 @@
         </a>
       </header>
       <main class="fit scroll">
+        <section class="introduction" style="display:none;">
+          <p>We can help! Ask us anything.</p>
+          <p class="ask"><img src="media/icons/tmp.png" width="100" height="100" alt="ask a question" /></p>
+        </section>
+        <section id="question-thread" class="question-thread">
+          <h3 class="question-cat">Today - Flame, 2.1, Fido</h3>
+          <ul class="discuss">
+            <li>
+              <p class="avatar"><img src="media/icons/tmp.png" width="30" height="30" alt="avatar" /></p>
+              <div class="message">
+                <p>How do I take a screenshot?</p>
+                <span class="comment-meta">2 minutes ago &ndash; username</span>
+                <span class="votes-total vote" data-icon="feedback">10</span>
+              </div>
+            </li>
+            <li>
+              <p class="avatar"><img src="media/icons/tmp.png" width="20" height="20" alt="avatar" /></p>
+              <div class="message">
+                <p>Hmmmm, good question...</p>
+                <span class="comment-meta">2 minutes ago &ndash; username</span>
+                <span class="votes-total vote" data-icon="feedback">10</span>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <footer>
         <form id="question_form" class="hbox">
-          <input id="question_field" class="fit">
+          <input type="text" id="question_field" class="fit" placeholder="Type your question" />
           <button type="submit" data-icon-after="send"></button>
         </form>
-      </main>
+      </footer>
     </section>
 
+    <form role="dialog" data-type="confirm" class="hide">
+      <section>
+        <h1>Question Posted</h1>
+        <p>Thank you for your question! As soon as an answer is provided you will receive a notication informing you.</p>
+      </section>
+      <menu>
+        <button id="confirm" class="recommend">Ok</button>
+      </menu>
+    </form>
+
+    <script src="js/confirm.js" defer></script>
     <script src="js/sumo_db.js" defer></script>
     <script src="js/question_controller.js"></script>
 </body>

@@ -1,0 +1,12 @@
+/* icons */
+[data-icon]:before {
+    font-family: "gaia-icons";
+    content: attr(data-icon);
+    text-rendering: optimizeLegibility;
+}
+[data-icon-after]:after {
+    float: right;
+    font-family: "gaia-icons";
+    content: attr(data-icon-after);
+    text-rendering: optimizeLegibility;
+}

@@ -1,8 +1,12 @@
 'use strict';
 
+/* global Promise, QuestionController */
+
 (function(exports) {
   var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
+  var PRODUCT = 'firefox-os';
+  var LOCALE = 'en-US';
   var token;
 
   function get_token() {
@@ -66,6 +70,17 @@
       request_with_auth(endpoint, 'POST', data).then(function(response) {
         console.log(response);
       }).then();
+    },
+    get_questions: function() {
+        var endpoint = API_V2_BASE + 'question/';
+        endpoint += '?format=json';
+        var data = {
+            product: PRODUCT,
+            locale: LOCALE
+        };
+        return request(endpoint, 'GET', data).then(function(response) {
+            return JSON.parse(response);
+        });
     }
   };
   exports.SumoDB = SumoDB;

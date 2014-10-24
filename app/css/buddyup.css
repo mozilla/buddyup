@@ -1,27 +1,13 @@
-@font-face {
-    font-family: "gaia-icons";
-    src: url("../media/fonts/gaia-icons.ttf") format("truetype");
-    font-weight: 500;
-    font-style: normal;
-}
-* {
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Fira Sans';
-}
-header {
-    text-align: center;
-}
-h2 {
-    font-size: 1.2rem;
-    font-weight: 300;
-}
+@import 'base.css';
+@import 'utils.css';
+@import 'lists.css';
+@import 'buttons.css';
+@import 'icons.css';
+
 .intro {
     padding: .2rem 1rem;
 }
-.questions,
-.help-articles {
+.questions {
     margin-top: 1rem;
 }
 .questions.all {
@@ -56,119 +42,83 @@ h2 {
     color: #999;
     font-size: .9rem;
 }
-/* lists */
-[data-type="budyup-list"] a:link,
-[data-type="budyup-list"] a:visited {
+/* ask a question */
+.introduction {
+    display: flex;
+    flex-flow: row-reverse;
+    margin-top: 30%;
+}
+.introduction p:first-child {
+    padding: 1rem;
+    align-self: center;
+    flex: 1 1 60%;
+}
+.introduction .ask {
+    padding: 1rem;
+    flex: 1 1 40%;
+}
+.question-thread {
+    padding: 0 1rem;
+}
+.question-thread h3 {
+    font-size: .9rem;
+    font-weight: normal;
+}
+.questions-cat {
+    text-transform: uppercase;
+}
+.discuss li {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: .8rem;
+}
+.discuss .avatar {
+    flex: 1 0 10%;
+    align-self: center;
+    text-align: center;
+}
+.message {
     display: inline-block;
-    color: #333;
-    padding: .7rem 1rem 0;
-    border-top: 1px solid #edecec;
-    width: 100%;
-    text-decoration: none;
+    flex: 1 0 85%;
+    background-color: #EDECEC;
+    padding: .7rem .9rem;
+    border-radius: 6px;
 }
-/* buttons */
-button {
-    cursor: pointer;
-    font-size: 1rem;
+.comment-meta,
+.vote {
+    font-size: .8rem;
 }
-.button-blue,
-.button-gray {
-    display: block;
-    padding: .7rem;
-    border: 1px solid #333;
-    text-align: left;
-    width: 100%;
+.comment-meta {
+    width: 60%;
 }
-.button-blue {
-    background-color: #0095DD;
-    color: white;
-}
-.button-gray {
-    background-color: #edecec;
-}
-.button-gray:link,
-.button-gray:visited {
-    color: #333;
-    text-decoration: none;
-}
-.my-favourites {
-    border-top: 0;
-}
-.my-favourites:before {
-    float: right;
-}
-/* icons */
-[data-icon]:before {
-    font-family: "gaia-icons";
-    content: attr(data-icon);
-    text-rendering: optimizeLegibility;
-}
-[data-icon-after]:after {
-    float: right;
-    font-family: "gaia-icons";
-    content: attr(data-icon-after);
-    text-rendering: optimizeLegibility;
-}
-.icon-back {
+.vote {
     display: inline-block;
-    background: transparent url(building_blocks/headers/images/icons/) 0 0 no-repeat;
+    width: 25%;
+    text-align: right;
+}
+.vote:before {
+    margin-right: .3rem;
+    font-size: .8rem;
 }
 /* footer */
 footer button:hover {
     cursor: pointer;
 }
-footer input + button[type="reset"] {
-    position: absolute;
-    top: 0px;
-    right: -0.3rem;
-    background: transparent url('building_blocks/input_areas/images/clear.png') 50% 50% no-repeat;
-    width: 4rem;
-    height: 4rem;
-    padding: 0px;
-    border: medium none;
-    font-size: 0px;
-    opacity: 0;
-    pointer-events: none;
+footer input[type="text"] {
+    padding: .8rem;
+    border: none;
+    font-size: 1rem;
 }
-form input:focus + button[type="reset"] {
-    right: 2rem;
-    opacity: 1;
-    pointer-events: all;
-}
-footer .send {
-    display: inline-block;
-    background: none;
-    margin: 0;
-    border: 0;
-    width: 10%;
-    vertical-align: middle;
-}
-footer .send [data-icon]:before {
-    font-size: 3.5rem;
-}
-form[name="submit"] {
-    position: relative;
-}
-/* utils */
-.visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-.no-border {
-    border: 0;
+footer button {
+    background-color: #edecec;
+    border: none;
+    width: 13%;
+    font-size: 2rem;
 }
 /* overrides */
-input[type="text"] {
-    display: inline-block;
-    margin: 0;
-    border: 0;
-    width: 85%;
+form[role="dialog"][data-type="confirm"] p {
+    font-size: 1rem;
+    line-height: 1.7;
 }
 section[role="region"] > header:first-child a.back-link {
     position: absolute;
@@ -189,7 +139,4 @@ section.skin-organic section[role="region"] > header:first-child h1,
     font-size: 1.7rem;
     font-style: normal;
     text-align: inherit;
-}
-.gaia-footer {
-    padding: 0;
 }
