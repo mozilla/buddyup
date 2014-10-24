@@ -1,13 +1,13 @@
 'use strict';
 
-/* global Promise, QuestionController */
-
 (function(exports) {
   var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
   var LOCALE = 'en-US';
   var token;
+  var USERNAME = 'rik24d';
+  var PASSWORD = 'foobarbaz1';
 
   function get_token() {
     if (token) {
@@ -16,8 +16,8 @@
 
     var endpoint = API_V1_BASE + 'users/get_token';
     var data = {
-      username: 'rik24d',
-      password: 'foobarbaz1'
+      username: USERNAME,
+      password: PASSWORD
     };
     return request(endpoint, 'POST', data).then(function(response) {
       var json = JSON.parse(response);
@@ -71,15 +71,16 @@
         console.log(response);
       }).then();
     },
-    get_questions: function() {
+    get_my_questions: function() {
         var endpoint = API_V2_BASE + 'question/';
-        endpoint += '?format=json';
+        endpoint += '?creator=' + USERNAME;
+        endpoint += '&format=json'; // TODO bug 1088014
         var data = {
             product: PRODUCT,
             locale: LOCALE
         };
         return request(endpoint, 'GET', data).then(function(response) {
-            return JSON.parse(response);
+            return JSON.parse(response).results;
         });
     }
   };

@@ -8,23 +8,21 @@
    * @params {object} container - The container for the list.
    */
   function show_questions(container) {
-      SumoDB.get_questions().then(function(json) {
-          var results;
-          var showAll = false;
+    SumoDB.get_my_questions().then(function(results) {
+      var showAll = false;
 
-          if (container.dataset.all) {
-              results = json.results;
-              showAll = true;
-          } else {
-              results = json.results.slice(0, 3);
-          }
+      if (container.dataset.all) {
+        showAll = true;
+      } else {
+        results = results.slice(0, 3);
+      }
 
-          var html = nunjucks.render('questions.html', {
-              results: results,
-              all: showAll
-          });
-          container.innerHTML = html;
+      var html = nunjucks.render('questions.html', {
+        results: results,
+        all: showAll
       });
+      container.innerHTML = html;
+    });
   }
 
   var QuestionsController = {
