@@ -67,21 +67,34 @@
         content: ' ',
         topic: 'basic-features'
       };
-      request_with_auth(endpoint, 'POST', data).then(function(response) {
-        console.log(response);
-      }).then();
+      return request_with_auth(endpoint, 'POST', data).then(function(response) {
+        return JSON.parse(response);
+      });
     },
+
+    post_answer: function(question_id, text) {
+      var endpoint = API_V2_BASE + 'answer/';
+      endpoint += '?format=json'; // TODO bug 1088014
+      var data = {
+        question: question_id,
+        content: text
+      };
+      return request_with_auth(endpoint, 'POST', data).then(function(response) {
+        return JSON.parse(response);
+      });
+    },
+
     get_my_questions: function() {
-        var endpoint = API_V2_BASE + 'question/';
-        endpoint += '?creator=' + USERNAME;
-        endpoint += '&format=json'; // TODO bug 1088014
-        var data = {
-            product: PRODUCT,
-            locale: LOCALE
-        };
-        return request(endpoint, 'GET', data).then(function(response) {
-            return JSON.parse(response).results;
-        });
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += '?creator=' + USERNAME;
+      endpoint += '&format=json'; // TODO bug 1088014
+      var data = {
+        product: PRODUCT,
+        locale: LOCALE
+      };
+      return request(endpoint, 'GET', data).then(function(response) {
+        return JSON.parse(response).results;
+      });
     }
   };
   exports.SumoDB = SumoDB;

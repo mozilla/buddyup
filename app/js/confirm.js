@@ -5,11 +5,11 @@
  * for l10n and other uses in the app among other things.
  */
 (function(exports) {
-    var dialog = document.querySelector('[role="dialog"]');
-    var closeButton = dialog.querySelector('#confirm');
+  var dialog = document.querySelector('[role="dialog"]');
+  var closeButton = dialog.querySelector('#confirm');
 
-    closeButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        dialog.setAttribute('class', 'hide');
-    });
+  closeButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      dialog.setAttribute('class', 'hide');
+  });
 })(window);
