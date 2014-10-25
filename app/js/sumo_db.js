@@ -87,14 +87,23 @@
     get_my_questions: function() {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?creator=' + USERNAME;
+      endpoint += '&product=' + PRODUCT;
+      endpoint += '&locale=' + LOCALE;
       endpoint += '&format=json'; // TODO bug 1088014
-      var data = {
-        product: PRODUCT,
-        locale: LOCALE
-      };
-      return request(endpoint, 'GET', data).then(function(response) {
+
+      return request(endpoint, 'GET').then(function(response) {
         return JSON.parse(response).results;
       });
+    },
+
+    get_my_question: function(question_id) {
+        var endpoint = API_V2_BASE + 'question/';
+        endpoint += question_id + '/';
+        endpoint += '?format=json'; // TODO bug 1088014
+
+        return request(endpoint, 'GET').then(function(response) {
+          return JSON.parse(response);
+        });
     }
   };
   exports.SumoDB = SumoDB;

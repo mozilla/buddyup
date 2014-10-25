@@ -1,8 +1,9 @@
 @import 'base.css';
-@import 'utils.css';
 @import 'lists.css';
 @import 'buttons.css';
 @import 'icons.css';
+@import 'animations.css';
+@import 'utils.css';
 
 .intro {
     padding: .2rem 1rem;
@@ -43,17 +44,17 @@
     font-size: .9rem;
 }
 /* ask a question */
-.introduction {
+.thread-introduction {
     display: flex;
     flex-flow: row-reverse;
     margin-top: 30%;
 }
-.introduction p:first-child {
+.thread-introduction p:first-child {
     padding: 1rem;
     align-self: center;
     flex: 1 1 60%;
 }
-.introduction .ask {
+.thread-introduction .ask {
     padding: 1rem;
     flex: 1 1 40%;
 }

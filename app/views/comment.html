@@ -1,0 +1,14 @@
+{% extends thread.html %}
+
+{% block comment %}
+{% for comment in results %}
+  <li>
+    <p class="avatar"><img src="media/icons/tmp.png" width="30" height="30" alt="{{ comment.creator }}" /></p>
+    <div class="message">
+      <p>{{ comment.content }}</p>
+      <span class="comment-meta">{{ comment.updated }} &ndash; {{ comment.creator }}</span>
+      <span class="votes-total vote" data-icon="feedback">{{ comment.num_votes_past_week }}</span>
+    </div>
+  </li>
+{% endfor %}
+{% endblock %}

@@ -15,3 +15,14 @@
 .hide {
     display: none;
 }
+.spinner:before {
+    display: inline-block;
+    position: absolute;
+    top: 17%;
+    left: 90%;
+    content: attr(data-icon);
+    font-size: 2rem;
+    transform-origin: center;
+    animation: spinner 2s ease-in-out infinite;
+    z-index: 1000;
+}

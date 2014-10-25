@@ -1,40 +1,56 @@
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["message.html"] = (function() {function root(env, context, frame, runtime, cb) {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["comment.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<ul class=\"discuss\">\n  ";
+env.getTemplate(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "thread")),"html", env.autoesc), true, function(t_2,parentTemplate) {
+if(t_2) { cb(t_2); return; }
+for(var t_1 in parentTemplate.blocks) {
+context.addBlock(t_1, parentTemplate.blocks[t_1]);
+}
+output += "\n\n";
+output += "\n";
+parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_comment(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "\n";
 frame = frame.push();
-var t_3 = runtime.contextOrFrameLookup(context, frame, "results");
-if(t_3) {var t_2 = t_3.length;
-for(var t_1=0; t_1 < t_3.length; t_1++) {
-var t_4 = t_3[t_1];
-frame.set("message", t_4);
-frame.set("loop.index", t_1 + 1);
-frame.set("loop.index0", t_1);
-frame.set("loop.revindex", t_2 - t_1);
-frame.set("loop.revindex0", t_2 - t_1 - 1);
-frame.set("loop.first", t_1 === 0);
-frame.set("loop.last", t_1 === t_2 - 1);
-frame.set("loop.length", t_2);
-output += "\n  <li>\n    <p class=\"avatar\"><img src=\"";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"avatar", env.autoesc), env.autoesc);
-output += "\" width=\"30\" height=\"30\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"creator", env.autoesc), env.autoesc);
+var t_5 = runtime.contextOrFrameLookup(context, frame, "results");
+if(t_5) {var t_4 = t_5.length;
+for(var t_3=0; t_3 < t_5.length; t_3++) {
+var t_6 = t_5[t_3];
+frame.set("comment", t_6);
+frame.set("loop.index", t_3 + 1);
+frame.set("loop.index0", t_3);
+frame.set("loop.revindex", t_4 - t_3);
+frame.set("loop.revindex0", t_4 - t_3 - 1);
+frame.set("loop.first", t_3 === 0);
+frame.set("loop.last", t_3 === t_4 - 1);
+frame.set("loop.length", t_4);
+output += "\n  <li>\n    <p class=\"avatar\"><img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_6),"creator", env.autoesc), env.autoesc);
 output += "\" /></p>\n    <div class=\"message\">\n      <p>";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"content", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((t_6),"content", env.autoesc), env.autoesc);
 output += "</p>\n      <span class=\"comment-meta\">";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"updated", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((t_6),"updated", env.autoesc), env.autoesc);
 output += " &ndash; ";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"creator", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((t_6),"creator", env.autoesc), env.autoesc);
 output += "</span>\n      <span class=\"votes-total vote\" data-icon=\"feedback\">";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"num_votes_past_week", env.autoesc), env.autoesc);
-output += "</span>\n    </div>\n  </li>\n  ";
+output += runtime.suppressValue(runtime.memberLookup((t_6),"num_votes_past_week", env.autoesc), env.autoesc);
+output += "</span>\n    </div>\n  </li>\n";
 ;
 }
 }
 frame = frame.pop();
-output += "\n</ul>\n";
+output += "\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -42,6 +58,7 @@ cb(null, output);
 }
 }
 return {
+b_comment: b_comment,
 root: root
 };
 })();
@@ -97,6 +114,39 @@ cb(null, output);
 }
 }
 return {
+root: root
+};
+})();
+})();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<h3 class=\"question-cat\">Today - Flame, 2.1, Fido</h3>\n<ul class=\"discuss\">\n  ";
+context.getBlock("comment")(env, context, frame, runtime, function(t_2,t_1) {
+if(t_2) { cb(t_2); return; }
+output += t_1;
+output += "\n</ul>\n";
+cb(null, output);
+});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_comment(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+b_comment: b_comment,
 root: root
 };
 })();
