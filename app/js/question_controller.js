@@ -55,14 +55,12 @@
 
     document.getElementById('thread-introduction').classList.add('hide');
 
-    var promises = [];
-    promises.push(SumoDB.get_question(question_id));
+    var question_content = [];
+    question_content.push(SumoDB.get_question(question_id));
 
-    promises.push(SumoDB.get_answers_for_question(question_id).then(function(json) {
-      return json.results;
-    }));
+    question_content.push(SumoDB.get_answers_for_question(question_id));
 
-    Promise.all(promises).then(function([question, answers]) {
+    Promise.all(question_content).then(function([question, answers]) {
       question.content = question.title;
       answers.push(question);
       answers.reverse();

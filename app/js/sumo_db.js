@@ -112,7 +112,7 @@
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response);
+        return JSON.parse(response).results;
       });
 
     }
