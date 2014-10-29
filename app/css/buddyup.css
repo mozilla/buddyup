@@ -14,8 +14,7 @@
 .questions.all {
     margin-top: 0;
 }
-.questions h2,
-.help-articles h2 {
+.questions h2 {
     background-color: gray;
     color: white;
     margin: 0;
