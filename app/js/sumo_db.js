@@ -96,7 +96,7 @@
       });
     },
 
-    get_my_question: function(question_id) {
+    get_question: function(question_id) {
         var endpoint = API_V2_BASE + 'question/';
         endpoint += question_id + '/';
         endpoint += '?format=json'; // TODO bug 1088014
@@ -104,6 +104,17 @@
         return request(endpoint, 'GET').then(function(response) {
           return JSON.parse(response);
         });
+    },
+
+    get_answers_for_question: function(question_id) {
+      var endpoint = API_V2_BASE + 'answer/';
+      endpoint += '?question=' + question_id;
+      endpoint += '&format=json'; // TODO bug 1088014
+
+      return request(endpoint, 'GET').then(function(response) {
+        return JSON.parse(response);
+      });
+
     }
   };
   exports.SumoDB = SumoDB;

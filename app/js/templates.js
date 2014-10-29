@@ -3,7 +3,7 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-env.getTemplate(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "thread")),"html", env.autoesc), true, function(t_2,parentTemplate) {
+env.getTemplate("thread.html", true, function(t_2,parentTemplate) {
 if(t_2) { cb(t_2); return; }
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
