@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, Utils, nunjucks */
+/* global SumoDB, nunjucks */
 
 (function(exports) {
   var question_id;
@@ -9,7 +9,7 @@
     evt.preventDefault();
     var comment = document.getElementById('question_field').value;
 
-    Utils.show_spinner();
+    document.getElementById('spinner').classList.remove('hide');
 
     if (question_id) {
       submit_answer(question_id, comment);
@@ -35,16 +35,13 @@
   function submit_question(comment) {
     SumoDB.post_question(comment).then(function(response) {
       question_id = response.id;
-      SumoDB.get_question(question_id).then(function(response) {
-        Utils.remove_spinner();
-        console.log(response);
-      });
+      document.getElementById('spinner').classList.add('hide');
     });
   }
 
   function submit_answer(question_id, comment) {
     SumoDB.post_answer(question_id, comment).then(function(response) {
-      Utils.remove_spinner();
+      document.getElementById('spinner').classList.add('hide');
     });
   }
 
