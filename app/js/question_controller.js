@@ -10,12 +10,31 @@
     var comment = document.getElementById('question_field').value;
 
     document.getElementById('spinner').classList.remove('hide');
+    document.getElementById('thread-introduction').classList.add('hide');
+    document.getElementById('question-thread').classList.remove('hide');
 
+    var fake_comment = nunjucks.render('comment.html',
+      {comment: {content: comment}});
+    var list = document.getElementById('comment-list');
+    list.innerHTML += fake_comment;
+    var comment_to_replace = list.lastElementChild;
+    comment_to_replace.scrollIntoView();
+
+    var submit_promise;
     if (question_id) {
-      submit_answer(question_id, comment);
+      submit_promise = submit_answer(question_id, comment);
     } else {
-      submit_question(comment);
+      submit_promise = submit_question(comment).then(function(comment) {
+        comment.content = comment.title;
+        return comment;
+      });
     }
+
+    submit_promise.then(function(comment) {
+      document.getElementById('spinner').classList.add('hide');
+      comment_to_replace.innerHTML = nunjucks.render('comment.html',
+        {comment: comment});
+    });
   }
 
   function parseQueryString(queryString) {
@@ -33,15 +52,15 @@
   }
 
   function submit_question(comment) {
-    SumoDB.post_question(comment).then(function(response) {
+    return SumoDB.post_question(comment).then(function(response) {
       question_id = response.id;
-      document.getElementById('spinner').classList.add('hide');
+      return response;
     });
   }
 
   function submit_answer(question_id, comment) {
-    SumoDB.post_answer(question_id, comment).then(function(response) {
-      document.getElementById('spinner').classList.add('hide');
+    return SumoDB.post_answer(question_id, comment).then(function(response) {
+      return response;
     });
   }
 
@@ -51,6 +70,7 @@
     }
 
     document.getElementById('thread-introduction').classList.add('hide');
+    document.getElementById('question-thread').classList.remove('hide');
 
     var question_content = [];
     question_content.push(SumoDB.get_question(question_id));
@@ -61,10 +81,10 @@
       question.content = question.title;
       answers.push(question);
       answers.reverse();
-      var html = nunjucks.render('comment.html', {
+      var html = nunjucks.render('thread.html', {
         results: answers
       });
-      document.getElementById('question-thread').innerHTML = html;
+      document.getElementById('comment-list').innerHTML = html;
     });
   }
 

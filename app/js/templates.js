@@ -3,54 +3,26 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-env.getTemplate("thread.html", true, function(t_2,parentTemplate) {
-if(t_2) { cb(t_2); return; }
-for(var t_1 in parentTemplate.blocks) {
-context.addBlock(t_1, parentTemplate.blocks[t_1]);
-}
-output += "\n\n";
-output += "\n";
-parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_comment(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-output += "\n";
-frame = frame.push();
-var t_5 = runtime.contextOrFrameLookup(context, frame, "results");
-if(t_5) {var t_4 = t_5.length;
-for(var t_3=0; t_3 < t_5.length; t_3++) {
-var t_6 = t_5[t_3];
-frame.set("comment", t_6);
-frame.set("loop.index", t_3 + 1);
-frame.set("loop.index0", t_3);
-frame.set("loop.revindex", t_4 - t_3);
-frame.set("loop.revindex0", t_4 - t_3 - 1);
-frame.set("loop.first", t_3 === 0);
-frame.set("loop.last", t_3 === t_4 - 1);
-frame.set("loop.length", t_4);
-output += "\n  <li>\n    <p class=\"avatar\"><img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((t_6),"creator", env.autoesc), env.autoesc);
-output += "\" /></p>\n    <div class=\"message\">\n      <p>";
-output += runtime.suppressValue(runtime.memberLookup((t_6),"content", env.autoesc), env.autoesc);
-output += "</p>\n      <span class=\"comment-meta\">";
-output += runtime.suppressValue(runtime.memberLookup((t_6),"updated", env.autoesc), env.autoesc);
+output += "<li>\n  <p class=\"avatar\">\n    <img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
+output += "\" />\n  </p>\n  <div class=\"message\">\n    <p>";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
+output += "</p>\n    ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
+output += "\n      <span class=\"comment-meta\">";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc), env.autoesc);
 output += " &ndash; ";
-output += runtime.suppressValue(runtime.memberLookup((t_6),"creator", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
 output += "</span>\n      <span class=\"votes-total vote\" data-icon=\"feedback\">";
-output += runtime.suppressValue(runtime.memberLookup((t_6),"num_votes_past_week", env.autoesc), env.autoesc);
-output += "</span>\n    </div>\n  </li>\n";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"num_votes_past_week", env.autoesc), env.autoesc);
+output += "</span>\n    ";
 ;
 }
+else {
+output += "\n      <span>Sending…</span>\n    ";
+;
 }
-frame = frame.pop();
-output += "\n";
+output += "\n  </div>\n</li>\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -58,7 +30,6 @@ cb(null, output);
 }
 }
 return {
-b_comment: b_comment,
 root: root
 };
 })();
@@ -123,22 +94,31 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<h3 class=\"question-cat\">Today - Flame, 2.1, Fido</h3>\n<ul class=\"discuss\">\n  ";
-context.getBlock("comment")(env, context, frame, runtime, function(t_2,t_1) {
-if(t_2) { cb(t_2); return; }
-output += t_1;
-output += "\n</ul>\n";
-cb(null, output);
-});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
+frame = frame.push();
+var t_3 = runtime.contextOrFrameLookup(context, frame, "results");
+if(t_3) {var t_2 = t_3.length;
+for(var t_1=0; t_1 < t_3.length; t_1++) {
+var t_4 = t_3[t_1];
+frame.set("comment", t_4);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\n  ";
+env.getTemplate("comment.html", function(t_7,t_5) {
+if(t_7) { cb(t_7); return; }
+t_5.render(context.getVariables(), frame.push(), function(t_8,t_6) {
+if(t_8) { cb(t_8); return; }
+output += t_6
+output += "\n";
+})});
 }
 }
-function b_comment(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
+frame = frame.pop();
+output += "\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -146,7 +126,6 @@ cb(null, output);
 }
 }
 return {
-b_comment: b_comment,
 root: root
 };
 })();
