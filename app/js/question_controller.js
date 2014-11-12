@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, nunjucks */
+/* global SumoDB, nunjucks, Utils */
 
 (function(exports) {
   var question_id;
@@ -9,16 +9,18 @@
     evt.preventDefault();
     var comment = document.getElementById('question_field').value;
 
-    document.getElementById('spinner').classList.remove('hide');
+    Utils.toggle_spinner();
+
     document.getElementById('thread-introduction').classList.add('hide');
     document.getElementById('question-thread').classList.remove('hide');
 
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
     var list = document.getElementById('comment-list');
-    list.innerHTML += fake_comment;
-    var comment_to_replace = list.lastElementChild;
-    comment_to_replace.scrollIntoView();
+    var list_item = document.createElement('li');
+
+    list.appendChild(list_item).innerHTML += fake_comment;
+    list_item.scrollIntoView();
 
     var submit_promise;
     if (question_id) {
@@ -31,9 +33,11 @@
     }
 
     submit_promise.then(function(comment) {
-      document.getElementById('spinner').classList.add('hide');
-      comment_to_replace.innerHTML = nunjucks.render('comment.html',
-        {comment: comment});
+
+      Utils.toggle_spinner();
+
+      comment.updated = Utils.time_since(new Date(comment.updated), true);
+      list_item.innerHTML = nunjucks.render('comment.html', {comment: comment});
     });
   }
 
@@ -66,6 +70,7 @@
 
   function show_question() {
     if (!question_id) {
+      Utils.toggle_spinner();
       return;
     }
 
@@ -78,9 +83,18 @@
     question_content.push(SumoDB.get_answers_for_question(question_id));
 
     Promise.all(question_content).then(function([question, answers]) {
+
+      Utils.toggle_spinner();
+
       question.content = question.title;
       answers.push(question);
       answers.reverse();
+
+      for (var i = 0, l = answers.length; i < l; i++) {
+        var updated = answers[i].updated;
+        answers[i].updated = Utils.time_since(new Date(updated), true);
+      }
+
       var html = nunjucks.render('thread.html', {
         results: answers
       });
@@ -96,6 +110,9 @@
       if (location.search) {
         var params = parseQueryString(location.search.substring(1));
         if (params.id) {
+
+          Utils.toggle_spinner();
+
           question_id = params.id;
           show_question();
         }

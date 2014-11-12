@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, nunjucks */
+/* global SumoDB, nunjucks, Utils */
 
 (function(exports) {
   /**
@@ -9,8 +9,15 @@
    */
   function show_questions(container) {
     SumoDB.get_my_questions().then(function(results) {
-      var showAll = false;
 
+      Utils.toggle_spinner();
+
+      for (var i = 0, l = results.length; i < l; i++) {
+        var updated = results[i].updated;
+        results[i].updated = Utils.time_since(new Date(updated), true);
+      }
+
+      var showAll = false;
       if (container.dataset.all) {
         showAll = true;
       } else {
@@ -28,6 +35,8 @@
   var QuestionsController = {
     init: function() {
       nunjucks.configure({ autoescape: true });
+
+      Utils.toggle_spinner();
 
       var myQuestions = document.querySelector('#myquestions');
       show_questions(myQuestions);

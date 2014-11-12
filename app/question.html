@@ -17,8 +17,11 @@
     <link rel="stylesheet" href="css/buddyup.css" media="screen" />
     <link rel="stylesheet" href="css/utils.css" media="screen" />
 
+    <!-- localization -->
     <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+    <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
     <script src="js/libs/l10n.js" defer></script>
+    <script src="js/libs/l10n_date.js" defer></script>
   </head>
   <body class="skin-organic">
     <section role="region" class="vbox fit">
@@ -57,10 +60,10 @@
       </menu>
     </form>
 
-    <span id="spinner" class="spinner hide" data-icon="sync"></span>
-
     <script src="js/libs/nunjucks.js"></script>
     <script src="js/templates.js"></script>
+
+    <script src="js/utils.js"></script>
     <script src="js/confirm.js"></script>
     <script src="js/sumo_db.js"></script>
     <script src="js/question_controller.js"></script>

@@ -3,26 +3,26 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<li>\n  <p class=\"avatar\">\n    <img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
+output += "<p class=\"avatar\">\n  <img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
-output += "\" />\n  </p>\n  <div class=\"message\">\n    <p>";
+output += "\" />\n</p>\n<div class=\"message\">\n  <p>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
-output += "</p>\n    ";
+output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
-output += "\n      <span class=\"comment-meta\">";
+output += "\n    <span class=\"comment-meta\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc), env.autoesc);
 output += " &ndash; ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
-output += "</span>\n      <span class=\"votes-total vote\" data-icon=\"feedback\">";
+output += "</span>\n    <span class=\"votes-total vote\" data-icon=\"feedback\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"num_votes_past_week", env.autoesc), env.autoesc);
-output += "</span>\n    ";
+output += "</span>\n  ";
 ;
 }
 else {
-output += "\n      <span>Sending…</span>\n    ";
+output += "\n    <span>Sending…</span>\n  ";
 ;
 }
-output += "\n  </div>\n</li>\n";
+output += "\n</div>\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -107,13 +107,13 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n  ";
+output += "\n  <li>";
 env.getTemplate("comment.html", function(t_7,t_5) {
 if(t_7) { cb(t_7); return; }
 t_5.render(context.getVariables(), frame.push(), function(t_8,t_6) {
 if(t_8) { cb(t_8); return; }
 output += t_6
-output += "\n";
+output += "</li>\n";
 })});
 }
 }

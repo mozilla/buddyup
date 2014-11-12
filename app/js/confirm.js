@@ -8,8 +8,8 @@
   var dialog = document.querySelector('[role="dialog"]');
   var closeButton = dialog.querySelector('#confirm');
 
-  closeButton.addEventListener('click', function(event) {
-      event.preventDefault();
-      dialog.setAttribute('class', 'hide');
+  closeButton.addEventListener('click', function(evt) {
+      evt.preventDefault();
+      dialog.classList.add('hide');
   });
 })(window);
