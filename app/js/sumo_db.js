@@ -96,6 +96,14 @@
       });
     },
 
+    // this function might end up being only temporary. This is to
+    // determine whether this is the user's first question.
+    get_questions_count: function() {
+      return this.get_my_questions().then(function(response) {
+        return response.length;
+      });
+    },
+
     get_question: function(question_id) {
         var endpoint = API_V2_BASE + 'question/';
         endpoint += question_id + '/';

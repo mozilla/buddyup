@@ -34,10 +34,19 @@
 
     submit_promise.then(function(comment) {
 
-      Utils.toggle_spinner();
+      SumoDB.get_questions_count().then(function(questions_count) {
 
-      comment.updated = Utils.time_since(new Date(comment.updated), true);
-      list_item.innerHTML = nunjucks.render('comment.html', {comment: comment});
+        Utils.toggle_spinner();
+
+        if (questions_count === 0) {
+          // This is the user's first question, show the confirmation dialog.
+          document.querySelector('[role="dialog"]').classList.remove('hide');
+        }
+
+        comment.updated = Utils.time_since(new Date(comment.updated), true);
+        list_item.innerHTML = nunjucks.render('comment.html',
+          {comment: comment});
+      });
     });
   }
 
