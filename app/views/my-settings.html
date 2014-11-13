@@ -1,53 +1,50 @@
-<form name="settings" id="settings" method="get">
-  <p>
-    <label for="username" class="visuallyhidden">username</label>
-    <input type="text" name="username" id="username" value="username" />
-    <button type="reset">Clear</button>
-  </p>
-  <p>Questions Answered</p>
-  <p>Helpful Upvotes</p>
-  <h2>Notifications</h2>
-  <label for="new-comments">New Comments on Thread
-    <input type="checkbox" id="new-comments" />
-  </label>
-  <label for="new-questions">New Question reminder
-    <input type="checkbox" id="new-questions" />
-  </label>
-  <h2>Answer A Question Filter</h2>
-  <p>The unanswered questions list will be filtered based on the setting below</p>
-  <label for="locale">Language</label>
-  <select id="locale">
-    <option>None</option>
-    <option>At time of event</option>
-    <option>5 minutes before</option>
-    <option>15 minutes before</option>
-    <option>30 minutes before</option>
-    <option>1 hour before</option>
-    <option>2 hours before</option>
-    <option>1 day before</option>
-  </select>
+<form name="settings" id="settings" class="settings" method="get">
+  <fieldset class="user">
+    <p>
+      <label for="username" class="visuallyhidden">username</label>
+      <input type="text" name="username" id="username" value="username" />
+      <button type="reset">Clear</button>
+    </p>
+    <p><span class="count" data-icon="tick">10</span> Questions Answered</p>
+    <p><span class="count" data-icon="feedback">7</span> Helpful Upvotes</p>
+  </fieldset>
 
-  <label for="handset_type">Handset Type</label>
-  <select id="handset_type">
-    <option>None</option>
-    <option>At time of event</option>
-    <option>5 minutes before</option>
-    <option>15 minutes before</option>
-    <option>30 minutes before</option>
-    <option>1 hour before</option>
-    <option>2 hours before</option>
-    <option>1 day before</option>
-  </select>
+  <fieldset class="notifications">
+    <h2>Notifications</h2>
+    <ul>
+      <li>
+        <label for="new-comments" class="pack-switch">
+          <input type="checkbox" id="new-comments" name="new-comments" />
+          <span>New Comments on Thread</span>
+        </label>
+      </li>
+      <li>
+        <label for="new-questions" class="pack-switch">
+          <input type="checkbox" id="new-questions" name="new-questions" />
+          <span>New Question reminder</span>
+        </label>
+      </li>
+    </ul>
+  </fieldset>
 
-  <label for="operator">Operator</label>
-  <select id="operator">
-    <option>None</option>
-    <option>At time of event</option>
-    <option>5 minutes before</option>
-    <option>15 minutes before</option>
-    <option>30 minutes before</option>
-    <option>1 hour before</option>
-    <option>2 hours before</option>
-    <option>1 day before</option>
-  </select>
+  <fieldset>
+    <h2>Answer A Question Filter</h2>
+    <p>The unanswered questions list will be filtered based on the setting below.</p>
+    <label for="locale">Language</label>
+    <select id="locale">
+      <option selected="selected">en-US</option>
+      <option>fr</option>
+      <option>de</option>
+    </select>
+
+    <label for="handset_type">Handset Type</label>
+    <select id="handset_type">
+      <option selected="selected">All</option>
+    </select>
+
+    <label for="operator">Operator</label>
+    <select id="operator">
+      <option selected="selected">All</option>
+    </select>
+  </fieldset>
 </form>

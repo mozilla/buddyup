@@ -14,7 +14,8 @@
 .questions.all {
     margin-top: 0;
 }
-.questions h2 {
+.questions h2,
+.settings h2 {
     background-color: gray;
     color: white;
     margin: 0;
@@ -41,6 +42,29 @@
 .last-activity {
     color: #999;
     font-size: .9rem;
+}
+/* settings */
+.settings fieldset {
+    font-size: 1rem;
+}
+.settings fieldset.user {
+    padding: 0 1rem;
+}
+.settings h2 {
+    padding: .7rem 1rem;
+}
+.settings .count:before {
+    padding-right: .5rem;
+}
+.settings label.pack-switch {
+    width: 95%;
+}
+.settings label.pack-switch input ~ span:after {
+    top: 29%;
+    right: -7%;
+}
+.notifications ul {
+    padding: 1rem;
 }
 /* ask a question */
 .thread-introduction {
@@ -125,6 +149,7 @@ section[role="region"] > header:first-child a.back-link {
     top: 0;
     color: white;
     min-width: 4rem;
+    font-style: normal;
 }
 section.skin-organic[role="region"] > header:first-child,
 .skin-organic section[role="region"] > header:first-child {
