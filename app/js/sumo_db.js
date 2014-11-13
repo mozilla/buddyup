@@ -122,7 +122,27 @@
       return request(endpoint, 'GET').then(function(response) {
         return JSON.parse(response).results;
       });
+    },
 
+    get_unanswered_questions: function() {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += '?product=' + PRODUCT;
+      endpoint += '&is_solved=0';
+      endpoint += '&format=json'; // TODO bug 1088014
+
+      return request(endpoint, 'GET').then(function(response) {
+        return JSON.parse(response).results;
+      });
+    },
+
+    get_settings: function() {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += '?product=' + PRODUCT;
+      endpoint += '&format=json'; // TODO bug 1088014
+
+      return request(endpoint, 'GET').then(function(response) {
+        return JSON.parse(response).results;
+      });
     }
   };
   exports.SumoDB = SumoDB;

@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/lists.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/building_blocks/switches.css" media="screen" />
 
     <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
@@ -24,26 +25,18 @@
   <body class="skin-organic">
     <section role="region" class="vbox fit">
       <header>
-        <h1>Support</h1>
+        <h1>My Profile</h1>
         <a href="settings.html" id="settings" class="settings-icon" data-icon="settings">
           <span class="visuallyhidden">Settings</span>
         </a>
       </header>
-      <main class="fit scroll">
-        <section class="intro">
-          <h2>Need Help? Let us get started.</h2>
-          <a href="question.html" data-icon-after="forward" class="button-blue">Ask A Question</a>
-          <h2>Have Answers? Help out.</h2>
-          <a href="my_questions.html?role=helper" class="button-gray" data-icon-after="forward">View Unanswered Questions</a>
-        </section>
-        <section id="myquestions" class="questions"></section>
-      </main>
+      <main id="my-settings" class="fit scroll"></main>
     </section>
-    <script type="text/javascript" src="js/libs/nunjucks.js" defer></script>
-    <script type="text/javascript" src="js/templates.js" defer></script>
+    <script src="js/libs/nunjucks.js" defer></script>
+    <script src="js/templates.js" defer></script>
 
-    <script src="js/utils.js"></script>
-    <script type="text/javascript" src="js/sumo_db.js" defer></script>
-    <script type="text/javascript" src="js/questions_controller.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/sumo_db.js" defer></script>
+    <script src="js/settings_controller.js" defer></script>
 </body>
 </html>

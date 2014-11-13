@@ -34,6 +34,23 @@ root: root
 };
 })();
 })();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["my-settings.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<form name=\"settings\" id=\"settings\" method=\"get\">\n  <p>\n    <label for=\"username\" class=\"visuallyhidden\">username</label>\n    <input type=\"text\" name=\"username\" id=\"username\" value=\"username\" />\n    <button type=\"reset\">Clear</button>\n  </p>\n  <p>Questions Answered</p>\n  <p>Helpful Upvotes</p>\n  <h2>Notifications</h2>\n  <label for=\"new-comments\">New Comments on Thread\n    <input type=\"checkbox\" id=\"new-comments\" />\n  </label>\n  <label for=\"new-questions\">New Question reminder\n    <input type=\"checkbox\" id=\"new-questions\" />\n  </label>\n  <h2>Answer A Question Filter</h2>\n  <p>The unanswered questions list will be filtered based on the setting below</p>\n  <label for=\"locale\">Language</label>\n  <select id=\"locale\">\n    <option>None</option>\n    <option>At time of event</option>\n    <option>5 minutes before</option>\n    <option>15 minutes before</option>\n    <option>30 minutes before</option>\n    <option>1 hour before</option>\n    <option>2 hours before</option>\n    <option>1 day before</option>\n  </select>\n\n  <label for=\"handset_type\">Handset Type</label>\n  <select id=\"handset_type\">\n    <option>None</option>\n    <option>At time of event</option>\n    <option>5 minutes before</option>\n    <option>15 minutes before</option>\n    <option>30 minutes before</option>\n    <option>1 hour before</option>\n    <option>2 hours before</option>\n    <option>1 day before</option>\n  </select>\n\n  <label for=\"operator\">Operator</label>\n  <select id=\"operator\">\n    <option>None</option>\n    <option>At time of event</option>\n    <option>5 minutes before</option>\n    <option>15 minutes before</option>\n    <option>30 minutes before</option>\n    <option>1 hour before</option>\n    <option>2 hours before</option>\n    <option>1 day before</option>\n  </select>\n</form>\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;

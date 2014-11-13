@@ -8,27 +8,40 @@
    * @params {object} container - The container for the list.
    */
   function show_questions(container) {
-    SumoDB.get_my_questions().then(function(results) {
 
-      Utils.toggle_spinner();
+    var promise = SumoDB.get_my_questions;
+    var params = Utils.get_url_parameters();
 
-      for (var i = 0, l = results.length; i < l; i++) {
-        var updated = results[i].updated;
-        results[i].updated = Utils.time_since(new Date(updated), true);
-      }
+    if ('helper' === params.role) {
+      promise = SumoDB.get_unanswered_questions;
+    }
 
-      var showAll = false;
-      if (container.dataset.all) {
-        showAll = true;
+    promise().then(function(results) {
+
+      if (results.length) {
+        Utils.toggle_spinner();
+
+        for (var i = 0, l = results.length; i < l; i++) {
+          var updated = results[i].updated;
+          results[i].updated = Utils.time_since(new Date(updated), true);
+        }
+
+        var showAll = false;
+        if (container.dataset.all) {
+          showAll = true;
+        } else {
+          results = results.slice(0, 3);
+        }
+
+        var html = nunjucks.render('questions.html', {
+          results: results,
+          all: showAll
+        });
+        container.innerHTML = html;
       } else {
-        results = results.slice(0, 3);
+        console.log('No questions found.');
       }
 
-      var html = nunjucks.render('questions.html', {
-        results: results,
-        all: showAll
-      });
-      container.innerHTML = html;
     });
   }
 

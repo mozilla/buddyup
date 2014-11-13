@@ -10,3 +10,12 @@
     content: attr(data-icon-after);
     text-rendering: optimizeLegibility;
 }
+/* this titanic selector is needed to override the one in header.css */
+section[role="region"] > header:first-child a.settings-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    font-size: 2rem;
+    font-style: normal;
+}

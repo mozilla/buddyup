@@ -30,6 +30,20 @@
     time_since: function(time, use_compact_format) {
       var mozl10n = new navigator.mozL10n.DateTimeFormat();
       return mozl10n.fromNow(time, use_compact_format);
+    },
+    /**
+     * Retrieves the url parameters and returns the key/value pairs as an object.
+     */
+    get_url_parameters: function() {
+      var params = {};
+      var urlParams = window.location.search.substring(1);
+      var keyValuePairs = urlParams.split('&');
+
+      for (var i = 0, l = keyValuePairs.length; i < l; i++) {
+        var keyValue = keyValuePairs[i].split('=');
+        params[keyValue[0]] = keyValue[1];
+      }
+      return params;
     }
   };
 
