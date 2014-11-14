@@ -58,13 +58,40 @@
 }
 .settings label.pack-switch {
     width: 95%;
+    height: auto;
 }
 .settings label.pack-switch input ~ span:after {
     top: 29%;
     right: -7%;
 }
+.achievements li {
+    margin-top: 1.2rem;
+}
 .notifications ul {
+    padding: 1rem 1rem 0;
+}
+.notifications li {
+    display: inline-block;
+    margin-top: 1rem;
+    width: 100%;
+    height: 3.2rem;
+}
+.question-filters section {
     padding: 1rem;
+}
+.question-filters p,
+.question-filters select {
+    margin-bottom: 1rem;
+}
+.question-filters label {
+    display: block;
+    margin-bottom: .5rem;
+    font-size: 1.15rem;
+}
+.question-filters select {
+    padding: .5rem;
+    width: 100%;
+    font-size: 1rem;
 }
 /* ask a question */
 .thread-introduction {
@@ -144,7 +171,8 @@ form[role="dialog"][data-type="confirm"] p {
     font-size: 1rem;
     line-height: 1.7;
 }
-section[role="region"] > header:first-child a.back-link {
+section[role="region"] > header:first-child a.back-link,
+section[role="region"] > header:first-child a.close-link {
     position: absolute;
     top: 0;
     color: white;

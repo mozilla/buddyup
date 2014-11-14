@@ -5,8 +5,10 @@
       <input type="text" name="username" id="username" value="username" />
       <button type="reset">Clear</button>
     </p>
-    <p><span class="count" data-icon="tick">10</span> Questions Answered</p>
-    <p><span class="count" data-icon="feedback">7</span> Helpful Upvotes</p>
+    <ul class="achievements">
+      <li><span class="count" data-icon="tick">10</span> Questions Answered</li>
+      <li><span class="count" data-icon="feedback">7</span> Helpful Upvotes</li>
+    </ul>
   </fieldset>
 
   <fieldset class="notifications">
@@ -15,7 +17,8 @@
       <li>
         <label for="new-comments" class="pack-switch">
           <input type="checkbox" id="new-comments" name="new-comments" />
-          <span>New Comments on Thread</span>
+          New Comments on Thread
+          <span></span>
         </label>
       </li>
       <li>
@@ -27,24 +30,29 @@
     </ul>
   </fieldset>
 
-  <fieldset>
+  <fieldset class="question-filters">
     <h2>Answer A Question Filter</h2>
-    <p>The unanswered questions list will be filtered based on the setting below.</p>
-    <label for="locale">Language</label>
-    <select id="locale">
-      <option selected="selected">en-US</option>
-      <option>fr</option>
-      <option>de</option>
-    </select>
+    <section>
+      <p>The unanswered questions list will be filtered based on the setting below.</p>
+      <label for="locale">Language</label>
 
-    <label for="handset_type">Handset Type</label>
-    <select id="handset_type">
-      <option selected="selected">All</option>
-    </select>
+      <span class="button icon icon-dialog">
+        <select id="locale">
+          <option selected="selected">en-US</option>
+          <option>fr</option>
+          <option>de</option>
+        </select>
+      </span>
 
-    <label for="operator">Operator</label>
-    <select id="operator">
-      <option selected="selected">All</option>
-    </select>
+      <label for="handset_type">Handset Type</label>
+      <select id="handset_type">
+        <option selected="selected">All</option>
+      </select>
+
+      <label for="operator">Operator</label>
+      <select id="operator">
+        <option selected="selected">All</option>
+      </select>
+    </section>
   </fieldset>
 </form>
