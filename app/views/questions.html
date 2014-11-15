@@ -2,17 +2,21 @@
 <h2>My Questions</h2>
 {% endif %}
 <ul data-type="budyup-list">
-  {% for question in results %}
-  <li>
-    <a href="question.html?id={{ question.id }}">{{ question.title }}</a>
-    <ul class="interaction">
-      <li class="comment-total" data-icon-after="messages">{{ question.num_answers }}</li>
-      <li class="votes-total" data-icon-after="feedback">{{ question.num_votes_past_week }}<li>
-    </ul>
-    <span class="last-activity">{{ question.updated }}</span>
-  </li>
-  {% endfor %}
+  {% if results %}
+    {% for question in results %}
+    <li>
+      <a href="question.html?id={{ question.id }}">{{ question.title }}</a>
+      <ul class="interaction">
+        <li class="comment-total" data-icon-after="messages">{{ question.num_answers }}</li>
+        <li class="votes-total" data-icon-after="feedback">{{ question.num_votes_past_week }}<li>
+      </ul>
+      <span class="last-activity">{{ question.updated }}</span>
+    </li>
+    {% endfor %}
+  {% else %}
+    <li class="no-data">No questions found</li>
+  {% endif %}
 </ul>
-{% if not all %}
+{% if not all and results %}
 <a href="my_questions.html" data-icon-after="forward" class="button-gray">All My Questions</a>
 {% endif %}

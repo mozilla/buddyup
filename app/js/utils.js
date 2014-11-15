@@ -1,8 +1,12 @@
 'use strict';
 
-/* global SumoDB, localforage */
+/* global localforage */
 
 (function(exports) {
+
+  var LOCALE = 'en-US';
+  var USERNAME = 'rik24d';
+  var PASSWORD = 'foobarbaz1';
 
   var Utils = {
     /**
@@ -34,7 +38,7 @@
       return mozl10n.fromNow(time, use_compact_format);
     },
     /**
-     * Retrieves the url parameters and returns the key/value pairs as an object.
+     * Retrieves url parameters and returns the key/value pairs as an object.
      */
     get_url_parameters: function() {
       var params = {};
@@ -47,10 +51,22 @@
       }
       return params;
     },
-    // temp mock
-    user_exists: function() {
+    /**
+     * Get the user. If user does not exist, create one [tmp mocked]
+     */
+    get_create_user: function() {
       return localforage.getItem('user').then(function(response) {
-          console.log(response);
+          if (!response) {
+            var user = {
+              username: USERNAME,
+              password: PASSWORD,
+              locale: LOCALE
+            };
+            localforage.setItem('user', user, function(er, response) {
+              return response;
+            });
+          }
+          return response;
       });
     }
   };

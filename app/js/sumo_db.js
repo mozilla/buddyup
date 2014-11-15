@@ -94,11 +94,15 @@
       return user;
     },
 
-    get_my_questions: function() {
+    /**
+     * Get list of questions for the current user
+     * @params {object} user - The user details
+     */
+    get_my_questions: function(user) {
       var endpoint = API_V2_BASE + 'question/';
-      endpoint += '?creator=' + USERNAME;
+      endpoint += '?creator=' + user.username;
       endpoint += '&product=' + PRODUCT;
-      endpoint += '&locale=' + LOCALE;
+      endpoint += '&locale=' + user.locale;
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(function(response) {

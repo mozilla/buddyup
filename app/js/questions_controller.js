@@ -1,14 +1,16 @@
 'use strict';
 
-/* global SumoDB, nunjucks, localforage, Utils */
+/* global SumoDB, nunjucks, Utils */
 
 (function(exports) {
   /**
    * Shows a list of questions for the current user.
+   * @params {object} user - The user details
    * @params {object} container - The container for the list.
    */
-  function show_questions(container) {
+  function show_questions(user, container) {
 
+    var html;
     var promise = SumoDB.get_my_questions;
     var params = Utils.get_url_parameters();
 
@@ -16,7 +18,7 @@
       promise = SumoDB.get_unanswered_questions;
     }
 
-    promise().then(function(results) {
+    promise(user).then(function(results) {
 
       if (results.length) {
         Utils.toggle_spinner();
@@ -33,14 +35,16 @@
           results = results.slice(0, 3);
         }
 
-        var html = nunjucks.render('questions.html', {
+        html = nunjucks.render('questions.html', {
           results: results,
           all: showAll
         });
         container.innerHTML = html;
       } else {
-        //tmp
-        console.log('No questions found.');
+        // no questions for the user, just render the template with no data.
+        Utils.toggle_spinner();
+        html = nunjucks.render('questions.html', {});
+        container.innerHTML = html;
       }
 
     });
@@ -53,13 +57,14 @@
       Utils.toggle_spinner();
 
       var myQuestions = document.querySelector('#myquestions');
-      Utils.user_exists().then(function(response) {
+      Utils.get_create_user().then(function(response) {
         if (response) {
-          console.log(response);
-          show_questions(myQuestions);
+          show_questions(response, myQuestions);
         } else {
-          // tmp
-          console.log('No user exists');
+          // no user exists, just render the template with no data.
+          Utils.toggle_spinner();
+          var html = nunjucks.render('questions.html', {});
+          myQuestions.innerHTML = html;
         }
       });
     }
