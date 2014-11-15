@@ -1,5 +1,7 @@
 'use strict';
 
+/* global SumoDB, localforage */
+
 (function(exports) {
 
   var Utils = {
@@ -44,6 +46,12 @@
         params[keyValue[0]] = keyValue[1];
       }
       return params;
+    },
+    // temp mock
+    user_exists: function() {
+      return localforage.getItem('user').then(function(response) {
+          console.log(response);
+      });
     }
   };
 

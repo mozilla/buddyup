@@ -84,6 +84,16 @@
       });
     },
 
+    // tmp
+    create_account: function() {
+      var user = {
+        user: USERNAME,
+        locale: LOCALE,
+        role: 'helpee'
+      };
+      return user;
+    },
+
     get_my_questions: function() {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?creator=' + USERNAME;

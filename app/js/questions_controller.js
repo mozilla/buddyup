@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, nunjucks, Utils */
+/* global SumoDB, nunjucks, localforage, Utils */
 
 (function(exports) {
   /**
@@ -53,7 +53,15 @@
       Utils.toggle_spinner();
 
       var myQuestions = document.querySelector('#myquestions');
-      show_questions(myQuestions);
+      Utils.user_exists().then(function(response) {
+        if (response) {
+          console.log(response);
+          show_questions(myQuestions);
+        } else {
+          // tmp
+          console.log('No user exists');
+        }
+      });
     }
   };
 
