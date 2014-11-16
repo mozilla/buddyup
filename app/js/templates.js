@@ -95,7 +95,9 @@ output += "\n  ";
 ;
 }
 else {
-output += "\n    <li class=\"no-data\">No questions found</li>\n  ";
+output += "\n    <li class=\"no-data\">";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "message"), env.autoesc);
+output += "</li>\n  ";
 ;
 }
 output += "\n</ul>\n";

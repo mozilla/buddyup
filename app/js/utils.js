@@ -1,12 +1,6 @@
 'use strict';
 
-/* global localforage */
-
 (function(exports) {
-
-  var LOCALE = 'en-US';
-  var USERNAME = 'rik24d';
-  var PASSWORD = 'foobarbaz1';
 
   var Utils = {
     /**
@@ -50,24 +44,6 @@
         params[keyValue[0]] = keyValue[1];
       }
       return params;
-    },
-    /**
-     * Get the user. If user does not exist, create one [tmp mocked]
-     */
-    get_create_user: function() {
-      return localforage.getItem('user').then(function(response) {
-          if (!response) {
-            var user = {
-              username: USERNAME,
-              password: PASSWORD,
-              locale: LOCALE
-            };
-            localforage.setItem('user', user, function(er, response) {
-              return response;
-            });
-          }
-          return response;
-      });
     }
   };
 

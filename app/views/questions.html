@@ -14,7 +14,7 @@
     </li>
     {% endfor %}
   {% else %}
-    <li class="no-data">No questions found</li>
+    <li class="no-data">{{ message }}</li>
   {% endif %}
 </ul>
 {% if not all and results %}

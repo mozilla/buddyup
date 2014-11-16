@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, nunjucks, Utils */
+/* global UserController, SumoDB, Utils, nunjucks */
 
 (function(exports) {
   /**
@@ -41,9 +41,12 @@
         });
         container.innerHTML = html;
       } else {
-        // no questions for the user, just render the template with no data.
+        // no questions for the user, render the template passing
+        // relevant message to user.
         Utils.toggle_spinner();
-        html = nunjucks.render('questions.html', {});
+        html = nunjucks.render('questions.html', {
+          message: 'No questions found'
+        });
         container.innerHTML = html;
       }
 
@@ -57,14 +60,16 @@
       Utils.toggle_spinner();
 
       var myQuestions = document.querySelector('#myquestions');
-      Utils.get_create_user().then(function(response) {
+      UserController.get_user().then(function(response) {
         if (response) {
+          console.log('user exists, showing questions', response);
           show_questions(response, myQuestions);
         } else {
-          // no user exists, just render the template with no data.
-          Utils.toggle_spinner();
-          var html = nunjucks.render('questions.html', {});
-          myQuestions.innerHTML = html;
+          console.log('user does not exists');
+          UserController.create_user().then(function(response) {
+            console.log('created user, showing questions', response);
+            show_questions(response, myQuestions);
+          });
         }
       });
     }
