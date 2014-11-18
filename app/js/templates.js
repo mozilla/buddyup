@@ -10,7 +10,7 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
 output += "\n    <span class=\"comment-meta\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
 output += " &ndash; ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
 output += "</span>\n    <span class=\"votes-total vote\" data-icon=\"feedback\">";
@@ -85,7 +85,7 @@ output += runtime.suppressValue(runtime.memberLookup((t_4),"num_answers", env.au
 output += "</li>\n        <li class=\"votes-total\" data-icon-after=\"feedback\">";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"num_votes_past_week", env.autoesc), env.autoesc);
 output += "<li>\n      </ul>\n      <span class=\"last-activity\">";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"updated", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((t_4),"created", env.autoesc), env.autoesc);
 output += "</span>\n    </li>\n    ";
 ;
 }

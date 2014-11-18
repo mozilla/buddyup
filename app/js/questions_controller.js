@@ -24,8 +24,8 @@
         Utils.toggle_spinner();
 
         for (var i = 0, l = results.length; i < l; i++) {
-          var updated = results[i].updated;
-          results[i].updated = Utils.time_since(new Date(updated), true);
+          var created = results[i].created;
+          results[i].created = Utils.time_since(new Date(created), true);
         }
 
         var showAll = false;
@@ -62,12 +62,9 @@
       var myQuestions = document.querySelector('#myquestions');
       UserController.get_user().then(function(response) {
         if (response) {
-          console.log('user exists, showing questions', response);
           show_questions(response, myQuestions);
         } else {
-          console.log('user does not exists');
           UserController.create_user().then(function(response) {
-            console.log('created user, showing questions', response);
             show_questions(response, myQuestions);
           });
         }

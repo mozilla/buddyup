@@ -4,7 +4,6 @@
   var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
-  var LOCALE = 'en-US';
   var token;
   var USERNAME = 'rik24d';
   var PASSWORD = 'foobarbaz1';
@@ -83,17 +82,6 @@
         return JSON.parse(response);
       });
     },
-
-    // tmp
-    create_account: function() {
-      var user = {
-        user: USERNAME,
-        locale: LOCALE,
-        role: 'helpee'
-      };
-      return user;
-    },
-
     /**
      * Get list of questions for the current user
      * @params {object} user - The user details
@@ -112,8 +100,8 @@
 
     // this function might end up being only temporary. This is to
     // determine whether this is the user's first question.
-    get_questions_count: function() {
-      return this.get_my_questions().then(function(response) {
+    get_questions_count: function(user) {
+      return this.get_my_questions(user).then(function(response) {
         return response.length;
       });
     },

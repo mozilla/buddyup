@@ -10,7 +10,7 @@
         <li class="comment-total" data-icon-after="messages">{{ question.num_answers }}</li>
         <li class="votes-total" data-icon-after="feedback">{{ question.num_votes_past_week }}<li>
       </ul>
-      <span class="last-activity">{{ question.updated }}</span>
+      <span class="last-activity">{{ question.created }}</span>
     </li>
     {% endfor %}
   {% else %}

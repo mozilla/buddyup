@@ -1,8 +1,9 @@
 'use strict';
 
-/* global SumoDB, nunjucks, Utils */
+/* global SumoDB, UserController, Utils, nunjucks */
 
 (function(exports) {
+  var user;
   var question_id;
 
   function submit_comment(evt) {
@@ -34,7 +35,7 @@
 
     submit_promise.then(function(comment) {
 
-      SumoDB.get_questions_count().then(function(questions_count) {
+      SumoDB.get_questions_count(user).then(function(questions_count) {
 
         Utils.toggle_spinner();
 
@@ -43,25 +44,11 @@
           document.querySelector('[role="dialog"]').classList.remove('hide');
         }
 
-        comment.updated = Utils.time_since(new Date(comment.updated), true);
+        comment.created = Utils.time_since(new Date(comment.created), true);
         list_item.innerHTML = nunjucks.render('comment.html',
           {comment: comment});
       });
     });
-  }
-
-  function parseQueryString(queryString) {
-      var params = {};
-
-      var queries = queryString.split('&');
-
-      // Convert the array of strings into an object
-      for (var i = 0, l = queries.length; i < l; i++) {
-          var [key, value] = queries[i].split('=');
-          params[key] = value;
-      }
-
-      return params;
   }
 
   function submit_question(comment) {
@@ -100,8 +87,8 @@
       answers.reverse();
 
       for (var i = 0, l = answers.length; i < l; i++) {
-        var updated = answers[i].updated;
-        answers[i].updated = Utils.time_since(new Date(updated), true);
+        var created = answers[i].created;
+        answers[i].created = Utils.time_since(new Date(created), true);
       }
 
       var html = nunjucks.render('thread.html', {
@@ -116,8 +103,20 @@
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
 
+      // TODO: would probably be preferrable to do this once for
+      // the whole app and in each (most) controllers?
+      UserController.get_user().then(function(response) {
+        if (response) {
+          user = response;
+        } else {
+          UserController.create_user().then(function(response) {
+            user = response;
+          });
+        }
+      });
+
       if (location.search) {
-        var params = parseQueryString(location.search.substring(1));
+        var params = Utils.get_url_parameters(location.search.substring(1));
         if (params.id) {
 
           Utils.toggle_spinner();
