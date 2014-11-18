@@ -1,14 +1,14 @@
 'use strict';
 
-/* global UserController, SumoDB, Utils, nunjucks */
+/* global SumoDB, UserController, Utils, nunjucks */
 
 (function(exports) {
+
   /**
    * Shows a list of questions for the current user.
-   * @params {object} user - The user details
    * @params {object} container - The container for the list.
    */
-  function show_questions(user, container) {
+  function show_questions(container) {
 
     var html;
     var promise = SumoDB.get_my_questions;
@@ -18,7 +18,7 @@
       promise = SumoDB.get_unanswered_questions;
     }
 
-    promise(user).then(function(results) {
+    promise().then(function(results) {
 
       if (results.length) {
         Utils.toggle_spinner();
@@ -59,19 +59,17 @@
 
       Utils.toggle_spinner();
 
-      var myQuestions = document.querySelector('#myquestions');
-      UserController.get_user().then(function(response) {
-        if (response) {
-          show_questions(response, myQuestions);
-        } else {
-          UserController.create_user().then(function(response) {
-            show_questions(response, myQuestions);
-          });
-        }
+      UserController.init().then(function(response) {
+        // store the user in exports (window) or pass it around?
+        exports.user = response;
+
+        var my_questions = document.querySelector('#myquestions');
+        show_questions(my_questions);
       });
     }
   };
 
   exports.QuestionsController = QuestionsController;
   QuestionsController.init();
+
 })(window);

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, Utils, nunjucks  */
+/* global SumoDB, nunjucks  */
 
 (function(exports) {
   var SettingsController = {
@@ -14,7 +14,7 @@
         document.querySelector('#my-settings').innerHTML= html;
       });
     }
-  }
+  };
 
   exports.SettingsController = SettingsController;
   SettingsController.init();

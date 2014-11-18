@@ -1,29 +1,8 @@
 'use strict';
 
 (function(exports) {
-  var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
-  var token;
-  var USERNAME = 'rik24d';
-  var PASSWORD = 'foobarbaz1';
-
-  function get_token() {
-    if (token) {
-      return Promise.resolve(token);
-    }
-
-    var endpoint = API_V1_BASE + 'users/get_token';
-    var data = {
-      username: USERNAME,
-      password: PASSWORD
-    };
-    return request(endpoint, 'POST', data).then(function(response) {
-      var json = JSON.parse(response);
-      token = json.token;
-      return token;
-    });
-  }
 
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
@@ -50,10 +29,8 @@
     });
   }
 
-  function request_with_auth(url, method, data) {
-    return get_token().then(function(token) {
-      return request(url, method, data, {authorization: 'Token ' + token});
-    });
+  function request_with_auth(url, method, data, token) {
+    return request(url, method, data, {authorization: 'Token ' + token});
   }
 
   var SumoDB = {
@@ -66,9 +43,11 @@
         content: ' ',
         topic: 'basic-features'
       };
-      return request_with_auth(endpoint, 'POST', data).then(function(response) {
-        return JSON.parse(response);
-      });
+      return request_with_auth(endpoint, 'POST', data, window.user.token)
+        .then(function(response) {
+          return JSON.parse(response);
+        }
+      );
     },
 
     post_answer: function(question_id, text) {
@@ -78,19 +57,20 @@
         question: question_id,
         content: text
       };
-      return request_with_auth(endpoint, 'POST', data).then(function(response) {
-        return JSON.parse(response);
-      });
+      return request_with_auth(endpoint, 'POST', data, window.user.token)
+      .then(function(response) {
+          return JSON.parse(response);
+        }
+      );
     },
     /**
      * Get list of questions for the current user
-     * @params {object} user - The user details
      */
-    get_my_questions: function(user) {
+    get_my_questions: function() {
       var endpoint = API_V2_BASE + 'question/';
-      endpoint += '?creator=' + user.username;
-      endpoint += '&product=' + PRODUCT;
-      endpoint += '&locale=' + user.locale;
+      endpoint += '?product=' + PRODUCT;
+      endpoint += '&creator=' + window.user.username;
+      endpoint += '&locale=' + window.user.locale;
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(function(response) {
@@ -100,8 +80,8 @@
 
     // this function might end up being only temporary. This is to
     // determine whether this is the user's first question.
-    get_questions_count: function(user) {
-      return this.get_my_questions(user).then(function(response) {
+    get_questions_count: function() {
+      return this.get_my_questions().then(function(response) {
         return response.length;
       });
     },
@@ -145,6 +125,15 @@
       return request(endpoint, 'GET').then(function(response) {
         return JSON.parse(response).results;
       });
+    },
+
+    create_user: function() {
+      var endpoint = API_V2_BASE + 'user/generate';
+      endpoint += '?format=json';
+
+      return request(endpoint, 'POST').then(function(response) {
+        return JSON.parse(response);
+      })
     }
   };
   exports.SumoDB = SumoDB;

@@ -1,9 +1,8 @@
 'use strict';
 
-/* global SumoDB, UserController, Utils, nunjucks */
+/* global UserController, SumoDB, Utils, nunjucks */
 
 (function(exports) {
-  var user;
   var question_id;
 
   function submit_comment(evt) {
@@ -35,7 +34,7 @@
 
     submit_promise.then(function(comment) {
 
-      SumoDB.get_questions_count(user).then(function(questions_count) {
+      SumoDB.get_questions_count().then(function(questions_count) {
 
         Utils.toggle_spinner();
 
@@ -45,6 +44,7 @@
         }
 
         comment.created = Utils.time_since(new Date(comment.created), true);
+        console.log(comment);
         list_item.innerHTML = nunjucks.render('comment.html',
           {comment: comment});
       });
@@ -103,16 +103,9 @@
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
 
-      // TODO: would probably be preferrable to do this once for
-      // the whole app and in each (most) controllers?
-      UserController.get_user().then(function(response) {
-        if (response) {
-          user = response;
-        } else {
-          UserController.create_user().then(function(response) {
-            user = response;
-          });
-        }
+      UserController.init().then(function(response) {
+        // store the user in exports (window) or pass it around?
+        exports.user = response;
       });
 
       if (location.search) {
@@ -129,4 +122,5 @@
   };
   exports.QuestionController = QuestionController;
   QuestionController.init();
+
 })(window);
