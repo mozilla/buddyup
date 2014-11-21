@@ -1,0 +1,73 @@
+<form name="profile" id="profile" class="profile" method="get">
+  <fieldset class="user">
+    <p>
+      <label for="display_name" class="visuallyhidden">{{ results.user.display_name }}</label>
+      <input type="text" name="display_name" id="display_name" value="{{ results.user.display_name }}" required />
+      <button type="reset">Clear</button>
+    </p>
+    <ul class="achievements">
+      <li>
+        <span class="count" data-icon="tick">{{ results.user.questions_answered }}</span> Questions Answered
+      </li>
+      <li>
+        <span class="count" data-icon="feedback">{{ results.user.helpful_upvotes }}</span> Helpful Upvotes
+      </li>
+    </ul>
+  </fieldset>
+
+  <fieldset class="notifications">
+    <h2>Notifications</h2>
+    <ul>
+      <li>
+        <label for="new_comments" class="pack-switch">
+          <input type="checkbox" id="new_comments" name="new_comments"
+            {% if results.user.new_comment_notify %}checked="checked"{% endif %} />
+          <span>New Comments</span>
+        </label>
+      </li>
+      <li>
+        <label for="new_questions" class="pack-switch">
+          <input type="checkbox" id="new_questions" name="new_questions"
+            {% if results.user.buddyup_reminder %}checked="checked"{% endif %} />
+          <span>BuddyUp Reminder</span>
+        </label>
+      </li>
+    </ul>
+  </fieldset>
+
+  <fieldset class="question-filters">
+    <h2>Answer A Question Filter</h2>
+    <section>
+      <p>The unanswered questions list will be filtered based on the setting below.</p>
+
+      <label for="locale">Language</label>
+      <span class="button icon icon-dialog">
+        <select id="locale">
+          {% for locale in results.locales %}
+            <option {% if locale == results.user.locale %}selected="selected"{% endif %}>{{ locale }}</option>
+          {% endfor %}
+        </select>
+      </span>
+
+      <label for="handset_type">Handset Type</label>
+      <select id="handset_type">
+        {% if results.user.handset_type == "" %}
+          <option selected="selected">All</option>
+        {% endif %}
+        {% for handset in results.handsets %}
+          <option {% if handset == results.user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="operator">Operator</label>
+      <select id="operator">
+        {% if results.user.operator == "" %}
+          <option selected="selected">All</option>
+        {% endif %}
+        {% for operator in results.operators %}
+          <option {% if operator == results.user.operator %}selected="selected"{% endif %}>{{ operator }}</option>
+        {% endfor %}
+      </select>
+    </section>
+  </fieldset>
+</form>

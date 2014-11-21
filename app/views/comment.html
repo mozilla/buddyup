@@ -5,7 +5,6 @@
   <p>{{ comment.content }}</p>
   {% if comment.updated %}
     <span class="comment-meta">{{ comment.created }} &ndash; {{ comment.creator }}</span>
-    <span class="votes-total vote" data-icon="feedback">{{ comment.num_votes_past_week }}</span>
   {% else %}
     <span>Sending…</span>
   {% endif %}

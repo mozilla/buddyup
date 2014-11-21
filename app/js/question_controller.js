@@ -44,7 +44,6 @@
         }
 
         comment.created = Utils.time_since(new Date(comment.created), true);
-        console.log(comment);
         list_item.innerHTML = nunjucks.render('comment.html',
           {comment: comment});
       });

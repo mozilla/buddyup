@@ -1,8 +1,21 @@
 'use strict';
 
 (function(exports) {
+  var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
+
+  function get_token() {
+    var endpoint = API_V1_BASE + 'users/get_token';
+    var data = {
+      username: window.user.username,
+      password: window.user.password
+    };
+    return request(endpoint, 'POST', data).then(function(response) {
+      var json = JSON.parse(response);
+      return json.token;
+    });
+  }
 
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
@@ -87,13 +100,13 @@
     },
 
     get_question: function(question_id) {
-        var endpoint = API_V2_BASE + 'question/';
-        endpoint += question_id + '/';
-        endpoint += '?format=json'; // TODO bug 1088014
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += question_id + '/';
+      endpoint += '?format=json'; // TODO bug 1088014
 
-        return request(endpoint, 'GET').then(function(response) {
-          return JSON.parse(response);
-        });
+      return request(endpoint, 'GET').then(function(response) {
+        return JSON.parse(response);
+      });
     },
 
     get_answers_for_question: function(question_id) {
@@ -117,23 +130,24 @@
       });
     },
 
-    get_settings: function() {
-      var endpoint = API_V2_BASE + 'question/';
-      endpoint += '?product=' + PRODUCT;
-      endpoint += '&format=json'; // TODO bug 1088014
-
-      return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response).results;
-      });
-    },
-
     create_user: function() {
       var endpoint = API_V2_BASE + 'user/generate';
-      endpoint += '?format=json';
+      endpoint += '?format=json'; // TODO bug 1088014
 
       return request(endpoint, 'POST').then(function(response) {
         return JSON.parse(response);
-      })
+      });
+    },
+
+    update_user: function(user_data) {
+      var endpoint = API_V2_BASE + 'user/';
+      endpoint += window.user.username + '/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(endpoint, 'PUT', user_data, window.user.token)
+        .then(function(response) {
+          return JSON.parse(response);
+      });
     }
   };
   exports.SumoDB = SumoDB;

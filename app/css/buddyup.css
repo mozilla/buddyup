@@ -15,7 +15,7 @@
     margin-top: 0;
 }
 .questions h2,
-.settings h2 {
+.profile h2 {
     background-color: gray;
     color: white;
     margin: 0;
@@ -46,24 +46,24 @@
 .no-data {
     margin: 1rem;
 }
-/* settings */
-.settings fieldset {
+/* profile */
+.profile fieldset {
     font-size: 1rem;
 }
-.settings fieldset.user {
+.profile fieldset.user {
     padding: 0 1rem;
 }
-.settings h2 {
+.profile h2 {
     padding: .7rem 1rem;
 }
-.settings .count:before {
+.profile .count:before {
     padding-right: .5rem;
 }
-.settings label.pack-switch {
+.profile label.pack-switch {
     width: 95%;
     height: auto;
 }
-.settings label.pack-switch input ~ span:after {
+.profile label.pack-switch input ~ span:after {
     top: 29%;
     right: -7%;
 }
