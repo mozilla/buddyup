@@ -4,6 +4,32 @@
 
 (function(exports) {
 
+  /**
+   *
+   */
+  function normalize_user(user) {
+    var hash_password = response.password;
+    var token = response.token;
+    var user = response.user;
+    var name = !!user.display_name ? user.display_name : user.username;
+
+    return {
+      username: user.username,
+      display_name: name,
+      avatar: user.avatar,
+      password: hash_password,
+      token: token,
+      locale: user.locale,
+      member_since: user.date_joined,
+      questions_answered: 10,
+      helpful_upvotes: 2,
+      new_comment_notify: true,
+      buddyup_reminder: false,
+      handset_type: 'Alcatel',
+      operator: 'MTN'
+    };
+  }
+
   var UserController = {
     /**
      * Get a user from local storage.
@@ -18,29 +44,9 @@
      */
     create_user: function() {
       return SumoDB.create_user().then(function(response) {
-        var hash_password = response.password;
-        var token = response.token;
-        var user = response.user;
-        var name = !!user.display_name ? user.display_name : user.username;
-
-        var local_user = {
-          username: user.username,
-          display_name: name,
-          avatar: user.avatar,
-          password: hash_password,
-          token: token,
-          locale: user.locale,
-          member_since: user.date_joined,
-          questions_answered: 10,
-          helpful_upvotes: 2,
-          new_comment_notify: true,
-          buddyup_reminder: false,
-          handset_type: 'Alcatel',
-          operator: 'MTN'
-        };
-
-        return localforage.setItem('user', local_user).then(function(response) {
-          return response;
+        return localforage.setItem('user', normalize_user(response))
+          .then(function(response) {
+            return response;
         });
       });
     },

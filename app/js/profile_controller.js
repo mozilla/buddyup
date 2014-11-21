@@ -27,6 +27,10 @@
       user_data[elem_name] = elem.type === 'checkbox' ?
         elem.checked : elem.value;
     }
+
+    user_data.username = window.user.username;
+    user_data.password = window.user.password;
+
     SumoDB.update_user(user_data).then(function(response) {
       console.log(response);
     });
