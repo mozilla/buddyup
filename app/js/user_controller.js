@@ -7,7 +7,7 @@
   /**
    *
    */
-  function normalize_user(user) {
+  function normalize_user(response) {
     var hash_password = response.password;
     var token = response.token;
     var user = response.user;
