@@ -43,7 +43,7 @@
           document.querySelector('[role="dialog"]').classList.remove('hide');
         }
 
-        comment.created = Utils.time_since(new Date(comment.created), true);
+        comment.created = Utils.time_since(new Date(comment.created), false);
         list_item.innerHTML = nunjucks.render('comment.html',
           {comment: comment});
       });
@@ -87,7 +87,7 @@
 
       for (var i = 0, l = answers.length; i < l; i++) {
         var created = answers[i].created;
-        answers[i].created = Utils.time_since(new Date(created), true);
+        answers[i].created = Utils.time_since(new Date(created), false);
       }
 
       var html = nunjucks.render('thread.html', {
