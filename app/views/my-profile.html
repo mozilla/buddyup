@@ -50,7 +50,7 @@
       </span>
 
       <label for="handset_type">Handset Type</label>
-      <select id="handset_type">
+      <select id="handset_type" multiple="true">
         {% if results.user.handset_type == "" %}
           <option selected="selected">All</option>
         {% endif %}

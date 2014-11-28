@@ -81,7 +81,7 @@ output += "</option>\n          ";
 }
 }
 frame = frame.pop();
-output += "\n        </select>\n      </span>\n\n      <label for=\"handset_type\">Handset Type</label>\n      <select id=\"handset_type\">\n        ";
+output += "\n        </select>\n      </span>\n\n      <label for=\"handset_type\">Handset Type</label>\n      <select id=\"handset_type\" multiple=\"true\">\n        ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc) == "") {
 output += "\n          <option selected=\"selected\">All</option>\n        ";
 ;

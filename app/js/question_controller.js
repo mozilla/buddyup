@@ -38,7 +38,9 @@
 
         Utils.toggle_spinner();
 
-        if (questions_count === 0) {
+        console.log(questions_count);
+
+        if (questions_count === 1) {
           // This is the user's first question, show the confirmation dialog.
           document.querySelector('[role="dialog"]').classList.remove('hide');
         }

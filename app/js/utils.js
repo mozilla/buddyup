@@ -64,6 +64,23 @@
         params[keyValue[0]] = keyValue[1];
       }
       return params;
+    },
+    /**
+     * Returns meta data gathered from the device to attach to questions
+     * for better categorization and filtering.
+     */
+    get_user_meta: function() {
+      var gecko = navigator.userAgent.match(/Gecko\/(\d+\.?)+\d+/g)[0];
+      var os_version = gecko.substr(gecko.indexOf('/') + 1);
+      var handset_type = 'Alcatel'; // TODO: @see http://mzl.la/1y8b4ho
+      var operator = 'Movistar'; // TODO: @see http://mzl.la/1y8b4ho
+
+      return {
+        lang: navigator.language,
+        os_version: os_version,
+        handset_type: handset_type,
+        operator: operator
+      }
     }
   };
 
