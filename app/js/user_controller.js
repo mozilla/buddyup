@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, localforage */
+/* global SumoDB, asyncStorage */
 
 (function(exports) {
 
@@ -35,8 +35,8 @@
      * Get a user from local storage.
      */
     get_user: function() {
-      return localforage.getItem('user').then(function(response) {
-        return response;
+      return new Promise(function(resolve, reject) {
+        asyncStorage.getItem('user', resolve);
       });
     },
     /**
@@ -44,9 +44,8 @@
      */
     create_user: function() {
       return SumoDB.create_user().then(function(response) {
-        return localforage.setItem('user', normalize_user(response))
-          .then(function(response) {
-            return response;
+        return new Promise(function(resolve, reject) {
+          asyncStorage.setItem('user', normalize_user(response), resolve);
         });
       });
     },
