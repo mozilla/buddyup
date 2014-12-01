@@ -25,7 +25,7 @@
 
         for (var i = 0, l = results.length; i < l; i++) {
           var created = results[i].created;
-          results[i].created = Utils.time_since(new Date(created), false);
+          results[i].created = Utils.time_since(new Date(created));
         }
 
         var showAll = false;
