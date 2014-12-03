@@ -1,6 +1,6 @@
 'use strict';
 
-/* global UserController, SumoDB, Utils, nunjucks */
+/* global UserController, SumoDB, Utils, nunjucks, asyncStorage */
 
 (function(exports) {
   var question_id;
@@ -34,21 +34,23 @@
 
     submit_promise.then(function(comment) {
 
-      SumoDB.get_questions_count().then(function(questions_count) {
+      Utils.toggle_spinner();
 
-        Utils.toggle_spinner();
+      // Only handle first time help message scenario for questions
+      if (comment.answers) {
+        asyncStorage.getItem('seen_first_question_help', function(response) {
+          // See if the flag exist
+          if (!response) {
+            // flag does not exist, show the dialog and set the flag
+            document.querySelector('[role="dialog"]').classList.remove('hide');
+            asyncStorage.setItem('seen_first_question_help', true);
+          }
+        });
+      }
 
-        console.log(questions_count);
-
-        if (questions_count === 1) {
-          // This is the user's first question, show the confirmation dialog.
-          document.querySelector('[role="dialog"]').classList.remove('hide');
-        }
-
-        comment.created = Utils.time_since(new Date(comment.created));
-        list_item.innerHTML = nunjucks.render('comment.html',
-          {comment: comment});
-      });
+      comment.created = Utils.time_since(new Date(comment.created));
+      list_item.innerHTML = nunjucks.render('comment.html',
+      {comment: comment});
     });
   }
 
