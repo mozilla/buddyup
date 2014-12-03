@@ -5,7 +5,7 @@
  * for l10n and other uses in the app among other things.
  */
 (function(exports) {
-  var dialog = document.querySelector('[role="dialog"]');
+  var dialog = document.querySelector('#first_question_help');
   var closeButton = dialog.querySelector('#confirm');
 
   closeButton.addEventListener('click', function(evt) {

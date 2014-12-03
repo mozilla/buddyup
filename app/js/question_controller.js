@@ -42,15 +42,14 @@
           // See if the flag exist
           if (!response) {
             // flag does not exist, show the dialog and set the flag
-            document.querySelector('[role="dialog"]').classList.remove('hide');
+            document.querySelector('#first_question_help').classList.remove('hide');
             asyncStorage.setItem('seen_first_question_help', true);
           }
         });
       }
 
       comment.created = Utils.time_since(new Date(comment.created));
-      list_item.innerHTML = nunjucks.render('comment.html',
-      {comment: comment});
+      list_item.innerHTML = nunjucks.render('comment.html', {comment: comment});
     });
   }
 
