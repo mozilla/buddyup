@@ -1,9 +1,23 @@
 'use strict';
 
-/* global UserController, SumoDB, Utils, nunjucks */
+/* global UserController, SumoDB, Utils, nunjucks, asyncStorage */
 
 (function(exports) {
   var question_id;
+  var dialog;
+
+  /**
+   * Handles close button events from a fialog modal.
+   */
+  function dialog_handler() {
+    dialog = document.querySelector('#first_question_help');
+    var closeButton = dialog.querySelector('#confirm');
+
+    closeButton.addEventListener('click', function(evt) {
+      evt.preventDefault();
+      dialog.classList.add('hide');
+    });
+  }
 
   function submit_comment(evt) {
     evt.preventDefault();
@@ -34,22 +48,24 @@
 
     submit_promise.then(function(comment) {
 
-      SumoDB.get_questions_count().then(function(questions_count) {
+      Utils.toggle_spinner();
 
-        Utils.toggle_spinner();
+      // Only handle first time help message scenario for questions
+      if (comment.answers) {
+        asyncStorage.getItem('seen_first_question_help', function(response) {
+          // See if the flag exist
+          if (!response) {
+            // flag does not exist, show the dialog and set the flag
+            dialog.classList.remove('hide');
+            asyncStorage.setItem('seen_first_question_help', true);
+          }
+        });
+      }
 
-        console.log(questions_count);
-
-        if (questions_count === 1) {
-          // This is the user's first question, show the confirmation dialog.
-          document.querySelector('[role="dialog"]').classList.remove('hide');
-        }
-
-        comment.created = Utils.time_since(new Date(comment.created));
-        list_item.innerHTML = nunjucks.render('comment.html',
-          {comment: comment});
-        window.top.postMessage({question_id: question_id, comment: comment}, '*');
-      });
+      comment.created = Utils.time_since(new Date(comment.created));
+      list_item.innerHTML = nunjucks.render('comment.html',
+        {comment: comment});
+      window.top.postMessage({question_id: question_id, comment: comment}, '*');
     });
   }
 
@@ -104,6 +120,9 @@
     init: function() {
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
+
+      // handle dialog close events
+      dialog_handler();
 
       UserController.init().then(function(response) {
         // store the user in exports (window) or pass it around?
