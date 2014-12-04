@@ -24,7 +24,7 @@
       questions_answered: 10,
       helpful_upvotes: 2,
       new_comment_notify: true,
-      buddyup_reminder: false,
+      buddyup_reminder: true,
       handset_type: 'Alcatel',
       operator: 'MTN'
     };
@@ -57,6 +57,23 @@
 
     },
     /**
+     * Sets or updates the specific user preference on the server
+     * and locally.
+     * @param {string} pref - The preference to set
+     * @param {boolean} status - The status of the preference.
+     */
+    set_preference: function(pref, status) {
+      var preference = {};
+      preference[pref] = status;
+
+      SumoDB.update_preference(preference).then(function(response) {
+        UserController.get_user().then(function(user) {
+          user[pref] = status;
+          asyncStorage.setItem('user', user);
+        });
+      });
+    },
+    /**
      * Loads the user from local storage. If not found, makes a call
      * to the server to create a new ad-hoc user, then stores the new
      * user in localStorage.
@@ -68,7 +85,7 @@
         if (response) {
           return response;
         } else {
-          // no user exists, aske the server to generate a new user.
+          // no user exists, ask the server to generate a new user.
           return UserController.create_user().then(function(response) {
             return response;
           });

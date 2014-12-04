@@ -148,6 +148,17 @@
         .then(function(response) {
           return JSON.parse(response);
       });
+    },
+
+    update_preference: function(pref) {
+      var endpoint = API_V2_BASE + 'user/';
+      endpoint += window.user.username + '/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(endpoint, 'PATCH', pref, window.user.token)
+      .then(function(response) {
+        return JSON.parse(response);
+      });
     }
   };
   exports.SumoDB = SumoDB;

@@ -65,6 +65,21 @@
     });
   }
 
+  /**
+   * Adds an event listener to the new comment notify checkbox and updates
+   * the current user's preference on change events.
+   */
+  function pref_change_listener() {
+    var new_comments_notification = document.querySelector('#new_comments_notification');
+
+    // only add event listener if the element exists
+    if (new_comments_notification) {
+      new_comments_notification.addEventListener('change', function() {
+        UserController.set_preference('new_comment_notify', this.checked);
+      });
+    }
+  }
+
   function show_question() {
     if (!question_id) {
       Utils.toggle_spinner();
@@ -92,10 +107,14 @@
         answers[i].created = Utils.time_since(new Date(created));
       }
 
+      var question_thread = document.getElementById('question-thread');
       var html = nunjucks.render('thread.html', {
+        new_comment_notify: window.user.new_comment_notify,
         results: answers
       });
-      document.getElementById('comment-list').innerHTML = html;
+      question_thread.insertAdjacentHTML('beforeend', html);
+      // listen for clicks on new comment notify checkbox
+      pref_change_listener();
     });
   }
 
@@ -105,7 +124,6 @@
       form.addEventListener('submit', submit_comment);
 
       UserController.init().then(function(response) {
-        // store the user in exports (window) or pass it around?
         exports.user = response;
       });
 
