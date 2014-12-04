@@ -226,6 +226,7 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
+output += "<h3 class=\"question-cat\">Today - Flame, 2.1, Fido</h3>\n<ul id=\"comment-list\" class=\"discuss\">\n";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "results");
 if(t_3) {var t_2 = t_3.length;
@@ -250,7 +251,12 @@ output += "</li>\n";
 }
 }
 frame = frame.pop();
-output += "\n";
+output += "\n</ul>\n<label for=\"new_comments_notification\">\n  <input type=\"checkbox\" id=\"new_comments_notification\" ";
+if(runtime.contextOrFrameLookup(context, frame, "new_comment_notify")) {
+output += "checked=\"checked\"";
+;
+}
+output += " />\n  Receive new comment notification\n</label>\n";
 cb(null, output);
 ;
 } catch (e) {
