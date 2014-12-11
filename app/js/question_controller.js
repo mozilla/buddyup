@@ -48,6 +48,7 @@
         comment.created = Utils.time_since(new Date(comment.created));
         list_item.innerHTML = nunjucks.render('comment.html',
           {comment: comment});
+        window.top.postMessage({question_id: question_id, comment: comment}, '*');
       });
     });
   }
@@ -110,7 +111,7 @@
       });
 
       if (location.search) {
-        var params = Utils.get_url_parameters(location.search.substring(1));
+        var params = Utils.get_url_parameters(location);
         if (params.id) {
 
           Utils.toggle_spinner();
