@@ -4,49 +4,12 @@
     <meta charset="utf-8" />
     <meta name="description" content="SUMO real time support app for FirefoxOS" />
     <meta name="viewport" content="width=device-width" />
-
     <title>Welcome to BuddyUP</title>
 
-    <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/building_blocks/lists.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
-
-    <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
-
-    <!-- localization -->
-    <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
-    <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
-    <script src="js/libs/l10n.js" defer></script>
-    <script src="js/libs/l10n_date.js" defer></script>
+    <link rel="stylesheet" href="css/windowing.css">
   </head>
-  <body class="skin-organic">
-    <section role="region" class="vbox fit">
-      <header>
-        <h1>Support</h1>
-        <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
-          <span class="visuallyhidden">Settings</span>
-        </a>
-      </header>
-      <main class="fit scroll">
-        <section class="intro">
-          <h2>Need Help? Let us get started.</h2>
-          <a href="question.html" data-icon-after="forward" class="button-blue">Ask A Question</a>
-          <h2>Have Answers? Help out.</h2>
-          <a href="my_questions.html?role=helper" class="button-gray" data-icon-after="forward">View Unanswered Questions</a>
-        </section>
-        <section id="myquestions" class="questions"></section>
-      </main>
-    </section>
-    <script src="js/libs/async_storage.js"></script>
-    <script src="js/user_controller.js"></script>
-
-    <script src="js/libs/nunjucks.js" defer></script>
-    <script src="js/templates.js" defer></script>
-
-    <script src="js/utils.js" defer></script>
-    <script src="js/sumo_db.js" defer></script>
-    <script src="js/questions_controller.js" defer></script>
+<iframe src="home.html"></iframe>
+<script src="js/utils.js"></script>
+<script src="js/notifications.js"></script>
 </body>
 </html>

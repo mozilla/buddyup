@@ -4,6 +4,20 @@
 
 (function(exports) {
   var question_id;
+  var dialog;
+
+  /**
+   * Handles close button events from a fialog modal.
+   */
+  function dialog_handler() {
+    dialog = document.querySelector('#first_question_help');
+    var closeButton = dialog.querySelector('#confirm');
+
+    closeButton.addEventListener('click', function(evt) {
+      evt.preventDefault();
+      dialog.classList.add('hide');
+    });
+  }
 
   function submit_comment(evt) {
     evt.preventDefault();
@@ -42,14 +56,16 @@
           // See if the flag exist
           if (!response) {
             // flag does not exist, show the dialog and set the flag
-            document.querySelector('#first_question_help').classList.remove('hide');
+            dialog.classList.remove('hide');
             asyncStorage.setItem('seen_first_question_help', true);
           }
         });
       }
 
       comment.created = Utils.time_since(new Date(comment.created));
-      list_item.innerHTML = nunjucks.render('comment.html', {comment: comment});
+      list_item.innerHTML = nunjucks.render('comment.html',
+        {comment: comment});
+      window.top.postMessage({question_id: question_id, comment: comment}, '*');
     });
   }
 
@@ -124,12 +140,15 @@
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
 
+      // handle dialog close events
+      dialog_handler();
+
       UserController.init().then(function(response) {
         exports.user = response;
       });
 
       if (location.search) {
-        var params = Utils.get_url_parameters(location.search.substring(1));
+        var params = Utils.get_url_parameters(location);
         if (params.id) {
 
           Utils.toggle_spinner();

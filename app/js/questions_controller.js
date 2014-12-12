@@ -12,7 +12,7 @@
 
     var html;
     var promise = SumoDB.get_my_questions;
-    var params = Utils.get_url_parameters();
+    var params = Utils.get_url_parameters(location);
 
     if ('helper' === params.role) {
       promise = SumoDB.get_unanswered_questions;

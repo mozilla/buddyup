@@ -45,7 +45,10 @@
     create_user: function() {
       return SumoDB.create_user().then(function(response) {
         return new Promise(function(resolve, reject) {
-          asyncStorage.setItem('user', normalize_user(response), resolve);
+          var normalized_user = normalize_user(response);
+          asyncStorage.setItem('user', normalized_user, function() {
+            resolve(normalized_user);
+          });
         });
       });
     },
