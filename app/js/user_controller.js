@@ -35,20 +35,16 @@
      * Get a user from local storage.
      */
     get_user: function() {
-      return new Promise(function(resolve, reject) {
-        asyncStorage.getItem('user', resolve);
-      });
+      return asyncStorage.getItem('user');
     },
     /**
      * Create and store new user.
      */
     create_user: function() {
       return SumoDB.create_user().then(function(response) {
-        return new Promise(function(resolve, reject) {
-          var normalized_user = normalize_user(response);
-          asyncStorage.setItem('user', normalized_user, function() {
-            resolve(normalized_user);
-          });
+        var normalized_user = normalize_user(response);
+        return asyncStorage.setItem('user', normalized_user).then(function() {
+          return normalized_user;
         });
       });
     },
