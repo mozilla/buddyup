@@ -28,9 +28,7 @@
         elem.checked : elem.value;
     }
 
-    SumoDB.update_user(user_data).then(function(response) {
-      console.log(response);
-    });
+    SumoDB.update_user(user_data);
   }
 
   /**

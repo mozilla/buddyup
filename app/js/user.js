@@ -7,21 +7,15 @@
   var USER_KEY = 'user';
 
   function normalize_user(user) {
-    var name = !!user.display_name ? user.display_name : user.username;
+    user.display_name = user.display_name || user.username;
 
-    return {
-      username: user.username,
-      display_name: name,
-      avatar: user.avatar,
-      locale: user.locale,
-      member_since: user.date_joined,
-      questions_answered: 10,
-      helpful_upvotes: 2,
-      new_comment_notify: true,
-      buddyup_reminder: false,
-      handset_type: 'Alcatel',
-      operator: 'MTN'
-    };
+    /* FIXME : Temporary hardcoded values */
+    user.new_comment_notify = true;
+    user.buddyup_reminder = false;
+    user.handset_type = 'Alcatel';
+    user.operator = 'MTN';
+
+    return user;
   }
 
 
