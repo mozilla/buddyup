@@ -32,6 +32,56 @@ root: root
 };
 })();
 })();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helpee_questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"show_header", env.autoesc)) {
+output += "\n<h2>My Questions</h2>\n";
+;
+}
+output += "\n";
+env.getTemplate("question.html", function(t_3,t_1) {
+if(t_3) { cb(t_3); return; }
+t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
+if(t_4) { cb(t_4); return; }
+output += t_2
+output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
+cb(null, output);
+})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helper_questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<section class=\"tabbed-section\" role=\"region\">\n<ul role=\"tablist\" class=\"bb-tablist\" data-type=\"filter\">\n  <li id=\"new\" role=\"presentation\">\n    <a id=\"tab1\" href=\"#panel_new\" role=\"tab\" aria-controls=\"panel_new\" aria-selected=\"true\">New</a>\n  </li>\n  <li id=\"active\" role=\"presentation\">\n    <a id=\"tab2\" href=\"#panel_active\" role=\"tab\" aria-controls=\"panel_active\" aria-selected=\"false\">Active</a>\n  </li>\n</ul>\n<div id=\"panel_new\" class=\"bb-tabpanel\" role=\"tabpanel\" aria-labelledby=\"tab1\" aria-hidden=\"false\">\n  ";
+env.getTemplate("question.html", function(t_3,t_1) {
+if(t_3) { cb(t_3); return; }
+t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
+if(t_4) { cb(t_4); return; }
+output += t_2
+output += "\n</div>\n<div id=\"panel_active\" class=\"bb-tabpanel\" role=\"tabpanel\" aria-labelledby=\"tab2\" aria-hidden=\"true\">\n  <ul data-type=\"budyup-list\">\n    <li>No active question threads.</li>\n  </ul>\n</div>\n</section>\n";
+cb(null, output);
+})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["my-profile.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
@@ -42,9 +92,9 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runt
 output += "</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"display_name", env.autoesc), env.autoesc);
 output += "\" required />\n      <button type=\"reset\">Clear</button>\n    </p>\n    <ul class=\"achievements\">\n      <li>\n        <span class=\"count\" data-icon=\"tick\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"questions_answered", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"solution_count", env.autoesc), env.autoesc);
 output += "</span> Questions Answered\n      </li>\n      <li>\n        <span class=\"count\" data-icon=\"feedback\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpful_upvotes", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpfulness", env.autoesc), env.autoesc);
 output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comments\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comments\" name=\"new_comments\"\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
@@ -155,16 +205,12 @@ root: root
 };
 })();
 })();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["question.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
 var output = "";
 try {
-if(!runtime.contextOrFrameLookup(context, frame, "all")) {
-output += "\n<h2>My Questions</h2>\n";
-;
-}
-output += "\n<ul data-type=\"budyup-list\">\n  ";
+output += "<ul data-type=\"budyup-list\">\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "results")) {
 output += "\n    ";
 frame = frame.push();
@@ -205,11 +251,6 @@ output += "</li>\n  ";
 ;
 }
 output += "\n</ul>\n";
-if(!runtime.contextOrFrameLookup(context, frame, "all") && runtime.contextOrFrameLookup(context, frame, "results")) {
-output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
-;
-}
-output += "\n";
 cb(null, output);
 ;
 } catch (e) {

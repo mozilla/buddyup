@@ -1,6 +1,3 @@
-{% if not all %}
-<h2>My Questions</h2>
-{% endif %}
 <ul data-type="budyup-list">
   {% if results %}
     {% for question in results %}
@@ -17,6 +14,3 @@
     <li class="no-data">{{ message }}</li>
   {% endif %}
 </ul>
-{% if not all and results %}
-<a href="my_questions.html" data-icon-after="forward" class="button-gray">All My Questions</a>
-{% endif %}

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, UserController, nunjucks  */
+/* global SumoDB, User, nunjucks  */
 
 (function(exports) {
 
@@ -28,12 +28,7 @@
         elem.checked : elem.value;
     }
 
-    user_data.username = window.user.username;
-    user_data.password = window.user.password;
-
-    SumoDB.update_user(user_data).then(function(response) {
-      console.log(response);
-    });
+    SumoDB.update_user(user_data);
   }
 
   /**
@@ -47,13 +42,10 @@
   var ProfileController = {
     init: function() {
 
-      UserController.init().then(function(response) {
-        // store the user in exports (window) or pass it around?
-        exports.user = response;
-
+      User.get_user().then(function(user) {
         var html = nunjucks.render('my-profile.html', {
           results: {
-            user: response,
+            user: user,
             locales: LOCALES,
             handsets: HANDSETS,
             operators: OPERATORS

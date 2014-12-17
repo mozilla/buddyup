@@ -1,0 +1,18 @@
+<section class="tabbed-section" role="region">
+<ul role="tablist" class="bb-tablist" data-type="filter">
+  <li id="new" role="presentation">
+    <a id="tab1" href="#panel_new" role="tab" aria-controls="panel_new" aria-selected="true">New</a>
+  </li>
+  <li id="active" role="presentation">
+    <a id="tab2" href="#panel_active" role="tab" aria-controls="panel_active" aria-selected="false">Active</a>
+  </li>
+</ul>
+<div id="panel_new" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab1" aria-hidden="false">
+  {% include 'question.html' %}
+</div>
+<div id="panel_active" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab2" aria-hidden="true">
+  <ul data-type="budyup-list">
+    <li>No active question threads.</li>
+  </ul>
+</div>
+</section>
