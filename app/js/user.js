@@ -18,7 +18,6 @@
     return user;
   }
 
-
   /**
    * Create and store new user.
    */
@@ -43,6 +42,12 @@
   }
 
   var User = {
+    /**
+     * Get's the current user's credentials from local storage. If no
+     * credentials exist, there is no user, so ask the server to generate a new
+     * user (helpee) and then read the new user's credentials from local storage
+     * that would have been set by create_user
+     */
     get_credentials: function() {
       return asyncStorage.getItem(USER_CREDENTIALS_KEY)
       .then(function(credentials) {
@@ -54,12 +59,22 @@
       });
     },
 
+    /**
+     * Get the user from local storage. If no user exists, ask the server
+     * to generate a new user (helpee) and return the new user. If the user
+     * exists, make sure that the user data is no older than 15 minutes, then
+     * return the user.
+     *
+     * If the local user data is older than 15 minutes, get a refereshed copy
+     * of the user details from the server and return the new data.
+     */
     get_user: function() {
       return asyncStorage.getItem(USER_KEY).then(function(user) {
         if (!user) {
           return create_user();
         }
 
+        // if user was synced in the last 15 minutes return
         if (Date.now() - user.last_sync <= 15 * 60 * 1000) {
           return user;
         }

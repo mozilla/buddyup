@@ -3,9 +3,7 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<p class=\"avatar\">\n  <img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
-output += "\" />\n</p>\n<div class=\"message\">\n  <p>";
+output += "<div class=\"message\">\n  <p>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
 output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
@@ -37,17 +35,22 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"show_header", env.autoesc)) {
+if(runtime.contextOrFrameLookup(context, frame, "show_header")) {
 output += "\n<h2>My Questions</h2>\n";
 ;
 }
-output += "\n";
+output += "\n\n";
 env.getTemplate("question.html", function(t_3,t_1) {
 if(t_3) { cb(t_3); return; }
 t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
 if(t_4) { cb(t_4); return; }
 output += t_2
+output += "\n\n";
+if(runtime.contextOrFrameLookup(context, frame, "show_more")) {
 output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
+;
+}
+output += "\n";
 cb(null, output);
 })});
 } catch (e) {
@@ -267,7 +270,11 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<h3 class=\"question-cat\">Today - Flame, 2.1, Fido</h3>\n<ul id=\"comment-list\" class=\"discuss\">\n";
+output += "<h3 class=\"question-cat\">Today - ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc), env.autoesc);
+output += ", ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
+output += "</h3>\n<ul id=\"comment-list\" class=\"discuss\">\n";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "results");
 if(t_3) {var t_2 = t_3.length;

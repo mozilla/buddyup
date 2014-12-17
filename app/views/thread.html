@@ -1,4 +1,4 @@
-<h3 class="question-cat">Today - Flame, 2.1, Fido</h3>
+<h3 class="question-cat">Today - {{ user.handset_type }}, {{ user.display_name }}</h3>
 <ul id="comment-list" class="discuss">
 {% for comment in results %}
   <li>{% include 'comment.html' %}</li>

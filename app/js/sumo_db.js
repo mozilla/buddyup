@@ -153,7 +153,9 @@
       var endpoint = API_V2_BASE + 'user/' + username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(JSON.parse);
+      return request(endpoint, 'GET').then(function(response) {
+        return JSON.parse(response);
+      });
     },
 
     update_preference: function(pref) {

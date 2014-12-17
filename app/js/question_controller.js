@@ -1,10 +1,12 @@
 'use strict';
 
-/* global asyncStorage, SumoDB, Utils, nunjucks */
+/* global asyncStorage, SumoDB, Utils, User, nunjucks */
 
 (function(exports) {
+  var question_thread;
   var question_id;
   var dialog;
+  var user;
 
   /**
    * Handles close button events from a fialog modal.
@@ -27,6 +29,11 @@
 
     document.getElementById('thread-introduction').classList.add('hide');
     document.getElementById('question-thread').classList.remove('hide');
+
+    var thread = nunjucks.render('thread.html', {
+      user: user
+    });
+    question_thread.innerHTML = thread;
 
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
@@ -92,7 +99,7 @@
     // only add event listener if the element exists
     if (new_comments_notification) {
       new_comments_notification.addEventListener('change', function() {
-        UserController.set_preference('new_comment_notify', this.checked);
+        User.set_preference('new_comment_notify', this.checked);
       });
     }
   }
@@ -103,7 +110,6 @@
       return;
     }
 
-    document.getElementById('thread-introduction').classList.add('hide');
     document.getElementById('question-thread').classList.remove('hide');
 
     var question_content = [];
@@ -124,9 +130,8 @@
         answers[i].created = Utils.time_since(new Date(created));
       }
 
-      var question_thread = document.getElementById('question-thread');
       var html = nunjucks.render('thread.html', {
-        new_comment_notify: window.user.new_comment_notify,
+        user: user,
         results: answers
       });
       question_thread.insertAdjacentHTML('beforeend', html);
@@ -137,22 +142,39 @@
 
   var QuestionController = {
     init: function() {
-      var form = document.getElementById('question_form');
-      form.addEventListener('submit', submit_comment);
+      var question_view = location.search ? true : false;
 
-      // handle dialog close events
-      dialog_handler();
-
-      if (location.search) {
-        var params = Utils.get_url_parameters(location);
-        if (params.id) {
-
-          Utils.toggle_spinner();
-
-          question_id = params.id;
-          show_question();
-        }
+      // if this is a question view, not arrived at from clicking/tapping
+      // ask a question, just hide the asking intro right now.
+      if (question_view) {
+        document.getElementById('thread-introduction').classList.add('hide');
       }
+
+      // we will need the user details whether the user is posting a question
+      // or just viewing a question so, load the user during init
+      User.get_user().then(function(response) {
+
+        user = response;
+
+        var form = document.getElementById('question_form');
+        form.addEventListener('submit', submit_comment);
+
+        question_thread = document.getElementById('question-thread');
+
+        // handle dialog close events
+        dialog_handler();
+
+        if (question_view) {
+          var params = Utils.get_url_parameters(location);
+          if (params.id) {
+
+            Utils.toggle_spinner();
+
+            question_id = params.id;
+            show_question();
+          }
+        }
+      });
     }
   };
   exports.QuestionController = QuestionController;

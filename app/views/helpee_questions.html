@@ -1,5 +1,9 @@
-{% if results.show_header %}
+{% if show_header %}
 <h2>My Questions</h2>
 {% endif %}
+
 {% include 'question.html' %}
+
+{% if show_more %}
 <a href="my_questions.html" data-icon-after="forward" class="button-gray">All My Questions</a>
+{% endif %}
