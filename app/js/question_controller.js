@@ -1,6 +1,6 @@
 'use strict';
 
-/* global UserController, SumoDB, Utils, nunjucks, asyncStorage */
+/* global asyncStorage, SumoDB, Utils, nunjucks */
 
 (function(exports) {
   var question_id;
@@ -123,11 +123,6 @@
 
       // handle dialog close events
       dialog_handler();
-
-      UserController.init().then(function(response) {
-        // store the user in exports (window) or pass it around?
-        exports.user = response;
-      });
 
       if (location.search) {
         var params = Utils.get_url_parameters(location);

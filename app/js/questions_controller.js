@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, UserController, Utils, nunjucks */
+/* global SumoDB, User, Utils, nunjucks */
 
 (function(exports) {
 
@@ -71,10 +71,10 @@
   function show_questions(container) {
 
     var html;
-    var promise = SumoDB.get_my_questions;
     var params = Utils.get_url_parameters(location);
     var tmpl = QUESTIONS_TMPL_HELPEE;
 
+    var promise;
     if ('helper' === params.role) {
       // as this is a helper, the view is now for answer a question.
       // update the page title and heading.
@@ -83,12 +83,14 @@
 
       heading.textContent = ANSWER_QUESTION_HEADING;
       title.textContent = ANSWER_QUESTION_HEADING;
-      promise = SumoDB.get_unanswered_questions;
+      promise = SumoDB.get_unanswered_questions();
 
       tmpl = QUESTIONS_TMPL_HELPER;
+    } else {
+      promise = User.get_user().then(SumoDB.get_my_questions);
     }
 
-    promise().then(function(results) {
+    promise.then(function(results) {
 
       if (results.length) {
         Utils.toggle_spinner();
@@ -131,13 +133,8 @@
 
       Utils.toggle_spinner();
 
-      UserController.init().then(function(response) {
-        // store the user in exports (window) or pass it around?
-        exports.user = response;
-
-        var my_questions = document.querySelector('#myquestions');
-        show_questions(my_questions);
-      });
+      var my_questions = document.querySelector('#myquestions');
+      show_questions(my_questions);
     }
   };
 

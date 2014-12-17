@@ -1,5 +1,7 @@
 'use strict';
 
+/* global User */
+
 (function(exports) {
   var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
@@ -42,8 +44,12 @@
     });
   }
 
-  function request_with_auth(url, method, data, token) {
-    return request(url, method, data, {authorization: 'Token ' + token});
+  function request_with_auth(url, method, data) {
+    return User.get_credentials().then(function(credentials) {
+      return request(url, method, data, {
+        authorization: 'Token ' + credentials.token
+      });
+    });
   }
 
   var SumoDB = {
@@ -56,7 +62,7 @@
         content: ' ',
         topic: 'basic-features'
       };
-      return request_with_auth(endpoint, 'POST', data, window.user.token)
+      return request_with_auth(endpoint, 'POST', data)
         .then(function(response) {
           return JSON.parse(response);
         }
@@ -70,7 +76,7 @@
         question: question_id,
         content: text
       };
-      return request_with_auth(endpoint, 'POST', data, window.user.token)
+      return request_with_auth(endpoint, 'POST', data)
       .then(function(response) {
           return JSON.parse(response);
         }
@@ -79,11 +85,11 @@
     /**
      * Get list of questions for the current user
      */
-    get_my_questions: function() {
+    get_my_questions: function(user) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?product=' + PRODUCT;
-      endpoint += '&creator=' + window.user.username;
-      endpoint += '&locale=' + window.user.locale;
+      endpoint += '&creator=' + user.username;
+      endpoint += '&locale=' + user.locale;
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(function(response) {
@@ -132,14 +138,22 @@
     },
 
     update_user: function(user_data) {
-      var endpoint = API_V2_BASE + 'user/';
-      endpoint += window.user.username + '/';
+      return User.get_credentials().then(function(credentials) {
+        var endpoint = API_V2_BASE + 'user/';
+        endpoint += credentials.username + '/';
+        endpoint += '?format=json'; // TODO bug 1088014
+
+        user_data.username = credentials.username;
+        user_data.password = credentials.password;
+        return request_with_auth(endpoint, 'PUT', user_data);
+      }).then(JSON.parse);
+    },
+
+    get_user: function(username) {
+      var endpoint = API_V2_BASE + 'user/' + username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
 
-      return request_with_auth(endpoint, 'PUT', user_data, window.user.token)
-        .then(function(response) {
-          return JSON.parse(response);
-      });
+      return request(endpoint, 'GET').then(JSON.parse);
     }
   };
   exports.SumoDB = SumoDB;
