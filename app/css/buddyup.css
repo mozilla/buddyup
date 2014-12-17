@@ -169,17 +169,29 @@ footer button {
     width: 13%;
     font-size: 2rem;
 }
+[aria-hidden="true"] {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
 /* overrides */
 form[role="dialog"][data-type="confirm"] p {
     font-size: 1rem;
     line-height: 1.7;
 }
-section[role="region"] > header:first-child a.back-link,
-section[role="region"] > header:first-child a.close-link {
+.bb-tablist[data-type="filter"] > li > a {
+    font-style: normal;
+}
+.skin-organic section[role="region"] > header:first-child a {
     position: absolute;
     top: 0;
     color: white;
-    min-width: 4rem;
+    min-width: 3rem;
     font-style: normal;
 }
 section.skin-organic[role="region"] > header:first-child,
@@ -192,7 +204,7 @@ section.skin-organic section[role="region"] > header:first-child h1,
 .skin-organic section[role="region"] > header:first-child h1 {
     color: white;
     padding: 0;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-style: normal;
     text-align: inherit;
 }

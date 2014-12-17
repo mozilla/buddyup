@@ -14,7 +14,16 @@
     "url": "https://mozilla.org"
   },
   "type": "privileged",
-  "permissions": {},
+  "permissions": {
+    "alarms": {
+      "description": "Temporary to mock server side notifications"
+    },
+    "desktop-notification": {}
+  },
+  "messages": [
+    { "alarm": "/index.html" },
+    { "notification": "/index.html" }
+  ],
   "installs_allowed_from": ["*"],
   "locales": {},
   "default_locale": "en"

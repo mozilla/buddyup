@@ -36,9 +36,9 @@
     /**
      * Retrieves url parameters and returns the key/value pairs as an object.
      */
-    get_url_parameters: function() {
+    get_url_parameters: function(location) {
       var params = {};
-      var urlParams = window.location.search.substring(1);
+      var urlParams = location.search.substring(1);
       var keyValuePairs = urlParams.split('&');
 
       for (var i = 0, l = keyValuePairs.length; i < l; i++) {
