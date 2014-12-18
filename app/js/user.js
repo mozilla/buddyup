@@ -10,7 +10,7 @@
     user.display_name = user.display_name || user.username;
 
     /* FIXME : Temporary hardcoded values */
-    user.new_comment_notify = true;
+    user.new_comment_notify = false;
     user.buddyup_reminder = false;
     user.handset_type = 'Alcatel';
     user.operator = 'MTN';
@@ -85,6 +85,22 @@
           return asyncStorage.setItem('user', normalized_user).then(function() {
             return normalized_user;
           });
+        });
+      });
+    },
+    /**
+    * Sets or updates the specific user preference on the server and locally.
+    * @param {string} pref - The preference to set
+    * @param {boolean} status - The status of the preference.
+    */
+    set_preference: function(pref, status) {
+      var settings = {};
+      settings[pref] = status;
+
+      User.get_user().then(function(user) {
+        SumoDB.update_preference(user, settings).then(function(user) {
+          user[pref] = status;
+          asyncStorage.setItem('user', user);
         });
       });
     }

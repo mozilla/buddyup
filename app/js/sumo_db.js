@@ -7,18 +7,6 @@
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
 
-  function get_token() {
-    var endpoint = API_V1_BASE + 'users/get_token';
-    var data = {
-      username: window.user.username,
-      password: window.user.password
-    };
-    return request(endpoint, 'POST', data).then(function(response) {
-      var json = JSON.parse(response);
-      return json.token;
-    });
-  }
-
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
       var req = new XMLHttpRequest();
@@ -158,14 +146,14 @@
       });
     },
 
-    update_preference: function(pref) {
+    update_preference: function(user, setting) {
       var endpoint = API_V2_BASE + 'user/';
-      endpoint += window.user.username + '/';
+      endpoint += user.username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
 
-      return request_with_auth(endpoint, 'PATCH', pref, window.user.token)
-      .then(function(response) {
-        return JSON.parse(response);
+      return request_with_auth(endpoint, 'PATCH', setting)
+        .then(function(response) {
+          return JSON.parse(response);
       });
     }
   };
