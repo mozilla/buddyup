@@ -3,7 +3,6 @@
 /* global User */
 
 (function(exports) {
-  var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
 
@@ -151,7 +150,7 @@
       endpoint += user.username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
 
-      return request_with_auth(endpoint, 'PATCH', setting)
+      return request_with_auth(endpoint, 'PATCH', { settings: setting })
         .then(function(response) {
           return JSON.parse(response);
       });

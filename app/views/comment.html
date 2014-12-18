@@ -1,7 +1,13 @@
 <div class="message">
   <p>{{ comment.content }}</p>
   {% if comment.updated %}
-    <span class="comment-meta">{{ comment.created }} &ndash; {{ comment.creator }}</span>
+    <span class="comment-meta">{{ comment.created }} &ndash;
+      {% if comment.creator.display_name %}
+        {{ comment.creator.display_name }}
+      {% else %}
+        {{ comment.creator.username }}
+      {% endif %}
+    </span>
   {% else %}
     <span>Sending…</span>
   {% endif %}
