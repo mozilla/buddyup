@@ -148,9 +148,10 @@
     update_preference: function(user, setting) {
       var endpoint = API_V2_BASE + 'user/';
       endpoint += user.username + '/';
+      endpoint += 'set_setting/'
       endpoint += '?format=json'; // TODO bug 1088014
 
-      return request_with_auth(endpoint, 'PATCH', { settings: setting })
+      return request_with_auth(endpoint, 'POST', setting)
         .then(function(response) {
           return JSON.parse(response);
       });

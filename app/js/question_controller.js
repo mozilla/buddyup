@@ -31,7 +31,8 @@
     document.getElementById('question-thread').classList.remove('hide');
 
     var thread = nunjucks.render('thread.html', {
-      user: user
+      user: user,
+      new_comment_notify: user.settings[0].value === 'True' ? true : false
     });
     question_thread.innerHTML = thread;
 
@@ -132,6 +133,7 @@
 
       var html = nunjucks.render('thread.html', {
         user: user,
+        new_comment_notify: user.settings[0].value === 'True' ? true : false,
         results: answers
       });
       question_thread.insertAdjacentHTML('beforeend', html);

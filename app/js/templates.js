@@ -110,12 +110,12 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runt
 output += "</span> Questions Answered\n      </li>\n      <li>\n        <span class=\"count\" data-icon=\"feedback\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpfulness", env.autoesc), env.autoesc);
 output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comments\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comments\" name=\"new_comments\"\n            ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"new_comment_notify", env.autoesc)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
 output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      <li>\n        <label for=\"new_questions\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_questions\" name=\"new_questions\"\n            ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"buddyup_reminder", env.autoesc)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"buddyup_reminder", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }

@@ -10,8 +10,8 @@
     user.display_name = user.display_name || user.username;
 
     /* FIXME : Temporary hardcoded values */
-    user.new_comment_notify = false;
-    user.buddyup_reminder = false;
+    user.settings = [{ name: 'new_comment_notify', value: false },
+      { name: 'buddyup_reminder', value: false }];
     user.handset_type = 'Alcatel';
     user.operator = 'MTN';
 
@@ -94,13 +94,21 @@
     * @param {boolean} status - The status of the preference.
     */
     set_preference: function(pref, status) {
-      var settings = {};
-      settings[pref] = status;
+      var settings = {
+        'name': pref,
+        'value': status
+      };
 
       User.get_user().then(function(user) {
-        SumoDB.update_preference(user, settings).then(function(user) {
-          user[pref] = status;
-          asyncStorage.setItem('user', user);
+        SumoDB.update_preference(user, settings).then(function(setting) {
+          for (var i = 0, l = user.settings.length; i < l; i++) {
+            var current_setting = user.settings[i].name;
+            if (current_setting === setting.name) {
+              user.settings[i] = setting;
+              break;
+            }
+          }
+          asyncStorage.setItem(USER_KEY, user);
         });
       });
     }
