@@ -90,6 +90,7 @@
       endpoint += '?product=' + PRODUCT;
       endpoint += '&creator=' + user.username;
       endpoint += '&locale=' + user.locale;
+      endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(function(response) {

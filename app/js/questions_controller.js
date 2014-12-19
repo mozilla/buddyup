@@ -98,11 +98,6 @@
       if (results.length) {
         Utils.toggle_spinner();
 
-        for (var i = 0, l = results.length; i < l; i++) {
-          var created = results[i].created;
-          results[i].created = Utils.time_since(new Date(created));
-        }
-
         // if the data-all attrbiute does not exist on the container then
         // the template is going to be embedded on the landing screen,
         // so we need to trim down the results to the latest three.
@@ -113,6 +108,13 @@
           // only show 'view all questions' link on landing screen
           show_more = true;
         }
+
+        for (var i = 0, l = results.length; i < l; i++) {
+          var updated = results[i].updated;
+          results[i].updated_day = updated.split('T')[0];
+          results[i].updated = Utils.time_since(new Date(updated));
+        }
+
 
         html = nunjucks.render(tmpl, {
           show_header: show_header,

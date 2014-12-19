@@ -1,0 +1,14 @@
+<section data-type="budyup-list">
+  {% if results %}
+    {% for day, questions in results|groupby('updated_day') %}
+      <header>{{ day }}</header>
+      <ul>
+      {% for question in questions %}
+        {% include 'question.html' %}
+      {% endfor %}
+      </ul>
+    {% endfor %}
+  {% else %}
+    <p class="no-data">{{ message }}</p>
+  {% endif %}
+</section>
