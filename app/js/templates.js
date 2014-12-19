@@ -281,11 +281,6 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<h3 class=\"question-cat\">Today - ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc), env.autoesc);
-output += ", ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "</h3>\n<ul id=\"comment-list\" class=\"discuss\">\n";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "results");
 if(t_3) {var t_2 = t_3.length;
@@ -310,12 +305,57 @@ output += "</li>\n";
 }
 }
 frame = frame.pop();
-output += "\n</ul>\n<label for=\"new_comments_notification\">\n  <input type=\"checkbox\" id=\"new_comments_notification\" ";
+output += "\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_footer.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<label for=\"new_comments_notification\">\n  <input type=\"checkbox\" id=\"new_comments_notification\" ";
 if(runtime.contextOrFrameLookup(context, frame, "new_comment_notify")) {
 output += "checked=\"checked\"";
 ;
 }
 output += " />\n  Receive new comment notification\n</label>\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_header.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<h3 class=\"question-cat\">\n  ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
+output += " - ";
+if(runtime.contextOrFrameLookup(context, frame, "handset_type")) {
+output += " ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "handset_type"), env.autoesc);
+output += ", ";
+;
+}
+output += " ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
+output += "\n</h3>\n";
 cb(null, output);
 ;
 } catch (e) {

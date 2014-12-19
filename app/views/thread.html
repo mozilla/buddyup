@@ -1,10 +1,3 @@
-<h3 class="question-cat">Today - {{ user.handset_type }}, {{ user.display_name }}</h3>
-<ul id="comment-list" class="discuss">
 {% for comment in results %}
   <li>{% include 'comment.html' %}</li>
 {% endfor %}
-</ul>
-<label for="new_comments_notification">
-  <input type="checkbox" id="new_comments_notification" {% if new_comment_notify %}checked="checked"{% endif %} />
-  Receive new comment notification
-</label>
