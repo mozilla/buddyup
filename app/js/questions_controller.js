@@ -92,9 +92,6 @@
 
     promise.then(function(results) {
 
-      var show_header = false;
-      var show_more = false;
-
       if (results.length) {
         Utils.toggle_spinner();
 
@@ -109,28 +106,19 @@
         if (!container.dataset.all) {
           results = results.slice(0, 3);
           // only show the header on the landing screen.
-          show_header = true;
-          // only show 'view all questions' link on landing screen
-          show_more = true;
+          results.show_header = true;
         }
 
-        html = nunjucks.render(tmpl, {
-          show_header: show_header,
-          show_more: show_more,
-          results: results
-        });
+        html = nunjucks.render(tmpl, { results: results });
         container.innerHTML = html;
 
         add_tab_widget_handler();
 
       } else {
-        // this clause will only ever happen on the landing screen.
-        // Seeing there are no questions yet, and this is the landing screen,
-        // we need to show the header but not the view all questions button.
+        // no questions for the user, render the template passing
+        // relevant message to user.
         Utils.toggle_spinner();
         html = nunjucks.render(QUESTIONS_TMPL_HELPEE, {
-          show_header: true,
-          show_more: show_more,
           message: MSG_NO_QUESTIONS
         });
         container.innerHTML = html;

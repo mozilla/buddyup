@@ -10,13 +10,14 @@
     user.display_name = user.display_name || user.username;
 
     /* FIXME : Temporary hardcoded values */
-    user.settings = [{ name: 'new_comment_notify', value: false },
-      { name: 'buddyup_reminder', value: false }];
+    user.new_comment_notify = true;
+    user.buddyup_reminder = false;
     user.handset_type = 'Alcatel';
     user.operator = 'MTN';
 
     return user;
   }
+
 
   /**
    * Create and store new user.
@@ -42,12 +43,6 @@
   }
 
   var User = {
-    /**
-     * Get's the current user's credentials from local storage. If no
-     * credentials exist, there is no user, so ask the server to generate a new
-     * user (helpee) and then read the new user's credentials from local storage
-     * that would have been set by create_user
-     */
     get_credentials: function() {
       return asyncStorage.getItem(USER_CREDENTIALS_KEY)
       .then(function(credentials) {
@@ -59,22 +54,12 @@
       });
     },
 
-    /**
-     * Get the user from local storage. If no user exists, ask the server
-     * to generate a new user (helpee) and return the new user. If the user
-     * exists, make sure that the user data is no older than 15 minutes, then
-     * return the user.
-     *
-     * If the local user data is older than 15 minutes, get a refereshed copy
-     * of the user details from the server and return the new data.
-     */
     get_user: function() {
       return asyncStorage.getItem(USER_KEY).then(function(user) {
         if (!user) {
           return create_user();
         }
 
-        // if user was synced in the last 15 minutes return
         if (Date.now() - user.last_sync <= 15 * 60 * 1000) {
           return user;
         }
@@ -85,30 +70,6 @@
           return asyncStorage.setItem('user', normalized_user).then(function() {
             return normalized_user;
           });
-        });
-      });
-    },
-    /**
-    * Sets or updates the specific user preference on the server and locally.
-    * @param {string} pref - The preference to set
-    * @param {boolean} status - The status of the preference.
-    */
-    set_preference: function(pref, status) {
-      var settings = {
-        'name': pref,
-        'value': status
-      };
-
-      User.get_user().then(function(user) {
-        SumoDB.update_preference(user, settings).then(function(setting) {
-          for (var i = 0, l = user.settings.length; i < l; i++) {
-            var current_setting = user.settings[i].name;
-            if (current_setting === setting.name) {
-              user.settings[i] = setting;
-              break;
-            }
-          }
-          asyncStorage.setItem(USER_KEY, user);
         });
       });
     }

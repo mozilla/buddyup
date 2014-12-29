@@ -124,7 +124,7 @@
 .discuss li {
     display: flex;
     flex-flow: row;
-    margin-top: .8rem;
+    margin-bottom: .8rem;
 }
 .discuss .avatar {
     flex: 1 0 10%;
