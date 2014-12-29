@@ -1,13 +1,14 @@
 'use strict';
 
-/* global UserController, SumoDB, Utils, nunjucks, asyncStorage */
+/* global asyncStorage, SumoDB, Utils, User, nunjucks */
 
 (function(exports) {
   var question_id;
   var dialog;
+  var user;
 
   /**
-   * Handles close button events from a fialog modal.
+   * Handles close button events from a dialog modal.
    */
   function dialog_handler() {
     dialog = document.querySelector('#first_question_help');
@@ -92,7 +93,7 @@
     // only add event listener if the element exists
     if (new_comments_notification) {
       new_comments_notification.addEventListener('change', function() {
-        UserController.set_preference('new_comment_notify', this.checked);
+        User.set_preference('new_comment_notify', this.checked);
       });
     }
   }
@@ -126,7 +127,7 @@
 
       var question_thread = document.getElementById('question-thread');
       var html = nunjucks.render('thread.html', {
-        new_comment_notify: window.user.new_comment_notify,
+        user: user,
         results: answers
       });
       question_thread.insertAdjacentHTML('beforeend', html);
@@ -137,26 +138,27 @@
 
   var QuestionController = {
     init: function() {
-      var form = document.getElementById('question_form');
-      form.addEventListener('submit', submit_comment);
+      // we will need the user details whether the user is posting a question
+      // or just viewing a question so, load the user during init
+      User.get_user().then(function(response) {
+        var form = document.getElementById('question_form');
+        form.addEventListener('submit', submit_comment);
+        user = response;
 
-      // handle dialog close events
-      dialog_handler();
+        // handle dialog close events
+        dialog_handler();
 
-      UserController.init().then(function(response) {
-        exports.user = response;
-      });
+        if (location.search) {
+          var params = Utils.get_url_parameters(location);
+          if (params.id) {
 
-      if (location.search) {
-        var params = Utils.get_url_parameters(location);
-        if (params.id) {
+            Utils.toggle_spinner();
 
-          Utils.toggle_spinner();
-
-          question_id = params.id;
-          show_question();
+            question_id = params.id;
+            show_question();
+          }
         }
-      }
+      });
     }
   };
   exports.QuestionController = QuestionController;

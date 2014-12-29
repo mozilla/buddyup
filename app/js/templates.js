@@ -92,9 +92,9 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runt
 output += "</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"display_name", env.autoesc), env.autoesc);
 output += "\" required />\n      <button type=\"reset\">Clear</button>\n    </p>\n    <ul class=\"achievements\">\n      <li>\n        <span class=\"count\" data-icon=\"tick\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"questions_answered", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"solution_count", env.autoesc), env.autoesc);
 output += "</span> Questions Answered\n      </li>\n      <li>\n        <span class=\"count\" data-icon=\"feedback\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpful_upvotes", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpfulness", env.autoesc), env.autoesc);
 output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comments\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comments\" name=\"new_comments\"\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
@@ -293,7 +293,7 @@ output += "</li>\n";
 }
 frame = frame.pop();
 output += "\n</ul>\n<label for=\"new_comments_notification\">\n  <input type=\"checkbox\" id=\"new_comments_notification\" ";
-if(runtime.contextOrFrameLookup(context, frame, "new_comment_notify")) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
