@@ -96,7 +96,7 @@
 
       // Only handle first time help message scenario for questions
       if (comment.answers) {
-        asyncStorage.getItem('seen_first_question_help').then(function(response) {
+        asyncStorage.getItem('seen_first_question_help', function(response) {
           // See if the flag exist
           if (!response) {
             // flag does not exist, show the dialog and set the flag
