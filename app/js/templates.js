@@ -3,17 +3,26 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<p class=\"avatar\">\n  <img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
-output += "\" />\n</p>\n<div class=\"message\">\n  <p>";
+output += "<div class=\"message\">\n  <p>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
 output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
 output += "\n    <span class=\"comment-meta\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
-output += " &ndash; ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
-output += "</span>\n  ";
+output += " &ndash;\n      ";
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"display_name", env.autoesc)) {
+output += "\n        ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"display_name", env.autoesc), env.autoesc);
+output += "\n      ";
+;
+}
+else {
+output += "\n        ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"username", env.autoesc), env.autoesc);
+output += "\n      ";
+;
+}
+output += "\n    </span>\n  ";
 ;
 }
 else {
@@ -37,17 +46,22 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"show_header", env.autoesc)) {
+if(runtime.contextOrFrameLookup(context, frame, "show_header")) {
 output += "\n<h2>My Questions</h2>\n";
 ;
 }
-output += "\n";
+output += "\n\n";
 env.getTemplate("question.html", function(t_3,t_1) {
 if(t_3) { cb(t_3); return; }
 t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
 if(t_4) { cb(t_4); return; }
 output += t_2
+output += "\n\n";
+if(runtime.contextOrFrameLookup(context, frame, "show_more")) {
 output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
+;
+}
+output += "\n";
 cb(null, output);
 })});
 } catch (e) {
@@ -96,12 +110,12 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runt
 output += "</span> Questions Answered\n      </li>\n      <li>\n        <span class=\"count\" data-icon=\"feedback\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpfulness", env.autoesc), env.autoesc);
 output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comments\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comments\" name=\"new_comments\"\n            ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"new_comment_notify", env.autoesc)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
 output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      <li>\n        <label for=\"new_questions\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_questions\" name=\"new_questions\"\n            ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"buddyup_reminder", env.autoesc)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"buddyup_reminder", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
@@ -292,6 +306,56 @@ output += "</li>\n";
 }
 frame = frame.pop();
 output += "\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_footer.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<label for=\"new_comments_notification\">\n  <input type=\"checkbox\" id=\"new_comments_notification\" ";
+if(runtime.contextOrFrameLookup(context, frame, "new_comment_notify")) {
+output += "checked=\"checked\"";
+;
+}
+output += " />\n  Receive new comment notification\n</label>\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_header.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<h3 class=\"question-cat\">\n  ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
+output += " - ";
+if(runtime.contextOrFrameLookup(context, frame, "handset_type")) {
+output += " ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "handset_type"), env.autoesc);
+output += ", ";
+;
+}
+output += " ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
+output += "\n</h3>\n";
 cb(null, output);
 ;
 } catch (e) {
