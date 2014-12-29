@@ -1,13 +1,14 @@
 'use strict';
 
-/* global asyncStorage, SumoDB, Utils, nunjucks */
+/* global asyncStorage, SumoDB, Utils, User, nunjucks */
 
 (function(exports) {
   var question_id;
   var dialog;
+  var user;
 
   /**
-   * Handles close button events from a fialog modal.
+   * Handles close button events from a dialog modal.
    */
   function dialog_handler() {
     dialog = document.querySelector('#first_question_help');
@@ -82,6 +83,21 @@
     });
   }
 
+  /**
+   * Adds an event listener to the new comment notify checkbox and updates
+   * the current user's preference on change events.
+   */
+  function pref_change_listener() {
+    var new_comments_notification = document.querySelector('#new_comments_notification');
+
+    // only add event listener if the element exists
+    if (new_comments_notification) {
+      new_comments_notification.addEventListener('change', function() {
+        User.set_preference('new_comment_notify', this.checked);
+      });
+    }
+  }
+
   function show_question() {
     if (!question_id) {
       Utils.toggle_spinner();
@@ -109,31 +125,40 @@
         answers[i].created = Utils.time_since(new Date(created));
       }
 
+      var question_thread = document.getElementById('question-thread');
       var html = nunjucks.render('thread.html', {
+        user: user,
         results: answers
       });
-      document.getElementById('comment-list').innerHTML = html;
+      question_thread.insertAdjacentHTML('beforeend', html);
+      // listen for clicks on new comment notify checkbox
+      pref_change_listener();
     });
   }
 
   var QuestionController = {
     init: function() {
-      var form = document.getElementById('question_form');
-      form.addEventListener('submit', submit_comment);
+      // we will need the user details whether the user is posting a question
+      // or just viewing a question so, load the user during init
+      User.get_user().then(function(response) {
+        var form = document.getElementById('question_form');
+        form.addEventListener('submit', submit_comment);
+        user = response;
 
-      // handle dialog close events
-      dialog_handler();
+        // handle dialog close events
+        dialog_handler();
 
-      if (location.search) {
-        var params = Utils.get_url_parameters(location);
-        if (params.id) {
+        if (location.search) {
+          var params = Utils.get_url_parameters(location);
+          if (params.id) {
 
-          Utils.toggle_spinner();
+            Utils.toggle_spinner();
 
-          question_id = params.id;
-          show_question();
+            question_id = params.id;
+            show_question();
+          }
         }
-      }
+      });
     }
   };
   exports.QuestionController = QuestionController;
