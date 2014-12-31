@@ -3,6 +3,7 @@
 /* global asyncStorage, SumoDB, Utils, User, nunjucks */
 
 (function(exports) {
+  var question_thread;
   var question_id;
   var dialog;
   var user;
@@ -18,6 +19,44 @@
       evt.preventDefault();
       dialog.classList.add('hide');
     });
+  }
+
+  /**
+  * Adds the thread header that displays, the relative time the question was
+  * posted, the device (if already categorised) and the display name of the
+  * user who posted the question.
+  * @param {object} question - The question JSON object
+  */
+  function add_thread_header(question) {
+    var handset_type;
+    var date_posted = Utils.time_since(new Date(question.updated));
+    var author = question.creator.display_name || question.creator.username;
+
+    for (var i = 0, l = question.metadata.length; i < l; i++) {
+      var current_item = question.metadata[i];
+      if (current_item.name === 'device_type') {
+        handset_type = current_item.value;
+        break;
+      }
+    }
+    var html = nunjucks.render('thread_header.html', {
+      date_posted: date_posted,
+      handset_type: handset_type,
+      author: author
+    });
+    question_thread.insertAdjacentHTML('afterbegin', html);
+  }
+
+  /**
+  * Adds the footer section to the question thread. Currently this consist
+  * of the receive new notifications settings chckbox.
+  */
+  function add_thread_footer() {
+    var do_notify = user.settings[0].value === 'True' ? true : false;
+    var html = nunjucks.render('thread_footer.html', {
+      new_comment_notify: do_notify
+    });
+    question_thread.insertAdjacentHTML('beforeend', html);
   }
 
   function submit_comment(evt) {
@@ -42,6 +81,10 @@
       submit_promise = submit_answer(question_id, comment);
     } else {
       submit_promise = submit_question(comment).then(function(comment) {
+
+        add_thread_header(comment);
+        add_thread_footer();
+
         comment.content = comment.title;
         return comment;
       });
@@ -104,7 +147,6 @@
       return;
     }
 
-    document.getElementById('thread-introduction').classList.add('hide');
     document.getElementById('question-thread').classList.remove('hide');
 
     var question_content = [];
@@ -125,12 +167,15 @@
         answers[i].created = Utils.time_since(new Date(created));
       }
 
-      var question_thread = document.getElementById('question-thread');
+      add_thread_header(question);
       var html = nunjucks.render('thread.html', {
         user: user,
         results: answers
       });
-      question_thread.insertAdjacentHTML('beforeend', html);
+      var list = document.getElementById('comment-list');
+      list.insertAdjacentHTML('beforeend', html);
+      add_thread_footer();
+
       // listen for clicks on new comment notify checkbox
       pref_change_listener();
     });
@@ -138,17 +183,27 @@
 
   var QuestionController = {
     init: function() {
+      var question_view = location.search ? true : false;
+
+      // if this is a question view, not arrived at from clicking/tapping
+      // ask a question, hide the introduction section.
+      if (question_view) {
+        document.getElementById('thread-introduction').classList.add('hide');
+      }
+
       // we will need the user details whether the user is posting a question
       // or just viewing a question so, load the user during init
       User.get_user().then(function(response) {
         var form = document.getElementById('question_form');
         form.addEventListener('submit', submit_comment);
+
         user = response;
+        question_thread = document.getElementById('question-thread');
 
         // handle dialog close events
         dialog_handler();
 
-        if (location.search) {
+        if (question_view) {
           var params = Utils.get_url_parameters(location);
           if (params.id) {
 

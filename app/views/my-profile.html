@@ -21,14 +21,14 @@
       <li>
         <label for="new_comments" class="pack-switch">
           <input type="checkbox" id="new_comments" name="new_comments"
-            {% if results.user.new_comment_notify %}checked="checked"{% endif %} />
+            {% if results.new_comment_notify %}checked="checked"{% endif %} />
           <span>New Comments</span>
         </label>
       </li>
       <li>
         <label for="new_questions" class="pack-switch">
           <input type="checkbox" id="new_questions" name="new_questions"
-            {% if results.user.buddyup_reminder %}checked="checked"{% endif %} />
+            {% if results.buddyup_reminder %}checked="checked"{% endif %} />
           <span>BuddyUp Reminder</span>
         </label>
       </li>
