@@ -8,6 +8,8 @@
   var dialog;
   var user;
 
+  var question_field;
+
   /**
    * Handles close button events from a dialog modal.
    */
@@ -49,7 +51,7 @@
 
   function submit_comment(evt) {
     evt.preventDefault();
-    var comment = document.getElementById('question_field').value;
+    var comment = question_field.value;
 
     Utils.toggle_spinner();
 
@@ -80,6 +82,8 @@
     submit_promise.then(function(comment) {
 
       Utils.toggle_spinner();
+
+      question_field.value = '';
 
       // Only handle first time help message scenario for questions
       if (comment.answers) {
@@ -154,7 +158,7 @@
 
   var QuestionController = {
     init: function() {
-      var question_view = location.search ? true : false;
+      question_field = document.getElementById('question_field');
 
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
@@ -170,7 +174,8 @@
       // handle dialog close events
       dialog_handler();
 
-      if (question_view) {
+      var question_view = location.search ? true : false;
+      if (location.search) {
         var params = Utils.get_url_parameters(location);
         if (params.id) {
 
