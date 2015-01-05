@@ -1,15 +1,13 @@
 'use strict';
 
-/* global asyncStorage, SumoDB, Utils, User, nunjucks */
+/* global asyncStorage, SumoDB, Utils, nunjucks */
 
 (function(exports) {
-  var question_thread;
   var question_id;
   var dialog;
-  var user;
 
   /**
-   * Handles close button events from a dialog modal.
+   * Handles close button events from a fialog modal.
    */
   function dialog_handler() {
     dialog = document.querySelector('#first_question_help');
@@ -21,32 +19,6 @@
     });
   }
 
-  /**
-  * Adds the thread header that displays, the relative time the question was
-  * posted, the device (if already categorised) and the display name of the
-  * user who posted the question.
-  * @param {object} question - The question JSON object
-  */
-  function add_thread_header(question) {
-    var handset_type;
-    var date_posted = Utils.time_since(new Date(question.updated));
-    var author = question.creator.display_name || question.creator.username;
-
-    for (var i = 0, l = question.metadata.length; i < l; i++) {
-      var current_item = question.metadata[i];
-      if (current_item.name === 'device_type') {
-        handset_type = current_item.value;
-        break;
-      }
-    }
-    var html = nunjucks.render('thread_header.html', {
-      date_posted: date_posted,
-      handset_type: handset_type,
-      author: author
-    });
-    question_thread.insertAdjacentHTML('afterbegin', html);
-  }
-
   function submit_comment(evt) {
     evt.preventDefault();
     var comment = document.getElementById('question_field').value;
@@ -54,7 +26,7 @@
     Utils.toggle_spinner();
 
     document.getElementById('thread-introduction').classList.add('hide');
-    question_thread.classList.remove('hide');
+    document.getElementById('question-thread').classList.remove('hide');
 
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
@@ -69,9 +41,6 @@
       submit_promise = submit_answer(question_id, comment);
     } else {
       submit_promise = submit_question(comment).then(function(comment) {
-
-        add_thread_header(comment);
-
         comment.content = comment.title;
         return comment;
       });
@@ -114,15 +83,13 @@
   }
 
   function show_question() {
-
-    document.getElementById('thread-introduction').classList.add('hide');
-
     if (!question_id) {
       Utils.toggle_spinner();
       return;
     }
 
-    question_thread.classList.remove('hide');
+    document.getElementById('thread-introduction').classList.add('hide');
+    document.getElementById('question-thread').classList.remove('hide');
 
     var question_content = [];
     question_content.push(SumoDB.get_question(question_id));
@@ -142,35 +109,22 @@
         answers[i].created = Utils.time_since(new Date(created));
       }
 
-      add_thread_header(question);
       var html = nunjucks.render('thread.html', {
-        user: user,
         results: answers
       });
-      var list = document.getElementById('comment-list');
-      list.insertAdjacentHTML('beforeend', html);
+      document.getElementById('comment-list').innerHTML = html;
     });
   }
 
   var QuestionController = {
     init: function() {
-      var question_view = location.search ? true : false;
-
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
-
-      // we will need the user details whether the user is posting a question
-      // or just viewing a question so, load the user during init
-      User.get_user().then(function(response) {
-        user = response;
-      });
-
-      question_thread = document.getElementById('question-thread');
 
       // handle dialog close events
       dialog_handler();
 
-      if (question_view) {
+      if (location.search) {
         var params = Utils.get_url_parameters(location);
         if (params.id) {
 

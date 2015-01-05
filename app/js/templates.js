@@ -3,7 +3,9 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<div class=\"message\">\n  <p>";
+output += "<p class=\"avatar\">\n  <img src=\"media/icons/tmp.png\" width=\"30\" height=\"30\" alt=\"";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc), env.autoesc);
+output += "\" />\n</p>\n<div class=\"message\">\n  <p>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
 output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
@@ -35,22 +37,17 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-if(runtime.contextOrFrameLookup(context, frame, "show_header")) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"show_header", env.autoesc)) {
 output += "\n<h2>My Questions</h2>\n";
 ;
 }
-output += "\n\n";
+output += "\n";
 env.getTemplate("question.html", function(t_3,t_1) {
 if(t_3) { cb(t_3); return; }
 t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
 if(t_4) { cb(t_4); return; }
 output += t_2
-output += "\n\n";
-if(runtime.contextOrFrameLookup(context, frame, "show_more")) {
 output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
-;
-}
-output += "\n";
 cb(null, output);
 })});
 } catch (e) {
@@ -295,34 +292,6 @@ output += "</li>\n";
 }
 frame = frame.pop();
 output += "\n";
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-})();
-})();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_header.html"] = (function() {function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-output += "<h3 class=\"question-cat\">\n  ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
-output += " - ";
-if(runtime.contextOrFrameLookup(context, frame, "handset_type")) {
-output += " ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "handset_type"), env.autoesc);
-output += ", ";
-;
-}
-output += " ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
-output += "\n</h3>\n";
 cb(null, output);
 ;
 } catch (e) {

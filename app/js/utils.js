@@ -25,6 +25,7 @@
     /**
      * Display a human-readable relative timestamp.
      * @param {String|Date} time before/after the currentDate.
+     * @param {String} useCompactFormat whether to use a compact display format.
      */
     time_since: function(time) {
       var mozl10n = new navigator.mozL10n.DateTimeFormat();
