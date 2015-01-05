@@ -10,8 +10,8 @@
     user.display_name = user.display_name || user.username;
 
     /* FIXME : Temporary hardcoded values */
-    user.settings = [{ name: 'new_comment_notify', value: false },
-      { name: 'buddyup_reminder', value: false }];
+    user.new_comment_notify = true;
+    user.buddyup_reminder = false;
     user.handset_type = 'Alcatel';
     user.operator = 'MTN';
 
