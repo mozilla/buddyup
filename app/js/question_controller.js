@@ -47,18 +47,6 @@
     question_thread.insertAdjacentHTML('afterbegin', html);
   }
 
-  /**
-  * Adds the footer section to the question thread. Currently this consist
-  * of the receive new notifications settings chckbox.
-  */
-  function add_thread_footer() {
-    var do_notify = user.settings[0].value === 'True' ? true : false;
-    var html = nunjucks.render('thread_footer.html', {
-      new_comment_notify: do_notify
-    });
-    question_thread.insertAdjacentHTML('beforeend', html);
-  }
-
   function submit_comment(evt) {
     evt.preventDefault();
     var comment = document.getElementById('question_field').value;
@@ -83,7 +71,6 @@
       submit_promise = submit_question(comment).then(function(comment) {
 
         add_thread_header(comment);
-        add_thread_footer();
 
         comment.content = comment.title;
         return comment;
@@ -126,21 +113,6 @@
     });
   }
 
-  /**
-   * Adds an event listener to the new comment notify checkbox and updates
-   * the current user's preference on change events.
-   */
-  function pref_change_listener() {
-    var new_comments_notification = document.querySelector('#new_comments_notification');
-
-    // only add event listener if the element exists
-    if (new_comments_notification) {
-      new_comments_notification.addEventListener('change', function() {
-        User.set_preference('new_comment_notify', this.checked);
-      });
-    }
-  }
-
   function show_question() {
     if (!question_id) {
       Utils.toggle_spinner();
@@ -174,10 +146,6 @@
       });
       var list = document.getElementById('comment-list');
       list.insertAdjacentHTML('beforeend', html);
-      add_thread_footer();
-
-      // listen for clicks on new comment notify checkbox
-      pref_change_listener();
     });
   }
 

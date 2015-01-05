@@ -306,28 +306,6 @@ root: root
 };
 })();
 })();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_footer.html"] = (function() {function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-output += "<label for=\"new_comments_notification\">\n  <input type=\"checkbox\" id=\"new_comments_notification\" ";
-if(runtime.contextOrFrameLookup(context, frame, "new_comment_notify")) {
-output += "checked=\"checked\"";
-;
-}
-output += " />\n  Receive new comment notification\n</label>\n";
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-})();
-})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["thread_header.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;

@@ -88,31 +88,6 @@
           });
         });
       });
-    },
-
-    /**
-    * Sets or updates the specific user preference on the server and locally.
-    * @param {string} pref - The preference to set
-    * @param {boolean} status - The status of the preference.
-    */
-    set_preference: function(pref, status) {
-      var settings = {
-        'name': pref,
-        'value': status
-      };
-
-      User.get_user().then(function(user) {
-        SumoDB.update_preference(user, settings).then(function(setting) {
-          for (var i = 0, l = user.settings.length; i < l; i++) {
-            var current_setting = user.settings[i].name;
-            if (current_setting === setting.name) {
-              user.settings[i] = setting;
-              break;
-            }
-          }
-          asyncStorage.setItem(USER_KEY, user);
-        });
-      });
     }
   };
   exports.User = User;

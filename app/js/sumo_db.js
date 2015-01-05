@@ -141,15 +141,6 @@
       endpoint += '?format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
-    },
-
-    update_preference: function(user, setting) {
-      var endpoint = API_V2_BASE + 'user/';
-      endpoint += user.username + '/';
-      endpoint += 'set_setting/'
-      endpoint += '?format=json'; // TODO bug 1088014
-
-      return request_with_auth(endpoint, 'POST', setting).then(JSON.parse);
     }
   };
   exports.SumoDB = SumoDB;
