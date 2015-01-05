@@ -54,7 +54,7 @@
     Utils.toggle_spinner();
 
     document.getElementById('thread-introduction').classList.add('hide');
-    document.getElementById('question-thread').classList.remove('hide');
+    question_thread.classList.remove('hide');
 
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
@@ -114,12 +114,15 @@
   }
 
   function show_question() {
+
+    document.getElementById('thread-introduction').classList.add('hide');
+
     if (!question_id) {
       Utils.toggle_spinner();
       return;
     }
 
-    document.getElementById('question-thread').classList.remove('hide');
+    question_thread.classList.remove('hide');
 
     var question_content = [];
     question_content.push(SumoDB.get_question(question_id));
@@ -153,35 +156,30 @@
     init: function() {
       var question_view = location.search ? true : false;
 
-      // if this is a question view, not arrived at from clicking/tapping
-      // ask a question, hide the introduction section.
-      if (question_view) {
-        document.getElementById('thread-introduction').classList.add('hide');
-      }
+      var form = document.getElementById('question_form');
+      form.addEventListener('submit', submit_comment);
 
       // we will need the user details whether the user is posting a question
       // or just viewing a question so, load the user during init
       User.get_user().then(function(response) {
-        var form = document.getElementById('question_form');
-        form.addEventListener('submit', submit_comment);
-
         user = response;
-        question_thread = document.getElementById('question-thread');
-
-        // handle dialog close events
-        dialog_handler();
-
-        if (question_view) {
-          var params = Utils.get_url_parameters(location);
-          if (params.id) {
-
-            Utils.toggle_spinner();
-
-            question_id = params.id;
-            show_question();
-          }
-        }
       });
+
+      question_thread = document.getElementById('question-thread');
+
+      // handle dialog close events
+      dialog_handler();
+
+      if (question_view) {
+        var params = Utils.get_url_parameters(location);
+        if (params.id) {
+
+          Utils.toggle_spinner();
+
+          question_id = params.id;
+          show_question();
+        }
+      }
     }
   };
   exports.QuestionController = QuestionController;
