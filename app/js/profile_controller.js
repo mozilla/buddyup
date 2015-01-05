@@ -46,8 +46,6 @@
         var html = nunjucks.render('my-profile.html', {
           results: {
             user: user,
-            new_comment_notify: user.settings[0].value === 'True' ? true : false,
-            buddyup_reminder: user.settings[1].value === 'True' ? true : false,
             locales: LOCALES,
             handsets: HANDSETS,
             operators: OPERATORS

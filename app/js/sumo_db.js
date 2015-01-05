@@ -3,8 +3,21 @@
 /* global User */
 
 (function(exports) {
+  var API_V1_BASE = 'https://support.allizom.org/api/1/';
   var API_V2_BASE = 'https://support.allizom.org/api/2/';
   var PRODUCT = 'firefox-os';
+
+  function get_token() {
+    var endpoint = API_V1_BASE + 'users/get_token';
+    var data = {
+      username: window.user.username,
+      password: window.user.password
+    };
+    return request(endpoint, 'POST', data).then(function(response) {
+      var json = JSON.parse(response);
+      return json.token;
+    });
+  }
 
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
