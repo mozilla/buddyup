@@ -10,7 +10,7 @@ if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")
 output += "\n    <span class=\"comment-meta\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
 output += " &ndash;\n      ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"author", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"author", env.autoesc) || runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
 output += "\n    </span>\n  ";
 ;
 }

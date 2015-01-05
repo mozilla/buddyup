@@ -2,7 +2,7 @@
   <p>{{ comment.content }}</p>
   {% if comment.updated %}
     <span class="comment-meta">{{ comment.created }} &ndash;
-      {{ comment.author }}
+      {{ comment.author or author }}
     </span>
   {% else %}
     <span>Sending…</span>

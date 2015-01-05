@@ -107,8 +107,10 @@
       }
 
       comment.created = Utils.time_since(new Date(comment.created));
-      list_item.innerHTML = nunjucks.render('comment.html',
-        {comment: comment});
+      list_item.innerHTML = nunjucks.render('comment.html',{
+        author: comment.creator.display_name || comment.creator.username,
+        comment: comment
+      });
       window.top.postMessage({question_id: question_id, comment: comment}, '*');
     });
   }
