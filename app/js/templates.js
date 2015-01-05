@@ -10,18 +10,7 @@ if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")
 output += "\n    <span class=\"comment-meta\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
 output += " &ndash;\n      ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"display_name", env.autoesc)) {
-output += "\n        ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"display_name", env.autoesc), env.autoesc);
-output += "\n      ";
-;
-}
-else {
-output += "\n        ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"username", env.autoesc), env.autoesc);
-output += "\n      ";
-;
-}
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"author", env.autoesc), env.autoesc);
 output += "\n    </span>\n  ";
 ;
 }
@@ -294,7 +283,12 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n  <li>";
+output += "\n  <li ";
+if(runtime.memberLookup((t_4),"author", env.autoesc) != runtime.contextOrFrameLookup(context, frame, "author")) {
+output += "class=\"helper-comment\"";
+;
+}
+output += ">";
 env.getTemplate("comment.html", function(t_7,t_5) {
 if(t_7) { cb(t_7); return; }
 t_5.render(context.getVariables(), frame.push(), function(t_8,t_6) {

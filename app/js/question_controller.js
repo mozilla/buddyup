@@ -164,11 +164,15 @@
 
       for (var i = 0, l = answers.length; i < l; i++) {
         var created = answers[i].created;
+        // we need to loop to set relative time so, let's set the author name here
+        // then we do not need that logic in the template.
+        answers[i].author = answers[i].creator.display_name || answers[i].creator.username;
         answers[i].created = Utils.time_since(new Date(created));
       }
 
       add_thread_header(question);
       var html = nunjucks.render('thread.html', {
+        author: question.creator.display_name || question.creator.username,
         user: user,
         results: answers
       });
