@@ -91,6 +91,17 @@
     },
 
     /**
+     * Updates the local user data as well as last sync time.
+     * @param {object} user - The non-nomalized user object from the server.
+     */
+    update_user: function(user) {
+      user.last_sync = Date.now();
+      return asyncStorage.setItem('user', user).then(function() {
+        return user;
+      });
+    },
+
+    /**
     * Sets or updates the specific user preference on the server and locally.
     * @param {string} pref - The preference to set
     * @param {boolean} status - The status of the preference.
