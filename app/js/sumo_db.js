@@ -53,20 +53,44 @@
   }
 
   var SumoDB = {
-    post_question: function(text) {
+    /**
+    * Submits a new question to the server.
+    * @param {string} text - The question text
+    * @param {object} user_meta - Meta data from the user's device
+    * @returns response from the server on success
+    */
+    post_question: function(text, user_meta) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?format=json'; // TODO bug 1088014
       var data = {
         title: text,
         product: 'firefox-os',
         content: ' ',
-        topic: 'basic-features'
+        topic: 'basic-features',
+        locale: user_meta.lang
       };
-      return request_with_auth(endpoint, 'POST', data)
-        .then(function(response) {
-          return JSON.parse(response);
+      // we need to create the question before we can set the metadata as we
+      // need the questions's id
+      return request_with_auth(endpoint, 'POST', data).then(function(response) {
+        return JSON.parse(response).id;
+      }).then(function(question_id) {
+        // question was created successfully, now set the metadata
+        var metadata_updates = [];
+        var metadata = user_meta.metadata;
+        for (var i= 0, l = metadata.length; i < l; i++) {
+          metadata_updates.push(
+            SumoDB.update_question_metadata(question_id, metadata[i])
+          );
         }
-      );
+        // once the the metadata updates have completed successfully,
+        // we will have to fetch the question again so we have access
+        // to the metadata that we just set.
+        return Promise.all(metadata_updates).then(function() {
+          return question_id;
+        });
+      }).then(function(question_id) {
+        return SumoDB.get_question(question_id);
+      });
     },
 
     post_answer: function(question_id, text) {
@@ -194,6 +218,35 @@
             .then(JSON.parse);
           }
         });
+    },
+    /**
+    * Updates the metadata for a specific question id.
+    * @param {int} question_id - ID of the question to update
+    * @param {object} metadata - The metadata item to update
+    */
+    update_question_metadata: function(question_id, metadata) {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += question_id + '/';
+
+      var delete_metadata = endpoint + 'delete_metadata/';
+      var set_metadata = endpoint + 'set_metadata/';
+      delete_metadata += '?format=json'; // TODO bug 1088014
+      set_metadata += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(delete_metadata, 'POST', metadata)
+        .then(function(response) {
+          return request_with_auth(set_metadata, 'POST', metadata)
+            .then(JSON.parse);
+      }, function(error) {
+        // currently if the metadata item did not exist, the server
+        // will respond with a 404 error
+        // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1074959#c7
+        if (error.message === 'NOT FOUND') {
+          // metadata item did not already exist, save to set
+          return request_with_auth(set_metadata, 'POST', metadata)
+          .then(JSON.parse);
+        }
+      });
     }
   };
   exports.SumoDB = SumoDB;
