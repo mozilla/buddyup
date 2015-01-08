@@ -10,8 +10,8 @@
     user.display_name = user.display_name || user.username;
 
     /* FIXME : Temporary hardcoded values */
-    user.settings = [{ name: 'new_comment_notify', value: false },
-      { name: 'buddyup_reminder', value: false }];
+    user.new_comment_notify = true;
+    user.buddyup_reminder = false;
     user.handset_type = 'Alcatel';
     user.operator = 'MTN';
 
@@ -86,42 +86,6 @@
           return asyncStorage.setItem('user', normalized_user).then(function() {
             return normalized_user;
           });
-        });
-      });
-    },
-
-    /**
-     * Updates the local user data as well as last sync time.
-     * @param {object} user - The non-nomalized user object from the server.
-     */
-    update_user: function(user) {
-      user.last_sync = Date.now();
-      return asyncStorage.setItem('user', user).then(function() {
-        return user;
-      });
-    },
-
-    /**
-    * Sets or updates the specific user preference on the server and locally.
-    * @param {string} pref - The preference to set
-    * @param {boolean} status - The status of the preference.
-    */
-    set_preference: function(pref, status) {
-      var settings = {
-        'name': pref,
-        'value': status
-      };
-
-      User.get_user().then(function(user) {
-        SumoDB.update_preference(user, settings).then(function(setting) {
-          for (var i = 0, l = user.settings.length; i < l; i++) {
-            var current_setting = user.settings[i].name;
-            if (current_setting === setting.name) {
-              user.settings[i] = setting;
-              break;
-            }
-          }
-          asyncStorage.setItem(USER_KEY, user);
         });
       });
     }

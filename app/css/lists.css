@@ -8,3 +8,9 @@
     width: 100%;
     text-decoration: none;
 }
+
+[data-type="budyup-list"] header {
+  color: #0AC;
+  text-align: left;
+  padding-left: 0.7rem;
+}

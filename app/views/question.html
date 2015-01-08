@@ -1,16 +1,8 @@
-<ul data-type="budyup-list">
-  {% if results %}
-    {% for question in results %}
-    <li>
-      <a href="question.html?id={{ question.id }}">{{ question.title }}</a>
-      <ul class="interaction">
-        <li class="comment-total" data-icon-after="messages">{{ question.num_answers }}</li>
-        <li class="votes-total" data-icon-after="feedback">{{ question.num_votes_past_week }}<li>
-      </ul>
-      <span class="last-activity">{{ question.created }}</span>
-    </li>
-    {% endfor %}
-  {% else %}
-    <li class="no-data">{{ message }}</li>
-  {% endif %}
-</ul>
+<li>
+  <a href="question.html?id={{ question.id }}">{{ question.title }}</a>
+  <ul class="interaction">
+    <li class="comment-total" data-icon-after="messages">{{ question.num_answers }}</li>
+    <li class="votes-total" data-icon-after="feedback">{{ question.num_votes_past_week }}<li>
+  </ul>
+  <span class="last-activity">{{ question.updated }}</span>
+</li>

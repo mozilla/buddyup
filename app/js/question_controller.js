@@ -8,6 +8,8 @@
   var dialog;
   var user;
 
+  var question_field;
+
   /**
    * Handles close button events from a dialog modal.
    */
@@ -47,26 +49,14 @@
     question_thread.insertAdjacentHTML('afterbegin', html);
   }
 
-  /**
-  * Adds the footer section to the question thread. Currently this consist
-  * of the receive new notifications settings chckbox.
-  */
-  function add_thread_footer() {
-    var do_notify = user.settings[0].value === 'True' ? true : false;
-    var html = nunjucks.render('thread_footer.html', {
-      new_comment_notify: do_notify
-    });
-    question_thread.insertAdjacentHTML('beforeend', html);
-  }
-
   function submit_comment(evt) {
     evt.preventDefault();
-    var comment = document.getElementById('question_field').value;
+    var comment = question_field.value;
 
     Utils.toggle_spinner();
 
     document.getElementById('thread-introduction').classList.add('hide');
-    document.getElementById('question-thread').classList.remove('hide');
+    question_thread.classList.remove('hide');
 
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
@@ -83,7 +73,6 @@
       submit_promise = submit_question(comment).then(function(comment) {
 
         add_thread_header(comment);
-        add_thread_footer();
 
         comment.content = comment.title;
         return comment;
@@ -93,6 +82,8 @@
     submit_promise.then(function(comment) {
 
       Utils.toggle_spinner();
+
+      question_field.value = '';
 
       // Only handle first time help message scenario for questions
       if (comment.answers) {
@@ -128,28 +119,16 @@
     });
   }
 
-  /**
-   * Adds an event listener to the new comment notify checkbox and updates
-   * the current user's preference on change events.
-   */
-  function pref_change_listener() {
-    var new_comments_notification = document.querySelector('#new_comments_notification');
-
-    // only add event listener if the element exists
-    if (new_comments_notification) {
-      new_comments_notification.addEventListener('change', function() {
-        User.set_preference('new_comment_notify', this.checked);
-      });
-    }
-  }
-
   function show_question() {
+
+    document.getElementById('thread-introduction').classList.add('hide');
+
     if (!question_id) {
       Utils.toggle_spinner();
       return;
     }
 
-    document.getElementById('question-thread').classList.remove('hide');
+    question_thread.classList.remove('hide');
 
     var question_content = [];
     question_content.push(SumoDB.get_question(question_id));
@@ -180,46 +159,38 @@
       });
       var list = document.getElementById('comment-list');
       list.insertAdjacentHTML('beforeend', html);
-      add_thread_footer();
-
-      // listen for clicks on new comment notify checkbox
-      pref_change_listener();
     });
   }
 
   var QuestionController = {
     init: function() {
-      var question_view = location.search ? true : false;
+      question_field = document.getElementById('question_field');
 
-      // if this is a question view, not arrived at from clicking/tapping
-      // ask a question, hide the introduction section.
-      if (question_view) {
-        document.getElementById('thread-introduction').classList.add('hide');
-      }
+      var form = document.getElementById('question_form');
+      form.addEventListener('submit', submit_comment);
 
       // we will need the user details whether the user is posting a question
       // or just viewing a question so, load the user during init
       User.get_user().then(function(response) {
-        var form = document.getElementById('question_form');
-        form.addEventListener('submit', submit_comment);
-
         user = response;
-        question_thread = document.getElementById('question-thread');
-
-        // handle dialog close events
-        dialog_handler();
-
-        if (question_view) {
-          var params = Utils.get_url_parameters(location);
-          if (params.id) {
-
-            Utils.toggle_spinner();
-
-            question_id = params.id;
-            show_question();
-          }
-        }
       });
+
+      question_thread = document.getElementById('question-thread');
+
+      // handle dialog close events
+      dialog_handler();
+
+      var question_view = location.search ? true : false;
+      if (location.search) {
+        var params = Utils.get_url_parameters(location);
+        if (params.id) {
+
+          Utils.toggle_spinner();
+
+          question_id = params.id;
+          show_question();
+        }
+      }
     }
   };
   exports.QuestionController = QuestionController;
