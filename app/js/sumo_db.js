@@ -117,9 +117,7 @@
       endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response).results;
-      });
+      return request(endpoint, 'GET').then(JSON.parse);
     },
 
     get_question: function(question_id) {
@@ -130,6 +128,10 @@
       return request(endpoint, 'GET').then(function(response) {
         return JSON.parse(response);
       });
+    },
+
+    get_question_list: function(url) {
+      return request(url, 'GET').then(JSON.parse);
     },
 
     get_answers_for_question: function(question_id) {
@@ -148,9 +150,7 @@
       endpoint += '&is_solved=0';
       endpoint += '&format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response).results;
-      });
+      return request(endpoint, 'GET').then(JSON.parse);
     },
 
     create_user: function() {

@@ -5,14 +5,15 @@
     <meta name="description" content="SUMO real time support app for FirefoxOS" />
     <meta name="viewport" content="width=device-width" />
 
-    <title>Welcome to BuddyUP</title>
+    <title>My Questions - BuddyUP</title>
 
     <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/lists.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/building_blocks/tabs.css" media="screen" />
 
     <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/gaia-icons.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
 
     <!-- localization -->
@@ -24,31 +25,45 @@
   <body class="skin-organic">
     <section role="region" class="vbox fit">
       <header>
-        <h1>Support</h1>
+        <h1 id="main_heading">My Questions</h1>
+        <a href="index.html" id="back" class="back-link" data-icon="back-light">
+          <span class="visuallyhidden">Back</span>
+        </a>
         <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
           <span class="visuallyhidden">Settings</span>
         </a>
       </header>
       <main class="fit scroll">
-        <section class="intro">
-          <h2>Need Help? Let us get started.</h2>
-          <a href="question.html" data-icon-after="forward" class="button-blue">Ask A Question</a>
-          <h2>Have Answers? Help out.</h2>
-          <a href="question_list_helper.html?role=helper" class="button-gray" data-icon-after="forward">View Unanswered Questions</a>
+        <section class="tabbed-section" role="region">
+          <ul role="tablist" class="bb-tablist" data-type="filter">
+            <li id="new" role="presentation">
+              <a id="tab1" href="#panel_new" role="tab" aria-controls="panel_new" aria-selected="true">New</a>
+            </li>
+            <li id="active" role="presentation">
+              <a id="tab2" href="#panel_active" role="tab" aria-controls="panel_active" aria-selected="false">Active</a>
+            </li>
+          </ul>
+
+          <div id="panel_new" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab1" aria-hidden="false">
+            <section id="myquestions" class="questions all" data-all="true"></section>
+            <button id="load-more" class="button-gray hide">Load more…</button>
+          </div>
+
+          <div id="panel_active" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab2" aria-hidden="true">
+            <section data-type="budyup-list">
+              <p>No active question threads.</p>
+            </section>
+          </div>
+
         </section>
-        <section id="myquestions" class="questions">
-          <h2>My Questions</h2>
-        </section>
-        <a id="all_questions_button" href="question_list_helpee.html" data-icon-after="forward" class="button-gray hide">All My Questions</a>
       </main>
     </section>
-    <script src="js/libs/async_storage.js"></script>
-    <script src="js/user.js" defer></script>
-
+    <script src="js/libs/async_storage.js" defer></script>
     <script src="js/libs/nunjucks.js" defer></script>
     <script src="js/templates.js" defer></script>
 
     <script src="js/utils.js" defer></script>
+    <script src="js/user.js" defer></script>
     <script src="js/sumo_db.js" defer></script>
     <script src="js/questions_controller.js" defer></script>
 </body>

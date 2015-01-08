@@ -30,61 +30,6 @@ root: root
 };
 })();
 })();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helpee_questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-if(runtime.contextOrFrameLookup(context, frame, "show_header")) {
-output += "\n<h2>My Questions</h2>\n";
-;
-}
-output += "\n\n";
-env.getTemplate("question_list_day.html", function(t_3,t_1) {
-if(t_3) { cb(t_3); return; }
-t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
-if(t_4) { cb(t_4); return; }
-output += t_2
-output += "\n\n";
-if(runtime.contextOrFrameLookup(context, frame, "show_more")) {
-output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
-;
-}
-output += "\n";
-cb(null, output);
-})});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-})();
-})();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helper_questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-output += "<section class=\"tabbed-section\" role=\"region\">\n<ul role=\"tablist\" class=\"bb-tablist\" data-type=\"filter\">\n  <li id=\"new\" role=\"presentation\">\n    <a id=\"tab1\" href=\"#panel_new\" role=\"tab\" aria-controls=\"panel_new\" aria-selected=\"true\">New</a>\n  </li>\n  <li id=\"active\" role=\"presentation\">\n    <a id=\"tab2\" href=\"#panel_active\" role=\"tab\" aria-controls=\"panel_active\" aria-selected=\"false\">Active</a>\n  </li>\n</ul>\n<div id=\"panel_new\" class=\"bb-tabpanel\" role=\"tabpanel\" aria-labelledby=\"tab1\" aria-hidden=\"false\">\n  ";
-env.getTemplate("question_list_day.html", function(t_3,t_1) {
-if(t_3) { cb(t_3); return; }
-t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
-if(t_4) { cb(t_4); return; }
-output += t_2
-output += "\n</div>\n<div id=\"panel_active\" class=\"bb-tabpanel\" role=\"tabpanel\" aria-labelledby=\"tab2\" aria-hidden=\"true\">\n  <section data-type=\"budyup-list\">\n    <p>No active question threads.</p>\n  </section>\n</div>\n</section>\n";
-cb(null, output);
-})});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-})();
-})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["my-profile.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
