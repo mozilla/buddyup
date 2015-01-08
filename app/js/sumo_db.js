@@ -140,14 +140,26 @@
 
     update_user: function(user_data) {
       return User.get_credentials().then(function(credentials) {
-        var endpoint = API_V2_BASE + 'user/';
-        endpoint += credentials.username + '/';
-        endpoint += '?format=json'; // TODO bug 1088014
+        var preference_updates = [];
+        var user = user_data.user;
+        user.username = credentials.username;
+        user.password = credentials.password;
 
-        user_data.username = credentials.username;
-        user_data.password = credentials.password;
-        return request_with_auth(endpoint, 'PUT', user_data);
-      }).then(JSON.parse);
+        // @see bug1113056 - currently we cannot do bulk settings updates.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1113056#c3
+        var settings = user_data.settings;
+        for (var i = 0, l = settings.length; i < l; i++) {
+          preference_updates.push(SumoDB.update_preference(user, settings[i]));
+        }
+
+        return Promise.all(preference_updates).then(function() {
+          var endpoint = API_V2_BASE + 'user/';
+          endpoint += user.username + '/';
+          endpoint += '?format=json'; // TODO bug 1088014
+
+          return request_with_auth(endpoint, 'PATCH', user).then(JSON.parse);
+        });
+      });
     },
 
     get_user: function(username) {
