@@ -106,6 +106,15 @@
         }
       );
     },
+
+    take_question: function(question_id) {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += question_id + '/take/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(endpoint, 'POST');
+    },
+
     /**
      * Get list of questions for the current user
      */
@@ -148,6 +157,7 @@
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?product=' + PRODUCT;
       endpoint += '&is_solved=0';
+      endpoint += '&taken_by=null';
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);

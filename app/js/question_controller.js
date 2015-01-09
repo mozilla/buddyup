@@ -128,7 +128,7 @@
     });
   }
 
-  function show_question() {
+  function load_question() {
 
     document.getElementById('thread-introduction').classList.add('hide');
 
@@ -144,37 +144,70 @@
 
     question_content.push(SumoDB.get_answers_for_question(question_id));
 
-    Promise.all(question_content).then(function([question, answers]) {
-
-      Utils.toggle_spinner();
-
-      question_object = question;
-
-      question.content = question.title;
-      answers.push(question);
-      answers.reverse();
-
-      for (var i = 0, l = answers.length; i < l; i++) {
-        var created = answers[i].created;
-        answers[i].author = answers[i].creator.display_name ||
-          answers[i].creator.username;
-        answers[i].created = Utils.time_since(new Date(created));
-      }
-
-      add_thread_header(question);
-      var html = nunjucks.render('thread.html', {
-        author: question.creator.display_name || question.creator.username,
-        user: user,
-        results: answers
+    Promise.all(question_content).
+      then(check_if_taken).
+      then(display_question).catch(function(err) {
+        // We're just catching the taken case
       });
-      var list = document.getElementById('comment-list');
-      list.insertAdjacentHTML('beforeend', html);
+  }
+
+  function check_if_taken([question, answers]) {
+    if (!question.taken_by ||
+        question.taken_by.username == user.username ||
+        question.taken_until - new Date() < 0) {
+      return [question, answers];
+    }
+
+    var dialog = document.getElementById('already_taken');
+    dialog.classList.remove('hide');
+    dialog.addEventListener('submit', function(evt) {
+      evt.preventDefault();
+      history.back();
     });
+    throw new Error('Already taken');
+  }
+
+  function display_question([question, answers]) {
+    Utils.toggle_spinner();
+
+    question_object = question;
+
+    question.content = question.title;
+    answers.push(question);
+    answers.reverse();
+
+    for (var i = 0, l = answers.length; i < l; i++) {
+      var created = answers[i].created;
+      answers[i].author = answers[i].creator.display_name ||
+        answers[i].creator.username;
+      answers[i].created = Utils.time_since(new Date(created));
+    }
+
+    add_thread_header(question);
+    var html = nunjucks.render('thread.html', {
+      author: question.creator.display_name || question.creator.username,
+      user: user,
+      results: answers
+    });
+    var list = document.getElementById('comment-list');
+    list.insertAdjacentHTML('beforeend', html);
+  }
+
+  function take_question(evt) {
+    if (evt.target.value.length !== 1) {
+      return;
+    }
+
+    var is_helper = user.username !== question_object.creator.username;
+    if (is_helper) {
+      SumoDB.take_question(question_id);
+    }
   }
 
   var QuestionController = {
     init: function() {
       question_field = document.getElementById('question_field');
+      question_field.addEventListener('input', take_question);
 
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
@@ -198,7 +231,7 @@
           Utils.toggle_spinner();
 
           question_id = params.id;
-          show_question();
+          load_question();
         }
       }
     }
