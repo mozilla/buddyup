@@ -10,6 +10,8 @@
 
   var question_field;
 
+  var question_object;
+
   /**
    * Handles close button events from a dialog modal.
    */
@@ -64,6 +66,11 @@
     var list_item = document.createElement('li');
 
     list.appendChild(list_item).innerHTML += fake_comment;
+    var is_helper = question_object &&
+      user.username !== question_object.creator.username;
+    if (is_helper) {
+      list_item.classList.add('helper-comment');
+    }
     list_item.scrollIntoView();
 
     var submit_promise;
@@ -98,8 +105,11 @@
       }
 
       comment.created = Utils.time_since(new Date(comment.created));
-      list_item.innerHTML = nunjucks.render('comment.html',
-        {comment: comment});
+      comment.author = comment.creator.display_name || comment.creator.username;
+      list_item.innerHTML = nunjucks.render('comment.html', {
+        comment: comment
+      });
+
       window.top.postMessage({question_id: question_id, comment: comment}, '*');
     });
   }
@@ -137,17 +147,22 @@
 
       Utils.toggle_spinner();
 
+      question_object = question;
+
       question.content = question.title;
       answers.push(question);
       answers.reverse();
 
       for (var i = 0, l = answers.length; i < l; i++) {
         var created = answers[i].created;
+        answers[i].author = answers[i].creator.display_name ||
+          answers[i].creator.username;
         answers[i].created = Utils.time_since(new Date(created));
       }
 
       add_thread_header(question);
       var html = nunjucks.render('thread.html', {
+        author: question.creator.display_name || question.creator.username,
         user: user,
         results: answers
       });
@@ -175,7 +190,7 @@
       dialog_handler();
 
       var question_view = location.search ? true : false;
-      if (location.search) {
+      if (question_view) {
         var params = Utils.get_url_parameters(location);
         if (params.id) {
 
