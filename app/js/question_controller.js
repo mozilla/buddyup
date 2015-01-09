@@ -13,6 +13,27 @@
   var question_object;
 
   /**
+   * Handles clicks on the helpful vote icon.
+   */
+  function helpful_votes_handler(evt) {
+    var elem = evt.target;
+
+    if (!elem.classList.contains('vote')) {
+      return;
+    }
+    var answer_id = elem.dataset.id;
+    SumoDB.submit_vote(answer_id).then(function(response) {
+      elem.classList.add('active');
+
+      if (response.num_helpful_votes) {
+        elem.textContent = response.num_helpful_votes;
+      } else if (response.message === 'CONFLICT') {
+        // Do nothing, user has already voted
+      }
+    });
+  }
+
+  /**
    * Handles close button events from a dialog modal.
    */
   function dialog_handler() {
@@ -219,6 +240,7 @@
       });
 
       question_thread = document.getElementById('question-thread');
+      question_thread.addEventListener('click', helpful_votes_handler);
 
       // handle dialog close events
       dialog_handler();

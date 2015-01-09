@@ -1,0 +1,22 @@
+.comment-meta {
+    font-size: .7rem;
+}
+.comment-meta {
+    display: inline-block;
+    width: 68%;
+}
+.vote {
+    display: inline-block;
+    text-align: right;
+    width: 29%;
+}
+.vote,
+.vote:before {
+    font-size: 1.1rem;
+}
+.vote:before {
+    margin-right: .3rem;
+}
+.vote.active {
+    color: #0095dd;
+}

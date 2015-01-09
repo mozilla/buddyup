@@ -1,9 +1,14 @@
 <div class="message">
   <p>{{ comment.content }}</p>
   {% if comment.updated %}
-    <span class="comment-meta">{{ comment.created }} &ndash;
-      {{ comment.author }}
-    </span>
+    <footer>
+      <span class="comment-meta">{{ comment.created }} &ndash; {{ comment.author }}</span>
+      <!-- if the comment object has a question property, this is a comment and not the question
+      so we should add the voting button -->
+      {% if comment.question %}
+        <button class="vote" data-icon="feedback" data-id="{{ comment.id }}">{{ comment.num_helpful_votes }}</button>
+      {% endif %}
+    </footer>
   {% else %}
     <span>Sending…</span>
   {% endif %}
