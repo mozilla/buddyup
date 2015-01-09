@@ -155,7 +155,23 @@
       endpoint += '?format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
-    }
+    },
+     /**
+     * Submits a new helpful vote for the specified answer.
+     * @param {string} answer_id - The answer id to receive the helpful vote.
+     */
+     submit_vote: function(answer_id) {
+       var endpoint = API_V2_BASE + 'answer/';
+       endpoint += answer_id + '/';
+       endpoint += 'helpful/';
+       endpoint += '?format=json'; // TODO bug 1088014
+
+       return request_with_auth(endpoint, 'POST', {})
+        .then(function(response) {
+          console.log(response);
+          return response;
+        });
+     }
   };
   exports.SumoDB = SumoDB;
 })(window);

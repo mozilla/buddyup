@@ -13,6 +13,24 @@
   var question_object;
 
   /**
+   * Handles clicks on the helpful vote icon.
+   */
+  function helpful_votes_handler() {
+    var question_thread = document.getElementById('question-thread');
+    question_thread.addEventListener('click', function(event) {
+
+      var elem = event.target;
+
+      if ('vote' === elem.className) {
+        var answer_id = elem.dataset.id;
+        SumoDB.submit_vote(answer_id).then(function(response) {
+          console.log(response);
+        });
+      }
+    });
+  }
+
+  /**
    * Handles close button events from a dialog modal.
    */
   function dialog_handler() {
@@ -185,6 +203,9 @@
       });
 
       question_thread = document.getElementById('question-thread');
+
+      // handle clicks for helpful votes
+      helpful_votes_handler();
 
       // handle dialog close events
       dialog_handler();

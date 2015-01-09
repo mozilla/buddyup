@@ -7,11 +7,20 @@ output += "<div class=\"message\">\n  <p>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
 output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
-output += "\n    <span class=\"comment-meta\">";
+output += "\n    <footer>\n      <span class=\"comment-meta\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
-output += " &ndash;\n      ";
+output += " &ndash; ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"author", env.autoesc), env.autoesc);
-output += "\n    </span>\n  ";
+output += "</span>\n      <!-- if the comment object has a question property, this is a comment and not the question\n      so we should add the voting button -->\n      ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"question", env.autoesc)) {
+output += "\n        <button class=\"vote\" data-icon=\"feedback\" data-id=\"";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"id", env.autoesc), env.autoesc);
+output += "\">";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"num_helpful_votes", env.autoesc), env.autoesc);
+output += "</button>\n      ";
+;
+}
+output += "\n    </footer>\n  ";
 ;
 }
 else {
