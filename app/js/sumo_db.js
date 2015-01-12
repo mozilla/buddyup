@@ -140,21 +140,60 @@
 
     update_user: function(user_data) {
       return User.get_credentials().then(function(credentials) {
-        var endpoint = API_V2_BASE + 'user/';
-        endpoint += credentials.username + '/';
-        endpoint += '?format=json'; // TODO bug 1088014
+        var settings_updates = [];
+        var user = user_data.user;
+        user.username = credentials.username;
+        user.password = credentials.password;
 
-        user_data.username = credentials.username;
-        user_data.password = credentials.password;
-        return request_with_auth(endpoint, 'PUT', user_data);
-      }).then(JSON.parse);
+        // @see bug1113056 - currently we cannot do bulk settings updates.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1113056#c3
+        var settings = user_data.settings;
+        for (var i = 0, l = settings.length; i < l; i++) {
+          settings_updates.push(SumoDB.update_user_settings(user, settings[i]));
+        }
+
+        return Promise.all(settings_updates).then(function() {
+          var endpoint = API_V2_BASE + 'user/';
+          endpoint += user.username + '/';
+          endpoint += '?format=json'; // TODO bug 1088014
+
+          return request_with_auth(endpoint, 'PATCH', user).then(JSON.parse);
+        });
+      });
     },
 
     get_user: function(username) {
       var endpoint = API_V2_BASE + 'user/' + username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(JSON.parse);
+      // settings is only visible if the user authenticated so, we need
+      // to do a request_with_auth here.
+      return request_with_auth(endpoint, 'GET').then(JSON.parse);
+    },
+
+    update_user_settings: function(user, setting) {
+      var endpoint = API_V2_BASE + 'user/';
+      endpoint += user.username + '/';
+
+      var set_user_setting = endpoint + 'set_setting/';
+      set_user_setting += '?format=json'; // TODO bug 1088014
+
+      var delete_user_setting = endpoint + 'delete_setting/';
+      delete_user_setting += '?format=json'; // TODO bug 1088014
+      return request_with_auth(delete_user_setting, 'POST', setting)
+        .then(function(response) {
+          return request_with_auth(set_user_setting, 'POST', setting)
+            .then(JSON.parse);
+        }, function(error) {
+          // currently if the settings item did not exist, the server
+          // will respond with a 404 error
+          // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1074959#c7
+          if (error.message === 'NOT FOUND') {
+            // settings item did not already exist, safe to set
+            return request_with_auth(set_user_setting, 'POST', setting)
+            .then(JSON.parse);
+          }
+        });
     }
   };
   exports.SumoDB = SumoDB;
