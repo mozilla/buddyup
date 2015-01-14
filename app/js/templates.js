@@ -183,7 +183,7 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<section data-type=\"budyup-list\">\n  ";
+output += "<section data-type=\"buddyup-list\">\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "results")) {
 output += "\n    ";
 frame = frame.push();
