@@ -51,17 +51,24 @@
      * for better categorization and filtering.
      */
     get_user_meta: function() {
-      var gecko = navigator.userAgent.match(/Gecko\/(\d+\.?)+\d+/g)[0];
-      var os_version = gecko.substr(gecko.indexOf('/') + 1);
-      var handset_type = 'Alcatel'; // TODO: @see http://mzl.la/1y8b4ho
-      var operator = 'Movistar'; // TODO: @see http://mzl.la/1y8b4ho
+      var gecko = navigator.userAgent.match(/rv:([\d\.]+)/)[1];
+      var os_version = {
+        name: 'os_version',
+        value: gecko
+      };
+      var handset_type = {
+        name: 'handset_type',
+        value: 'All' // TODO: @see http://mzl.la/1y8b4ho
+      };
+      var operator = {
+        name: 'operator',
+        value: 'All'// TODO: @see http://mzl.la/1y8b4ho
+      };
 
       return {
         lang: navigator.language,
-        os_version: os_version,
-        handset_type: handset_type,
-        operator: operator
-      }
+        metadata: [os_version, handset_type, operator]
+      };
     }
   };
 

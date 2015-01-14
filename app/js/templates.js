@@ -39,80 +39,23 @@ root: root
 };
 })();
 })();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helpee_questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-if(runtime.contextOrFrameLookup(context, frame, "show_header")) {
-output += "\n<h2>My Questions</h2>\n";
-;
-}
-output += "\n\n";
-env.getTemplate("question_list_day.html", function(t_3,t_1) {
-if(t_3) { cb(t_3); return; }
-t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
-if(t_4) { cb(t_4); return; }
-output += t_2
-output += "\n\n";
-if(runtime.contextOrFrameLookup(context, frame, "show_more")) {
-output += "\n<a href=\"my_questions.html\" data-icon-after=\"forward\" class=\"button-gray\">All My Questions</a>\n";
-;
-}
-output += "\n";
-cb(null, output);
-})});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-})();
-})();
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helper_questions.html"] = (function() {function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-output += "<section class=\"tabbed-section\" role=\"region\">\n<ul role=\"tablist\" class=\"bb-tablist\" data-type=\"filter\">\n  <li id=\"new\" role=\"presentation\">\n    <a id=\"tab1\" href=\"#panel_new\" role=\"tab\" aria-controls=\"panel_new\" aria-selected=\"true\">New</a>\n  </li>\n  <li id=\"active\" role=\"presentation\">\n    <a id=\"tab2\" href=\"#panel_active\" role=\"tab\" aria-controls=\"panel_active\" aria-selected=\"false\">Active</a>\n  </li>\n</ul>\n<div id=\"panel_new\" class=\"bb-tabpanel\" role=\"tabpanel\" aria-labelledby=\"tab1\" aria-hidden=\"false\">\n  ";
-env.getTemplate("question_list_day.html", function(t_3,t_1) {
-if(t_3) { cb(t_3); return; }
-t_1.render(context.getVariables(), frame.push(), function(t_4,t_2) {
-if(t_4) { cb(t_4); return; }
-output += t_2
-output += "\n</div>\n<div id=\"panel_active\" class=\"bb-tabpanel\" role=\"tabpanel\" aria-labelledby=\"tab2\" aria-hidden=\"true\">\n  <section data-type=\"budyup-list\">\n    <p>No active question threads.</p>\n  </section>\n</div>\n</section>\n";
-cb(null, output);
-})});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-})();
-})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["my-profile.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user\">\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"display_name", env.autoesc), env.autoesc);
-output += "</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
+output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user\">\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">Your Display Name</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"display_name", env.autoesc), env.autoesc);
 output += "\" required />\n      <button type=\"reset\">Clear</button>\n    </p>\n    <ul class=\"achievements\">\n      <li>\n        <span class=\"count\" data-icon=\"tick\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"solution_count", env.autoesc), env.autoesc);
 output += "</span> Questions Answered\n      </li>\n      <li>\n        <span class=\"count\" data-icon=\"feedback\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpfulness", env.autoesc), env.autoesc);
-output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comments\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comments\" name=\"new_comments\"\n            ";
+output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comment_notify\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comment_notify\" name=\"new_comment_notify\"\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
-output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      <li>\n        <label for=\"new_questions\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_questions\" name=\"new_questions\"\n            ";
+output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      <li>\n        <label for=\"buddyup_reminder\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"buddyup_reminder\" name=\"buddyup_reminder\"\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"buddyup_reminder", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
@@ -144,7 +87,7 @@ output += "</option>\n          ";
 }
 frame = frame.pop();
 output += "\n        </select>\n      </span>\n\n      <label for=\"handset_type\">Handset Type</label>\n      <select id=\"handset_type\" multiple=\"true\">\n        ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc) == "") {
+if(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc)),0, env.autoesc) == "All") {
 output += "\n          <option selected=\"selected\">All</option>\n        ";
 ;
 }
@@ -163,7 +106,7 @@ frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
 output += "\n          <option ";
-if(t_8 == runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc)) {
+if((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc).indexOf(t_8) !== -1)) {
 output += "selected=\"selected\"";
 ;
 }
@@ -175,7 +118,7 @@ output += "</option>\n        ";
 }
 frame = frame.pop();
 output += "\n      </select>\n\n      <label for=\"operator\">Operator</label>\n      <select id=\"operator\">\n        ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"operator", env.autoesc) == "") {
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"operator", env.autoesc) == "All") {
 output += "\n          <option selected=\"selected\">All</option>\n        ";
 ;
 }

@@ -56,7 +56,7 @@
 
     for (var i = 0, l = question.metadata.length; i < l; i++) {
       var current_item = question.metadata[i];
-      if (current_item.name === 'device_type') {
+      if (current_item.name === 'handset_type') {
         handset_type = current_item.value;
         break;
       }
@@ -133,7 +133,7 @@
   }
 
   function submit_question(comment) {
-    return SumoDB.post_question(comment).then(function(response) {
+    return SumoDB.post_question(comment, Utils.get_user_meta()).then(function(response) {
       question_id = response.id;
       return response;
     });

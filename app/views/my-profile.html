@@ -1,7 +1,7 @@
 <form name="profile" id="profile" class="profile" method="get">
   <fieldset class="user">
     <p>
-      <label for="display_name" class="visuallyhidden">{{ results.user.display_name }}</label>
+      <label for="display_name" class="visuallyhidden">Your Display Name</label>
       <input type="text" name="display_name" id="display_name" value="{{ results.user.display_name }}" required />
       <button type="reset">Clear</button>
     </p>
@@ -19,15 +19,15 @@
     <h2>Notifications</h2>
     <ul>
       <li>
-        <label for="new_comments" class="pack-switch">
-          <input type="checkbox" id="new_comments" name="new_comments"
+        <label for="new_comment_notify" class="pack-switch">
+          <input type="checkbox" id="new_comment_notify" name="new_comment_notify"
             {% if results.user.new_comment_notify %}checked="checked"{% endif %} />
           <span>New Comments</span>
         </label>
       </li>
       <li>
-        <label for="new_questions" class="pack-switch">
-          <input type="checkbox" id="new_questions" name="new_questions"
+        <label for="buddyup_reminder" class="pack-switch">
+          <input type="checkbox" id="buddyup_reminder" name="buddyup_reminder"
             {% if results.user.buddyup_reminder %}checked="checked"{% endif %} />
           <span>BuddyUp Reminder</span>
         </label>
@@ -51,17 +51,17 @@
 
       <label for="handset_type">Handset Type</label>
       <select id="handset_type" multiple="true">
-        {% if results.user.handset_type == "" %}
+        {% if results.user.handset_type[0] == "All" %}
           <option selected="selected">All</option>
         {% endif %}
         {% for handset in results.handsets %}
-          <option {% if handset == results.user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
+          <option {% if handset in results.user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
         {% endfor %}
       </select>
 
       <label for="operator">Operator</label>
       <select id="operator">
-        {% if results.user.operator == "" %}
+        {% if results.user.operator == "All" %}
           <option selected="selected">All</option>
         {% endif %}
         {% for operator in results.operators %}

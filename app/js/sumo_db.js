@@ -53,20 +53,44 @@
   }
 
   var SumoDB = {
-    post_question: function(text) {
+    /**
+    * Submits a new question to the server.
+    * @param {string} text - The question text
+    * @param {object} user_meta - Meta data from the user's device
+    * @returns response from the server on success
+    */
+    post_question: function(text, user_meta) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?format=json'; // TODO bug 1088014
       var data = {
         title: text,
         product: 'firefox-os',
         content: ' ',
-        topic: 'basic-features'
+        topic: 'basic-features',
+        locale: user_meta.lang
       };
-      return request_with_auth(endpoint, 'POST', data)
-        .then(function(response) {
-          return JSON.parse(response);
+      // we need to create the question before we can set the metadata as we
+      // need the questions's id
+      return request_with_auth(endpoint, 'POST', data).then(function(response) {
+        return JSON.parse(response).id;
+      }).then(function(question_id) {
+        // question was created successfully, now set the metadata
+        var metadata_updates = [];
+        var metadata = user_meta.metadata;
+        for (var i= 0, l = metadata.length; i < l; i++) {
+          metadata_updates.push(
+            SumoDB.update_question_metadata(question_id, metadata[i])
+          );
         }
-      );
+        // once the the metadata updates have completed successfully,
+        // we will have to fetch the question again so we have access
+        // to the metadata that we just set.
+        return Promise.all(metadata_updates).then(function() {
+          return question_id;
+        });
+      }).then(function(question_id) {
+        return SumoDB.get_question(question_id);
+      });
     },
 
     post_answer: function(question_id, text) {
@@ -93,9 +117,7 @@
       endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response).results;
-      });
+      return request(endpoint, 'GET').then(JSON.parse);
     },
 
     get_question: function(question_id) {
@@ -106,6 +128,10 @@
       return request(endpoint, 'GET').then(function(response) {
         return JSON.parse(response);
       });
+    },
+
+    get_question_list: function(url) {
+      return request(url, 'GET').then(JSON.parse);
     },
 
     get_answers_for_question: function(question_id) {
@@ -124,9 +150,7 @@
       endpoint += '&is_solved=0';
       endpoint += '&format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response).results;
-      });
+      return request(endpoint, 'GET').then(JSON.parse);
     },
 
     create_user: function() {
@@ -140,21 +164,34 @@
 
     update_user: function(user_data) {
       return User.get_credentials().then(function(credentials) {
-        var endpoint = API_V2_BASE + 'user/';
-        endpoint += credentials.username + '/';
-        endpoint += '?format=json'; // TODO bug 1088014
+        var settings_updates = [];
+        var user = user_data.user;
+        user.username = credentials.username;
+        user.password = credentials.password;
 
-        user_data.username = credentials.username;
-        user_data.password = credentials.password;
-        return request_with_auth(endpoint, 'PUT', user_data);
-      }).then(JSON.parse);
+        // @see bug1113056 - currently we cannot do bulk settings updates.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1113056#c3
+        var settings = user_data.settings;
+        for (var i = 0, l = settings.length; i < l; i++) {
+          settings_updates.push(SumoDB.update_user_settings(user, settings[i]));
+        }
+
+        return Promise.all(settings_updates).then(function() {
+          var endpoint = API_V2_BASE + 'user/';
+          endpoint += user.username + '/';
+          endpoint += '?format=json'; // TODO bug 1088014
+
+          return request_with_auth(endpoint, 'PATCH', user).then(JSON.parse);
+        });
+      });
     },
 
     get_user: function(username) {
       var endpoint = API_V2_BASE + 'user/' + username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
-
-      return request(endpoint, 'GET').then(JSON.parse);
+      // settings is only visible if the user authenticated so, we need
+      // to do a request_with_auth here.
+      return request_with_auth(endpoint, 'GET').then(JSON.parse);
     },
      /**
      * Submits a new helpful vote for the specified answer.
@@ -168,10 +205,63 @@
 
        return request_with_auth(endpoint, 'POST', {})
         .then(function(response) {
-          console.log(response);
           return response;
         });
-     }
+    },
+
+    update_user_settings: function(user, setting) {
+      var endpoint = API_V2_BASE + 'user/';
+      endpoint += user.username + '/';
+
+      var set_user_setting = endpoint + 'set_setting/';
+      set_user_setting += '?format=json'; // TODO bug 1088014
+
+      var delete_user_setting = endpoint + 'delete_setting/';
+      delete_user_setting += '?format=json'; // TODO bug 1088014
+      return request_with_auth(delete_user_setting, 'POST', setting)
+        .then(function(response) {
+          return request_with_auth(set_user_setting, 'POST', setting)
+            .then(JSON.parse);
+        }, function(error) {
+          // currently if the settings item did not exist, the server
+          // will respond with a 404 error
+          // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1074959#c7
+          if (error.message === 'NOT FOUND') {
+            // settings item did not already exist, safe to set
+            return request_with_auth(set_user_setting, 'POST', setting)
+            .then(JSON.parse);
+          }
+        });
+    },
+    /**
+    * Updates the metadata for a specific question id.
+    * @param {int} question_id - ID of the question to update
+    * @param {object} metadata - The metadata item to update
+    */
+    update_question_metadata: function(question_id, metadata) {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += question_id + '/';
+
+      var delete_metadata = endpoint + 'delete_metadata/';
+      var set_metadata = endpoint + 'set_metadata/';
+      delete_metadata += '?format=json'; // TODO bug 1088014
+      set_metadata += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(delete_metadata, 'POST', metadata)
+        .then(function(response) {
+          return request_with_auth(set_metadata, 'POST', metadata)
+            .then(JSON.parse);
+      }, function(error) {
+        // currently if the metadata item did not exist, the server
+        // will respond with a 404 error
+        // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1074959#c7
+        if (error.message === 'NOT FOUND') {
+          // metadata item did not already exist, save to set
+          return request_with_auth(set_metadata, 'POST', metadata)
+          .then(JSON.parse);
+        }
+      });
+    }
   };
   exports.SumoDB = SumoDB;
 })(window);
