@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, User, nunjucks  */
+/* global User, nunjucks  */
 
 (function(exports) {
 

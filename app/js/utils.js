@@ -1,5 +1,7 @@
 'use strict';
 
+/* global MobileOperator */
+
 (function(exports) {
 
   var Utils = {
@@ -51,23 +53,41 @@
      * for better categorization and filtering.
      */
     get_user_meta: function() {
-      var gecko = navigator.userAgent.match(/rv:([\d\.]+)/)[1];
-      var os_version = {
-        name: 'os_version',
-        value: gecko
-      };
-      var handset_type = {
-        name: 'handset_type',
-        value: 'All' // TODO: @see http://mzl.la/1y8b4ho
-      };
-      var operator = {
-        name: 'operator',
-        value: 'All'// TODO: @see http://mzl.la/1y8b4ho
-      };
+      var metas = [];
+
+      var gecko = navigator.userAgent.match(/rv:([\d\.]+)/);
+      if (gecko) {
+        metas.push({
+          name: 'os_version',
+          value: gecko[1]
+        });
+      }
+
+      var device = navigator.userAgent.match(/;(.+);/);
+      if (device) {
+        metas.push({
+          name: 'handset_type',
+          value: device[1].trim()
+        });
+      }
+
+      var networks = MobileOperator.detectMobileNetworks();
+      var operators = networks.map(function(network) {
+        return MobileOperator.getNetwork(network.mcc, network.mnc, network.spn);
+      });
+      var operator = operators.find(function(operator) {
+        return operator;
+      });
+      if (operator) {
+        metas.push({
+          name: 'operator',
+          value: operator
+        });
+      }
 
       return {
         lang: navigator.language,
-        metadata: [os_version, handset_type, operator]
+        metadata: metas
       };
     }
   };

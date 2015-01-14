@@ -115,7 +115,8 @@
   }
 
   function submit_question(comment) {
-    return SumoDB.post_question(comment, Utils.get_user_meta()).then(function(response) {
+    var user_meta = Utils.get_user_meta();
+    return SumoDB.post_question(comment, user_meta).then(function(response) {
       question_id = response.id;
       return response;
     });

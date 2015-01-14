@@ -18,7 +18,12 @@
     "alarms": {
       "description": "Temporary to mock server side notifications"
     },
-    "desktop-notification": {}
+    "desktop-notification": {
+      "description": ""
+    },
+    "mobilenetwork": {
+      "description": "To classify questions based on your network"
+    }
   },
   "messages": [
     { "alarm": "/index.html" },

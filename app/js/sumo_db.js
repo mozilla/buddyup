@@ -77,7 +77,7 @@
         // question was created successfully, now set the metadata
         var metadata_updates = [];
         var metadata = user_meta.metadata;
-        for (var i= 0, l = metadata.length; i < l; i++) {
+        for (var i = 0, l = metadata.length; i < l; i++) {
           metadata_updates.push(
             SumoDB.update_question_metadata(question_id, metadata[i])
           );
