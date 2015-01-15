@@ -57,7 +57,8 @@
         console.log(response);
         var results = response.results;
         if (results.length) {
-          display_questions(response, active_questions_list_container, load_more_active_questions_button);
+          display_questions(response, active_questions_list_container,
+              load_more_active_questions_button);
         } else {
           var html = nunjucks.render(QUESTION_LIST_TMPL, {
             message: MSG_NO_QUESTIONS
@@ -110,7 +111,8 @@
           results = results.slice(0, 3);
         }
 
-        display_questions(response, my_questions_list_container, load_more_my_questions_button);
+        display_questions(response, my_questions_list_container,
+            load_more_my_questions_button);
 
         var all_questions = document.getElementById('all_questions_button');
         if (all_questions) {
@@ -133,7 +135,7 @@
     var url = load_more_button.dataset.next;
     var container = document.getElementById(load_more_button.dataset.container);
     SumoDB.get_question_list(url).then(function(response) {
-      display_questions(response, container, load_more_button)
+      display_questions(response, container, load_more_button);
     });
   }
 
@@ -164,14 +166,18 @@
 
   var QuestionsController = {
     init: function() {
-      load_more_my_questions_button = document.getElementById('load-more-my-questions');
+      load_more_my_questions_button = document.getElementById(
+          'load-more-my-questions');
       if (load_more_my_questions_button) {
-        load_more_my_questions_button.addEventListener('click', load_more_questions);
+        load_more_my_questions_button.addEventListener('click',
+            load_more_questions);
       }
 
-      load_more_active_questions_button = document.getElementById('load-more-active-questions');
+      load_more_active_questions_button = document.getElementById(
+          'load-more-active-questions');
       if (load_more_active_questions_button) {
-        load_more_active_questions_button.addEventListener('click', load_more_questions);
+        load_more_active_questions_button.addEventListener('click',
+            load_more_questions);
       }
 
       nunjucks.configure({ autoescape: true });
@@ -181,7 +187,8 @@
       Utils.toggle_spinner();
 
       my_questions_list_container = document.getElementById('myquestions');
-      active_questions_list_container = document.getElementById('activequestions');
+      active_questions_list_container = document.getElementById(
+          'activequestions');
 
       load_initial_questions();
     }
