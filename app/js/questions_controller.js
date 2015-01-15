@@ -7,8 +7,10 @@
   var MSG_NO_QUESTIONS = 'No questions found';
   var QUESTION_LIST_TMPL = 'question_list_day.html';
 
-  var question_list_container;
-  var load_more_button;
+  var my_questions_list_container;
+  var active_questions_list_container;
+  var load_more_my_questions_button;
+  var load_more_active_questions_button;
 
   /**
    * Toggles the state of the specified Aria attribute between true and false.
@@ -43,6 +45,29 @@
     var tab_panels = container.querySelectorAll('[role="tabpanel"]');
     toggle_state(tab_panels, 'aria-hidden');
 
+    load_active_questions();
+  }
+
+  function load_active_questions() {
+    User.get_user().then(function(response){
+      var promise = SumoDB.get_active_questions(response.username);
+      console.log(response.username);
+
+      promise.then(function(response) {
+        console.log(response);
+        var results = response.results;
+        if (results.length) {
+          display_questions(response, active_questions_list_container, load_more_active_questions_button);
+        } else {
+          var html = nunjucks.render(QUESTION_LIST_TMPL, {
+            message: MSG_NO_QUESTIONS
+          });
+          active_questions_list_container.insertAdjacentHTML('beforeend', html);
+
+          Utils.toggle_spinner();
+        }
+      });
+    });
   }
 
   /**
@@ -81,11 +106,11 @@
         // if the data-all attrbiute does not exist on the container then
         // the template is going to be embedded on the landing screen,
         // so we need to trim down the results to the latest three.
-        if (!question_list_container.dataset.all) {
+        if (!my_questions_list_container.dataset.all) {
           results = results.slice(0, 3);
         }
 
-        display_questions(response);
+        display_questions(response, my_questions_list_container, load_more_my_questions_button);
 
         var all_questions = document.getElementById('all_questions_button');
         if (all_questions) {
@@ -95,7 +120,7 @@
         var html = nunjucks.render(QUESTION_LIST_TMPL, {
           message: MSG_NO_QUESTIONS
         });
-        question_list_container.insertAdjacentHTML('beforeend', html);
+        my_questions_list_container.insertAdjacentHTML('beforeend', html);
 
         Utils.toggle_spinner();
       }
@@ -104,12 +129,15 @@
 
   function load_more_questions() {
     Utils.toggle_spinner();
-
+    var load_more_button = this;
     var url = load_more_button.dataset.next;
-    SumoDB.get_question_list(url).then(display_questions);
+    var container = document.getElementById(load_more_button.dataset.container);
+    SumoDB.get_question_list(url).then(function(response) {
+      display_questions(response, container, load_more_button)
+    });
   }
 
-  function display_questions(response) {
+  function display_questions(response, container, load_more_button) {
     var results = response.results;
 
     for (var i = 0, l = results.length; i < l; i++) {
@@ -129,16 +157,21 @@
       next: response.next,
       results: results
     });
-    question_list_container.insertAdjacentHTML('beforeend', html);
+    container.insertAdjacentHTML('beforeend', html);
 
     Utils.toggle_spinner();
   }
 
   var QuestionsController = {
     init: function() {
-      load_more_button = document.getElementById('load-more');
-      if (load_more_button) {
-        load_more_button.addEventListener('click', load_more_questions);
+      load_more_my_questions_button = document.getElementById('load-more-my-questions');
+      if (load_more_my_questions_button) {
+        load_more_my_questions_button.addEventListener('click', load_more_questions);
+      }
+
+      load_more_active_questions_button = document.getElementById('load-more-active-questions');
+      if (load_more_active_questions_button) {
+        load_more_active_questions_button.addEventListener('click', load_more_questions);
       }
 
       nunjucks.configure({ autoescape: true });
@@ -147,7 +180,9 @@
 
       Utils.toggle_spinner();
 
-      question_list_container = document.getElementById('myquestions');
+      my_questions_list_container = document.getElementById('myquestions');
+      active_questions_list_container = document.getElementById('activequestions');
+
       load_initial_questions();
     }
   };

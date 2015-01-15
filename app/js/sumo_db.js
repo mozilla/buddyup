@@ -153,6 +153,14 @@
       return request(endpoint, 'GET').then(JSON.parse);
     },
 
+    get_active_questions: function(username) {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += '?involved=' + username
+      endpoint += '&format=json'; // TODO bug 1088014
+
+      return request(endpoint, 'GET').then(JSON.parse);
+    },
+
     create_user: function() {
       var endpoint = API_V2_BASE + 'user/generate';
       endpoint += '?format=json'; // TODO bug 1088014
