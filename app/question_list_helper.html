@@ -44,14 +44,13 @@
           </ul>
 
           <div id="panel_new" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab1" aria-hidden="false">
-            <section id="myquestions" class="questions all" data-all="true"></section>
-            <button id="load-more" class="button-gray hide">Load more…</button>
+            <section id="myquestions" class="questions js-question-container all" data-all="true"></section>
+            <button id="load-more-my-questions" class="button-gray hide">Load more…</button>
           </div>
 
           <div id="panel_active" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab2" aria-hidden="true">
-            <section>
-              <p>No active question threads.</p>
-            </section>
+            <section id="activequestions" class="questions js-question-container active" data-type="buddyup-list"></section>
+            <button id="load-more-active-questions" class="button-gray hide">Load more…</button>
           </div>
 
         </section>
