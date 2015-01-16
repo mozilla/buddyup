@@ -26,3 +26,9 @@
     animation: spinner 2s ease-in-out infinite;
     z-index: 1000;
 }
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

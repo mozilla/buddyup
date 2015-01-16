@@ -1,8 +1,9 @@
-<li>
-  <a href="question.html?id={{ question.id }}">{{ question.title }}</a>
-  <ul class="interaction">
-    <li class="comment-total" data-icon-after="messages">{{ question.num_answers }}</li>
-    <li class="votes-total" data-icon-after="feedback">{{ question.num_votes_past_week }}<li>
-  </ul>
-  <span class="last-activity">{{ question.updated }}</span>
+<li class="question-item">
+  <a href="question.html?id={{ question.id }}">
+    <p class="qi__title ellipsis">{{ question.title }}</p>
+    <div class="hbox">
+      <span class="qi__activity fit">{{ question.updated }}</span>
+      <span class="qi__comments" data-icon="messages">{{ question.num_answers }}</span>
+    </div>
+  </a>
 </li>

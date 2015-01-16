@@ -1,4 +1,10 @@
 /* icons */
+@font-face {
+  font-family: "gaia-icons";
+  src: url("../media/fonts/gaia-icons.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
 [data-icon]:before {
     font-family: "gaia-icons";
     content: attr(data-icon);

@@ -1,7 +1,7 @@
-<section data-type="buddyup-list">
+<section>
   {% if results %}
     {% for day, questions in results|groupby('updated_day') %}
-      <header>{{ day }}</header>
+      <h1 class="list-day">{{ day }}</h1>
       <ul>
       {% for question in questions %}
         {% include 'question.html' %}
