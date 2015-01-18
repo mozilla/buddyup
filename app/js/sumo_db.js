@@ -205,7 +205,9 @@
 
        return request_with_auth(endpoint, 'POST', {})
         .then(function(response) {
-          return response;
+          return JSON.parse(response);
+        }, function(error) {
+          return error;
         });
     },
 

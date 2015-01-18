@@ -24,7 +24,15 @@
       if ('vote' === elem.className) {
         var answer_id = elem.dataset.id;
         SumoDB.submit_vote(answer_id).then(function(response) {
-          console.log(response);
+          if (response.num_helpful_votes) {
+            elem.textContent = response.num_helpful_votes;
+          } else {
+            // the user has already voted.
+            if (response.message === 'CONFLICT') {
+              // TODO: Show this in a user message dialog
+              console.log('Cannot vote twice for the same answer.');
+            }
+          }
         });
       }
     });
