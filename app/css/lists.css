@@ -14,7 +14,7 @@ a {
   text-decoration: none;
 }
 
-.question-item {
+.list-item {
   border-bottom: 1px solid #e7e7e7;
   margin-left: 15px;
   margin-right: 15px;
@@ -22,27 +22,27 @@ a {
   padding-left: 15px;
   padding-top: 15px;
 }
-.question-item:last-child {
+.list-item:last-child {
   border-bottom: none;
 }
 
-.qi__title {
+.li__title {
   color: #333;
   line-height: 22px;
 }
-.qi__activity {
+.li__subtitle {
   color: #858585;
   font-size: 14px;
   line-height: 17px;
 }
-.qi__comments {
+.li__comments {
   color: #858585;
   display: inline-block;
   font-size: 13px;
   font-style: italic;
   text-align: right;
 }
-.qi__comments:before {
+.li__comments:before {
   font-style: normal;
   position: relative;
   right: 5px;

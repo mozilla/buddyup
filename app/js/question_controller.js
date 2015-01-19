@@ -1,9 +1,11 @@
 'use strict';
 
-/* global asyncStorage, SumoDB, Utils, User, nunjucks */
+/* global _, asyncStorage, SumoDB, Utils, User, nunjucks */
 
 (function(exports) {
   var question_thread;
+  var suggestions;
+  var thread_introduction;
   var question_id;
   var dialog;
   var user;
@@ -78,8 +80,7 @@
 
     Utils.toggle_spinner();
 
-    document.getElementById('thread-introduction').classList.add('hide');
-    question_thread.classList.remove('hide');
+    show_panel(question_thread);
 
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
@@ -150,15 +151,12 @@
   }
 
   function load_question() {
-
-    document.getElementById('thread-introduction').classList.add('hide');
-
     if (!question_id) {
       Utils.toggle_spinner();
       return;
     }
 
-    question_thread.classList.remove('hide');
+    show_panel(question_thread);
 
     var question_content = [];
     question_content.push(SumoDB.get_question(question_id));
@@ -218,6 +216,9 @@
     if (evt.target.value.length !== 1) {
       return;
     }
+    if (!question_id) {
+      return;
+    }
 
     var is_helper = user.username !== question_object.creator.username;
     if (is_helper) {
@@ -225,10 +226,56 @@
     }
   }
 
+  function show_panel(elt) {
+    var panels = [question_thread, suggestions, thread_introduction];
+    panels.forEach(function(panel) {
+      if (panel == elt) {
+        panel.classList.remove('hide');
+      } else {
+        panel.classList.add('hide');
+      }
+    });
+  }
+
+  function give_suggestions(evt) {
+    if (question_id) {
+      return;
+    }
+
+    if (evt.target.value.length < 3) {
+      show_panel(thread_introduction);
+      return;
+    }
+
+    SumoDB.get_suggestions(evt.target.value, function(response) {
+      if (response.questions.length + response.documents.length === 0) {
+        show_panel(thread_introduction);
+        return;
+      }
+
+      var kb_items = response.documents.map(function(kb_item) {
+        return nunjucks.render('kb_item.html', {
+          kb_item: kb_item
+        });
+      });
+      var question_items = response.questions.map(function(question_item) {
+        return nunjucks.render('question.html', {
+          question: question_item
+        });
+      });
+
+      suggestions.querySelector('ul').innerHTML =
+        kb_items.concat(question_items).join('');
+      show_panel(suggestions);
+    });
+  }
+
   var QuestionController = {
     init: function() {
       question_field = document.getElementById('question_field');
       question_field.addEventListener('input', take_question);
+      question_field.addEventListener('input',
+        _.throttle(give_suggestions, 500, {leading: false}));
 
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
@@ -241,6 +288,8 @@
 
       question_thread = document.getElementById('question-thread');
       question_thread.addEventListener('click', helpful_votes_handler);
+      suggestions = document.getElementById('suggestions');
+      thread_introduction = document.getElementById('thread-introduction');
 
       // handle dialog close events
       dialog_handler();

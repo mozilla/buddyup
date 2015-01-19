@@ -39,6 +39,27 @@ root: root
 };
 })();
 })();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["kb_item.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<li class=\"list-item\">\n  <a href=\"\">\n    <p class=\"li__title ellipsis\">";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"title", env.autoesc), env.autoesc);
+output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle ellipsis\">";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"summary", env.autoesc), env.autoesc);
+output += "</span>\n    </div>\n  </a>\n</li>\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["my-profile.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
@@ -165,13 +186,13 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<li class=\"question-item\">\n  <a href=\"question.html?id=";
+output += "<li class=\"list-item\">\n  <a href=\"question.html?id=";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"id", env.autoesc), env.autoesc);
-output += "\">\n    <p class=\"qi__title ellipsis\">";
+output += "\">\n    <p class=\"li__title ellipsis\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"title", env.autoesc), env.autoesc);
-output += "</p>\n    <div class=\"hbox\">\n      <span class=\"qi__activity fit\">";
+output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle fit\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"updated", env.autoesc), env.autoesc);
-output += "</span>\n      <span class=\"qi__comments\" data-icon=\"messages\">";
+output += "</span>\n      <span class=\"li__comments\" data-icon=\"messages\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"num_answers", env.autoesc), env.autoesc);
 output += "</span>\n    </div>\n  </a>\n</li>\n";
 cb(null, output);

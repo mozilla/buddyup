@@ -72,7 +72,7 @@
     }).then(function(response) {
       display_questions(response, active_questions_list_container,
           load_more_active_questions_button);
-    });;
+    });
   }
 
   function load_initial_questions() {
@@ -105,14 +105,14 @@
     });
   }
 
-  function load_more_questions() {
+  function load_more_questions(evt) {
     Utils.toggle_spinner();
-    var load_more_button = this;
+    var load_more_button = evt.target;
     var url = load_more_button.dataset.next;
     var container = load_more_button.parentElement
         .getElementsByClassName('js-question-container')[0];
     if (container) {
-      SumoDB.get_question_list(url).then(function (response) {
+      SumoDB.get_question_list(url).then(function(response) {
         display_questions(response, container, load_more_button);
       });
     }
