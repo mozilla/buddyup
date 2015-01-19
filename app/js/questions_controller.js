@@ -180,6 +180,7 @@
           'activequestions');
 
       load_initial_questions();
+      load_active_questions();
     }
   };
 
