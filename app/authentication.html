@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="SUMO real time support app for FirefoxOS" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Welcome to BuddyUP</title>
+
+    <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+
+    <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
+
+    <!-- localization -->
+    <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+    <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
+    <script src="js/libs/l10n.js" defer></script>
+    <script src="js/libs/l10n_date.js" defer></script>
+  </head>
+  <body class="skin-organic">
+  <section role="region" class="vbox fit">
+    <header>
+      <h1>Login</h1>
+      <a href="index.html" id="close" class="close-link" data-icon="close" data-action="back">
+        <span class="visuallyhidden">Close</span>
+      </a>
+      <input type="submit" class="button-done" value="Done" form="login" />
+    </header>
+    <main id="login_container" class="fit scroll">
+      <form name="login" id="login" method="post">
+        <ul id="login_errors"></ul>
+        <p>
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username">
+          <ul id="username_errors"></ul>
+        </p>
+        <p>
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password">
+          <ul id="password_errors"></ul>
+        </p>
+      </form>
+    </main>
+  </section>
+  <script src="js/libs/async_storage.js"></script>
+  <script src="js/user.js" defer></script>
+
+  <script src="js/libs/nunjucks.js" defer></script>
+  <script src="js/templates.js" defer></script>
+
+  <script src="js/utils.js" defer></script>
+  <script src="js/sumo_db.js" defer></script>
+  <script src="js/authentication_controller.js" defer></script>
+  </body>
+</html>

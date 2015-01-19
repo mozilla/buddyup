@@ -39,6 +39,12 @@
     return user;
   }
 
+  function set_user(username, password, token) {
+    return set_credentials(username, password, token).then(function() {
+      return SumoDB.get_user(username).then(sync_user);
+    });
+  }
+
   /**
    * Create and store new user.
    */
@@ -46,11 +52,8 @@
     return SumoDB.create_user().then(function(response) {
       var promises = [];
 
-      promises.push(asyncStorage.setItem(USER_CREDENTIALS_KEY, {
-        username: response.user.username,
-        password: response.password,
-        token: response.token
-      }));
+      promises.push(set_credentials(response.user.username, response.password,
+        response.token));
 
       var normalized_user = normalize_user(response.user);
       normalized_user.last_sync = Date.now();
@@ -59,6 +62,22 @@
       return Promise.all(promises).then(function() {
         return normalized_user;
       });
+    });
+  }
+
+  function set_credentials(username, password, token) {
+    return asyncStorage.setItem(USER_CREDENTIALS_KEY, {
+      username: username,
+      password: password,
+      token: token
+    });
+  }
+
+  function sync_user(user) {
+    var normalized_user = normalize_user(user);
+    normalized_user.last_sync = Date.now();
+    return asyncStorage.setItem(USER_KEY, normalized_user).then(function() {
+      return normalized_user;
     });
   }
 
@@ -100,13 +119,7 @@
           return user;
         }
 
-        return SumoDB.get_user(user.username).then(function(user) {
-          var normalized_user = normalize_user(user);
-          normalized_user.last_sync = Date.now();
-          return asyncStorage.setItem('user', normalized_user).then(function() {
-            return normalized_user;
-          });
-        });
+        return SumoDB.get_user(user.username).then(sync_user);
       });
     },
 
@@ -120,12 +133,12 @@
      * @returns The updated user object from indexedDB
      */
     update_user: function(user_data) {
-      return SumoDB.update_user(user_data).then(function(user) {
-        var normalized_user = normalize_user(user);
-        normalized_user.last_sync = Date.now();
-        return asyncStorage.setItem('user', normalized_user).then(function() {
-          return normalized_user;
-        });
+      return SumoDB.update_user(user_data).then(sync_user);
+    },
+
+    authenticate_user: function(username, password) {
+      return SumoDB.get_token(username, password).then(function(token) {
+        return set_user(username, password, token);
       });
     }
   };

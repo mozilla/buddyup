@@ -89,6 +89,19 @@
         lang: navigator.language,
         metadata: metas
       };
+    },
+    /**
+     * Clear then load the list of errors for a field or a form.
+     */
+    refresh_error_list: function(list, errors) {
+      list.innerHTML = '';
+      if (errors) {
+        for (var i in errors) {
+          var error = document.createElement('li');
+          error.appendChild(document.createTextNode(errors[i]));
+          list.appendChild(error);
+        }
+      }
     }
   };
 

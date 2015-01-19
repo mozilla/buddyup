@@ -11,18 +11,6 @@
   var sequence_id = 0;
   var last_request;
 
-  function get_token() {
-    var endpoint = API_V1_BASE + 'users/get_token';
-    var data = {
-      username: window.user.username,
-      password: window.user.password
-    };
-    return request(endpoint, 'POST', data).then(function(response) {
-      var json = JSON.parse(response);
-      return json.token;
-    });
-  }
-
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
       var req = new XMLHttpRequest();
@@ -39,7 +27,7 @@
         if (req.status >= 200 && req.status < 300) {
           resolve(req.responseText);
         } else {
-          reject(Error(req.statusText));
+          reject(req.responseText);
         }
       };
 
@@ -187,6 +175,18 @@
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
+    },
+
+    get_token: function(username, password) {
+      var endpoint = API_V1_BASE + 'users/get_token';
+      var data = {
+        username: username,
+        password: password
+      };
+      return request(endpoint, 'POST', data).then(function(response) {
+        var json = JSON.parse(response);
+        return json.token;
+      });
     },
 
     create_user: function() {
