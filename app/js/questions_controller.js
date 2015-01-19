@@ -111,7 +111,7 @@
     Utils.toggle_spinner();
     var load_more_button = this;
     var url = load_more_button.dataset.next;
-    var container = load_more_button.parentElement()
+    var container = load_more_button.parentElement
         .getElementsByClassName('.question-container')[0];
     if (container) {
       SumoDB.get_question_list(url).then(function (response) {
