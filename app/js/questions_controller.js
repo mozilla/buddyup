@@ -44,31 +44,6 @@
 
     var tab_panels = container.querySelectorAll('[role="tabpanel"]');
     toggle_state(tab_panels, 'aria-hidden');
-
-    load_active_questions();
-  }
-
-  function load_active_questions() {
-    User.get_user().then(function(response){
-      var promise = SumoDB.get_active_questions(response.username);
-      console.log(response.username);
-
-      promise.then(function(response) {
-        console.log(response);
-        var results = response.results;
-        if (results.length) {
-          display_questions(response, active_questions_list_container,
-              load_more_active_questions_button);
-        } else {
-          var html = nunjucks.render(QUESTION_LIST_TMPL, {
-            message: MSG_NO_QUESTIONS
-          });
-          active_questions_list_container.insertAdjacentHTML('beforeend', html);
-
-          Utils.toggle_spinner();
-        }
-      });
-    });
   }
 
   /**
@@ -91,6 +66,17 @@
     });
   }
 
+  function load_active_questions() {
+    User.get_user().then(function(response) {
+      var promise = SumoDB.get_active_questions(response.username);
+
+      promise.then(function(response) {
+        display_questions(response, active_questions_list_container,
+            load_more_active_questions_button);
+      });
+    });
+  }
+
   function load_initial_questions() {
     var params = Utils.get_url_parameters(location);
 
@@ -102,30 +88,22 @@
     }
 
     promise.then(function(response) {
-      var results = response.results;
-      if (results.length) {
-        // if the data-all attrbiute does not exist on the container then
+      if (response.results.length) {
+        // if the data-all attribute does not exist on the container then
         // the template is going to be embedded on the landing screen,
         // so we need to trim down the results to the latest three.
         if (!my_questions_list_container.dataset.all) {
-          results = results.slice(0, 3);
+          response.results = response.results.slice(0, 3);
         }
-
-        display_questions(response, my_questions_list_container,
-            load_more_my_questions_button);
 
         var all_questions = document.getElementById('all_questions_button');
         if (all_questions) {
           all_questions.classList.remove('hide');
         }
-      } else {
-        var html = nunjucks.render(QUESTION_LIST_TMPL, {
-          message: MSG_NO_QUESTIONS
-        });
-        my_questions_list_container.insertAdjacentHTML('beforeend', html);
-
-        Utils.toggle_spinner();
       }
+
+      display_questions(response, my_questions_list_container,
+          load_more_my_questions_button);
     });
   }
 
@@ -133,33 +111,44 @@
     Utils.toggle_spinner();
     var load_more_button = this;
     var url = load_more_button.dataset.next;
-    var container = document.getElementById(load_more_button.dataset.container);
-    SumoDB.get_question_list(url).then(function(response) {
-      display_questions(response, container, load_more_button);
-    });
+    var container = load_more_button.parentElement()
+        .getElementsByClassName('.question-container')[0];
+    if (container) {
+      SumoDB.get_question_list(url).then(function (response) {
+        display_questions(response, container, load_more_button);
+      });
+    }
   }
 
   function display_questions(response, container, load_more_button) {
     var results = response.results;
+    var html;
 
-    for (var i = 0, l = results.length; i < l; i++) {
-      var updated = results[i].updated;
-      results[i].updated_day = updated.split('T')[0];
-      results[i].updated = Utils.time_since(new Date(updated));
+    if (results.length) {
+      for (var i = 0, l = results.length; i < l; i++) {
+        var updated = results[i].updated;
+        results[i].updated_day = updated.split('T')[0];
+        results[i].updated = Utils.time_since(new Date(updated));
+      }
+
+      if (load_more_button && response.next) {
+        load_more_button.classList.remove('hide');
+        load_more_button.dataset.next = response.next;
+      } else if (load_more_button) {
+        load_more_button.classList.add('hide');
+      }
+
+      html = nunjucks.render(QUESTION_LIST_TMPL, {
+        next: response.next,
+        results: results
+      });
+      container.insertAdjacentHTML('beforeend', html);
+    } else {
+      html = nunjucks.render(QUESTION_LIST_TMPL, {
+        message: MSG_NO_QUESTIONS
+      });
+      container.insertAdjacentHTML('beforeend', html);
     }
-
-    if (load_more_button && response.next) {
-      load_more_button.classList.remove('hide');
-      load_more_button.dataset.next = response.next;
-    } else if (load_more_button) {
-      load_more_button.classList.add('hide');
-    }
-
-    var html = nunjucks.render(QUESTION_LIST_TMPL, {
-      next: response.next,
-      results: results
-    });
-    container.insertAdjacentHTML('beforeend', html);
 
     Utils.toggle_spinner();
   }
