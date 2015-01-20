@@ -121,22 +121,6 @@
     padding: .7rem .9rem;
     border-radius: 6px;
 }
-.comment-meta,
-.vote {
-    font-size: .8rem;
-}
-.comment-meta {
-    width: 60%;
-}
-.vote {
-    display: inline-block;
-    width: 25%;
-    text-align: right;
-}
-.vote:before {
-    margin-right: .3rem;
-    font-size: .8rem;
-}
 /* footer */
 footer button:hover {
     cursor: pointer;

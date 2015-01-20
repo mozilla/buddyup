@@ -207,10 +207,26 @@
     get_user: function(username) {
       var endpoint = API_V2_BASE + 'user/' + username + '/';
       endpoint += '?format=json'; // TODO bug 1088014
-
       // settings is only visible if the user authenticated so, we need
       // to do a request_with_auth here.
       return request_with_auth(endpoint, 'GET').then(JSON.parse);
+    },
+     /**
+     * Submits a new helpful vote for the specified answer.
+     * @param {string} answer_id - The answer id to receive the helpful vote.
+     */
+     submit_vote: function(answer_id) {
+       var endpoint = API_V2_BASE + 'answer/';
+       endpoint += answer_id + '/';
+       endpoint += 'helpful/';
+       endpoint += '?format=json'; // TODO bug 1088014
+
+       return request_with_auth(endpoint, 'POST', {})
+        .then(function(response) {
+          return JSON.parse(response);
+        }, function(error) {
+          return error;
+        });
     },
 
     update_user_settings: function(user, setting) {
