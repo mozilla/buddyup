@@ -5,7 +5,7 @@
   "scripts": {
     "test": ""
   },
-  "repository": "https://github.com/ossreleasefeed/buddyup",
+  "repository": "https://github.com/mozilla/buddyup",
   "author": "Mozilla",
   "license": "MIT",
   "dependencies": {},
