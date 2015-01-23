@@ -1,10 +1,10 @@
 'use strict';
 
-/* global User */
+/* global Settings, User */
 
 (function(exports) {
-  var API_V1_BASE = 'https://support.allizom.org/api/1/';
-  var API_V2_BASE = 'https://support.allizom.org/api/2/';
+  var API_V1_BASE = Settings.BASE_SERVER + '/api/1/';
+  var API_V2_BASE = Settings.BASE_SERVER + '/api/2/';
   var PRODUCT = 'firefox-os';
 
   var in_progress_requests = {};

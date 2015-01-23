@@ -44,7 +44,9 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<li class=\"list-item\">\n  <a href=\"\">\n    <p class=\"li__title ellipsis\">";
+output += "<li class=\"list-item\">\n  <a href=\"kb.html?slug=";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"slug", env.autoesc), env.autoesc);
+output += "\">\n    <p class=\"li__title ellipsis\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"title", env.autoesc), env.autoesc);
 output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle ellipsis\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"summary", env.autoesc), env.autoesc);

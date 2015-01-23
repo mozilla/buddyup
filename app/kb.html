@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>BuddyUP</title>
+
+    <link rel="stylesheet" href="css/building_blocks/layout.css" media="screen" />
+    <link rel="stylesheet" href="css/building_blocks/headers.css" media="screen" />
+
+    <link rel="stylesheet" href="css/fira.css" media="screen" />
+    <link rel="stylesheet" href="css/buddyup.css" media="screen" />
+    <link rel="stylesheet" href="css/utils.css" media="screen" />
+    <link rel="stylesheet" href="css/windowing.css">
+
+    <!-- localization -->
+    <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+    <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
+    <script src="js/libs/l10n.js" defer></script>
+  </head>
+  <body class="skin-organic">
+    <section role="region" class="vbox fit">
+      <header>
+        <h1>Help Article</h1>
+        <a href="index.html" id="back" class="back-link" data-icon="back-light">
+          <span class="visuallyhidden">Back</span>
+        </a>
+      </header>
+      <iframe id="kb-view">
+      </iframe>
+    </section>
+    <script src="js/settings.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/kb_controller.js"></script>
+  </body>
+</html>
