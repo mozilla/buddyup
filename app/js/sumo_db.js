@@ -122,6 +122,18 @@
       return request_with_auth(endpoint, 'POST');
     },
 
+    solve_question: function(question_id, answer_id) {
+      var endpoint = API_V2_BASE + 'question/';
+      endpoint += question_id +'/solve/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      var vote_promise = SumoDB.submit_vote(answer_id);
+      var solved_promise = request_with_auth(endpoint, 'POST',
+        {answer: answer_id});
+
+      return Promise.all([vote_promise, solved_promise]);
+    },
+
     /**
      * Get list of questions for the current user
      */

@@ -1,0 +1,26 @@
+.discuss li {
+    display: flex;
+    flex-flow: row;
+    margin-top: .8rem;
+    margin-left: 1.5rem;
+}
+.discuss li.helper-comment {
+    margin-right: 1.5rem;
+    margin-left: 0;
+}
+.comment-meta {
+    font-size: 1rem;
+}
+.vote {
+    text-align: right;
+}
+.vote,
+.vote:before {
+    font-size: 1.1rem;
+}
+.vote:before {
+    margin-right: .3rem;
+}
+.vote.active {
+    color: #0095dd;
+}

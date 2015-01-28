@@ -1,3 +1,7 @@
 {% for comment in results %}
-  <li {% if comment.author != author %}class="helper-comment"{% endif %}>{% include 'comment.html' %}</li>
+  <li
+  data-id="{{ comment.id }}"
+  {% if comment.author != author %}class="helper-comment"{% endif %}>
+    {% include 'comment.html' %}
+  </li>
 {% endfor %}

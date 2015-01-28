@@ -5,6 +5,11 @@
 @import 'animations.css';
 @import 'utils.css';
 
+html {
+  /* Use the same base size as Gaia for building blocks using rem units*/
+  font-size: 10px;
+}
+
 .intro {
     padding: .2rem 1rem;
 }
@@ -99,16 +104,6 @@
 .questions-cat {
     text-transform: uppercase;
 }
-.discuss li {
-    display: flex;
-    flex-flow: row;
-    margin-top: .8rem;
-    margin-left: 1.5rem;
-}
-.discuss li.helper-comment {
-    margin-right: 1.5rem;
-    margin-left: 0;
-}
 .discuss .avatar {
     flex: 1 0 10%;
     align-self: center;
@@ -174,4 +169,9 @@ section.skin-organic section[role="region"] > header:first-child h1,
     font-size: 1.5rem;
     font-style: normal;
     text-align: inherit;
+}
+
+/* Overrides confirm.css to adapt to the number of buttons */
+form[role="dialog"][data-type="confirm"] menu {
+    display: flex !important;
 }

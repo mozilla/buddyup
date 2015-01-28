@@ -3,24 +3,37 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<div class=\"message\">\n  <p>";
+output += "<div class=\"message vbox\">\n  <p>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
 output += "</p>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
-output += "\n    <footer>\n      <span class=\"comment-meta\">";
+output += "\n    <p class=\"hbox\">\n      <span class=\"comment-meta fit\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
 output += " &ndash; ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"author", env.autoesc), env.autoesc);
-output += "</span>\n      <!-- if the comment object has a question property, this is a comment and not the question\n      so we should add the voting button -->\n      ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"question", env.autoesc)) {
-output += "\n        <button class=\"vote\" data-icon=\"feedback\" data-id=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"id", env.autoesc), env.autoesc);
-output += "\">";
+output += "</span>\n      ";
+output += "\n      ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"question", env.autoesc) && !runtime.contextOrFrameLookup(context, frame, "is_my_question")) {
+output += "\n        <button class=\"js-vote vote\" data-icon=\"feedback\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"num_helpful_votes", env.autoesc), env.autoesc);
 output += "</button>\n      ";
 ;
 }
-output += "\n    </footer>\n  ";
+output += "\n    </p>\n    ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"id", env.autoesc) == runtime.contextOrFrameLookup(context, frame, "solution_id")) {
+output += "\n      <p class=\"is_solution\">Solution ✓</p>\n    ";
+;
+}
+else {
+output += "\n      ";
+if(runtime.contextOrFrameLookup(context, frame, "is_my_question") && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"username", env.autoesc) != runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"username", env.autoesc)) {
+output += "\n        <button class=\"js-solve\">Mark question as resolved</button>\n      ";
+;
+}
+output += "\n    ";
+;
+}
+output += "\n  ";
 ;
 }
 else {
@@ -350,18 +363,20 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n  <li ";
+output += "\n  <li\n  data-id=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"id", env.autoesc), env.autoesc);
+output += "\"\n  ";
 if(runtime.memberLookup((t_4),"author", env.autoesc) != runtime.contextOrFrameLookup(context, frame, "author")) {
 output += "class=\"helper-comment\"";
 ;
 }
-output += ">";
+output += ">\n    ";
 env.getTemplate("comment.html", function(t_7,t_5) {
 if(t_7) { cb(t_7); return; }
 t_5.render(context.getVariables(), frame.push(), function(t_8,t_6) {
 if(t_8) { cb(t_8); return; }
 output += t_6
-output += "</li>\n";
+output += "\n  </li>\n";
 })});
 }
 }

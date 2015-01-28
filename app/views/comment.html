@@ -1,14 +1,20 @@
-<div class="message">
+<div class="message vbox">
   <p>{{ comment.content }}</p>
   {% if comment.updated %}
-    <footer>
-      <span class="comment-meta">{{ comment.created }} &ndash; {{ comment.author }}</span>
-      <!-- if the comment object has a question property, this is a comment and not the question
-      so we should add the voting button -->
-      {% if comment.question %}
-        <button class="vote" data-icon="feedback" data-id="{{ comment.id }}">{{ comment.num_helpful_votes }}</button>
+    <p class="hbox">
+      <span class="comment-meta fit">{{ comment.created }} &ndash; {{ comment.author }}</span>
+      {# Comments with a question property are not the original question #}
+      {% if comment.question and not is_my_question %}
+        <button class="js-vote vote" data-icon="feedback">{{ comment.num_helpful_votes }}</button>
       {% endif %}
-    </footer>
+    </p>
+    {% if comment.id == solution_id %}
+      <p class="is_solution">Solution ✓</p>
+    {% else %}
+      {% if is_my_question and user.username != comment.creator.username  %}
+        <button class="js-solve">Mark question as resolved</button>
+      {% endif %}
+    {% endif %}
   {% else %}
     <span>Sending…</span>
   {% endif %}

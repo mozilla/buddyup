@@ -7,22 +7,35 @@
   var suggestions;
   var thread_introduction;
   var question_id;
-  var dialog;
 
   var question_field;
 
   var question_object;
+  var solution_id;
 
-  /**
-   * Handles clicks on the helpful vote icon.
-   */
-  function helpful_votes_handler(evt) {
+  function handle_event(evt) {
     var elem = evt.target;
 
-    if (!elem.classList.contains('vote')) {
-      return;
+    var answer_id = null;
+    var node = elem.parentNode;
+    while (node) {
+      if (node.dataset.id) {
+        answer_id = node.dataset.id;
+        node = null;
+      } else {
+        node = node.parentNode;
+      }
     }
-    var answer_id = elem.dataset.id;
+
+    if (elem.classList.contains('js-vote')) {
+      return handle_helpful_votes(elem, answer_id);
+    }
+    if (elem.classList.contains('js-solve')) {
+      return handle_solving(elem, answer_id);
+    }
+  }
+
+  function handle_helpful_votes(elem, answer_id) {
     SumoDB.submit_vote(answer_id).then(function(response) {
       elem.classList.add('active');
 
@@ -34,17 +47,40 @@
     });
   }
 
+  function handle_solving(elem, answer_id) {
+    var confirm_solve = document.getElementById('confirm_solve');
+    confirm_solve.classList.remove('hide');
+
+    confirm_solve.addEventListener('click', function(evt) {
+      if (!evt.target.classList.contains('recommend')) {
+        return;
+      }
+      SumoDB.solve_question(question_id, answer_id).then(function(response) {
+        var p = document.createElement('p');
+        p.textContent = 'Solution ✓';
+        p.classList.add('is_solution');
+        elem.parentNode.replaceChild(p, elem);
+      });
+    });
+
+  }
+
+  function close_question() {
+    document.getElementById('question_form').classList.add('hide');
+  }
+
   /**
    * Handles close button events from a dialog modal.
    */
-  function dialog_handler() {
-    dialog = document.querySelector('#first_question_help');
-    var closeButton = dialog.querySelector('#confirm');
-
-    closeButton.addEventListener('click', function(evt) {
+  function close_dialog_handler() {
+    var dialogs = document.querySelectorAll('form[data-type="confirm"]');
+    function close_dialog(evt) {
       evt.preventDefault();
-      dialog.classList.add('hide');
-    });
+      evt.target.classList.add('hide');
+    }
+    for (var dialog of dialogs) {
+      dialog.addEventListener('submit', close_dialog);
+    }
   }
 
   /**
@@ -116,10 +152,11 @@
 
       // Only handle first time help message scenario for questions
       if (comment.answers) {
-        asyncStorage.getItem('seen_first_question_help', function(response) {
+        asyncStorage.getItem('seen_first_question_help').then(function(response) {
           // See if the flag exist
           if (!response) {
             // flag does not exist, show the dialog and set the flag
+            var dialog = document.querySelector('#first_question_help');
             dialog.classList.remove('hide');
             asyncStorage.setItem('seen_first_question_help', true);
           }
@@ -129,7 +166,9 @@
       comment.created = Utils.time_since(new Date(comment.created));
       comment.author = comment.creator.display_name || comment.creator.username;
       list_item.innerHTML = nunjucks.render('comment.html', {
-        comment: comment
+        comment: comment,
+        is_my_question: question_object.creator.username === user.username,
+        user: user
       });
 
       window.top.postMessage({question_id: question_id, comment: comment}, '*');
@@ -179,7 +218,6 @@
       var dialog = document.getElementById('already_taken');
       dialog.classList.remove('hide');
       dialog.addEventListener('submit', function(evt) {
-        evt.preventDefault();
         history.back();
       });
       throw new Error('Already taken');
@@ -190,6 +228,10 @@
     Utils.toggle_spinner();
 
     question_object = question;
+    solution_id = question.solution;
+    if (solution_id) {
+      close_question();
+    }
 
     question.content = question.title;
     answers.push(question);
@@ -207,6 +249,8 @@
       var html = nunjucks.render('thread.html', {
         author: question.creator.display_name || question.creator.username,
         user: user,
+        is_my_question: question.creator.username === user.username,
+        solution_id: solution_id,
         results: answers
       });
       var list = document.getElementById('comment-list');
@@ -285,12 +329,12 @@
       form.addEventListener('submit', submit_comment);
 
       question_thread = document.getElementById('question-thread');
-      question_thread.addEventListener('click', helpful_votes_handler);
+      question_thread.addEventListener('click', handle_event);
       suggestions = document.getElementById('suggestions');
       thread_introduction = document.getElementById('thread-introduction');
 
       // handle dialog close events
-      dialog_handler();
+      close_dialog_handler();
 
       var question_view = location.search ? true : false;
       if (question_view) {

@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="css/fira.css" media="screen" />
     <link rel="stylesheet" href="css/buddyup.css" media="screen" />
-    <link rel="stylesheet" href="css/thread.css" media="screen" />
+    <link rel="stylesheet" href="css/comment.css" media="screen" />
     <link rel="stylesheet" href="css/utils.css" media="screen" />
 
     <!-- localization -->
@@ -71,6 +71,17 @@
         <p>Another helper has answered this question, please choose another.</p>
       </section>
       <menu>
+        <button class="recommend">Ok</button>
+      </menu>
+    </form>
+
+    <form id="confirm_solve" role="dialog" data-type="confirm" class="hide">
+      <section>
+        <h1>Has your question been solved?</h1>
+        <p>Would you like to mark this question as solved and let the helper know you won’t need any further help?</p>
+      </section>
+      <menu>
+        <button>Cancel</button>
         <button class="recommend">Ok</button>
       </menu>
     </form>
