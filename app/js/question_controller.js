@@ -171,9 +171,7 @@
   }
 
   function check_if_taken([question, answers]) {
-    if (!question.taken_by ||
-        question.taken_by.username == user.username ||
-        question.taken_until - new Date() < 0) {
+    if (!question.taken_by || question.taken_by.username == user.username) {
       return [question, answers];
     }
 
