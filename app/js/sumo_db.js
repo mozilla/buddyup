@@ -323,6 +323,14 @@
           delete in_progress_requests[request_sequence];
         }
       });
+      return request(endpoint, 'GET');
+    },
+
+    request_password_reset: function(username) {
+      var endpoint = API_V2_BASE + 'user/';
+      endpoint += username + '/request_password_reset/';
+
+      return request(endpoint, 'GET');
     }
   };
   exports.SumoDB = SumoDB;
