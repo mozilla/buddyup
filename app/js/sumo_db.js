@@ -129,7 +129,6 @@
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?product=' + PRODUCT;
       endpoint += '&creator=' + user.username;
-      endpoint += '&locale=' + user.locale;
       endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
