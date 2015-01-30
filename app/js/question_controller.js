@@ -8,7 +8,6 @@
   var thread_introduction;
   var question_id;
   var dialog;
-  var user;
 
   var question_field;
 
@@ -88,27 +87,28 @@
     var list_item = document.createElement('li');
 
     list.appendChild(list_item).innerHTML += fake_comment;
-    var is_helper = question_object &&
-      user.username !== question_object.creator.username;
-    if (is_helper) {
-      list_item.classList.add('helper-comment');
-    }
-    list_item.scrollIntoView();
+    User.get_user().then(function(user) {
+      var is_helper = question_object &&
+        user.username !== question_object.creator.username;
+      if (is_helper) {
+        list_item.classList.add('helper-comment');
+      }
+      list_item.scrollIntoView();
 
-    var submit_promise;
-    if (question_id) {
-      submit_promise = submit_answer(question_id, comment);
-    } else {
-      submit_promise = submit_question(comment).then(function(comment) {
+      var submit_promise;
+      if (question_id) {
+        submit_promise = submit_answer(question_id, comment);
+      } else {
+        submit_promise = submit_question(comment).then(function(comment) {
 
-        add_thread_header(comment);
+          add_thread_header(comment);
 
-        comment.content = comment.title;
-        return comment;
-      });
-    }
-
-    submit_promise.then(function(comment) {
+          comment.content = comment.title;
+          return comment;
+        });
+      }
+      return submit_promise;
+    }).then(function(comment) {
 
       Utils.toggle_spinner();
 
@@ -171,17 +171,19 @@
   }
 
   function check_if_taken([question, answers]) {
-    if (!question.taken_by || question.taken_by.username == user.username) {
-      return [question, answers];
-    }
+    return User.get_user().then(function(user) {
+      if (!question.taken_by || question.taken_by.username == user.username) {
+        return [question, answers];
+      }
 
-    var dialog = document.getElementById('already_taken');
-    dialog.classList.remove('hide');
-    dialog.addEventListener('submit', function(evt) {
-      evt.preventDefault();
-      history.back();
+      var dialog = document.getElementById('already_taken');
+      dialog.classList.remove('hide');
+      dialog.addEventListener('submit', function(evt) {
+        evt.preventDefault();
+        history.back();
+      });
+      throw new Error('Already taken');
     });
-    throw new Error('Already taken');
   }
 
   function display_question([question, answers]) {
@@ -201,13 +203,15 @@
     }
 
     add_thread_header(question);
-    var html = nunjucks.render('thread.html', {
-      author: question.creator.display_name || question.creator.username,
-      user: user,
-      results: answers
+    User.get_user().then(function(user) {
+      var html = nunjucks.render('thread.html', {
+        author: question.creator.display_name || question.creator.username,
+        user: user,
+        results: answers
+      });
+      var list = document.getElementById('comment-list');
+      list.insertAdjacentHTML('beforeend', html);
     });
-    var list = document.getElementById('comment-list');
-    list.insertAdjacentHTML('beforeend', html);
   }
 
   function take_question(evt) {
@@ -218,10 +222,12 @@
       return;
     }
 
-    var is_helper = user.username !== question_object.creator.username;
-    if (is_helper) {
-      SumoDB.take_question(question_id);
-    }
+    User.get_user().then(function(user) {
+      var is_helper = user.username !== question_object.creator.username;
+      if (is_helper) {
+        SumoDB.take_question(question_id);
+      }
+    });
   }
 
   function show_panel(elt) {
@@ -277,12 +283,6 @@
 
       var form = document.getElementById('question_form');
       form.addEventListener('submit', submit_comment);
-
-      // we will need the user details whether the user is posting a question
-      // or just viewing a question so, load the user during init
-      User.get_user().then(function(response) {
-        user = response;
-      });
 
       question_thread = document.getElementById('question-thread');
       question_thread.addEventListener('click', helpful_votes_handler);
