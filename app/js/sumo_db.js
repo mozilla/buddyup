@@ -175,7 +175,7 @@
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?product=' + PRODUCT;
       endpoint += '&is_solved=0';
-      endpoint += '&taken_by=null';
+      endpoint += '&is_taken=0';
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
