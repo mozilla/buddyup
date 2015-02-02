@@ -189,6 +189,17 @@
       });
     },
 
+    register_user: function(username, password, email) {
+      var endpoint = API_V2_BASE + 'user/';
+      endpoint += '?format=json' // TODO bug 1088014
+      var data = {
+        username: username,
+        password: password,
+        email: email
+      };
+      return request(endpoint, 'POST', data).then(JSON.parse);
+    },
+
     create_user: function() {
       var endpoint = API_V2_BASE + 'user/generate';
       endpoint += '?format=json'; // TODO bug 1088014

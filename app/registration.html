@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="SUMO real time support app for FirefoxOS" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Welcome to BuddyUP</title>
+
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+
+  <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
+
+  <!-- localization -->
+  <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+  <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
+  <script src="js/libs/l10n.js" defer></script>
+  <script src="js/libs/l10n_date.js" defer></script>
+</head>
+<body class="skin-organic">
+<section role="region" class="vbox fit">
+  <header>
+    <h1>Create Account</h1>
+    <a href="authentication.html" id="close" class="close-link" data-icon="close">
+      <span class="visuallyhidden">Close</span>
+    </a>
+    <input type="submit" class="button-done" value="Done" form="register" />
+  </header>
+  <main id="register_container" class="fit scroll">
+    <form name="register" id="register" method="post">
+      <p>
+        A support account lets you answer support questions and receive alerts to responses.
+      </p>
+      <ul id="register_errors"></ul>
+      <p>
+        <label for="email">Email Address</label>
+        <input type="email" name="email" id="email" />
+        <ul id="email_errors"></ul>
+      </p>
+      <p>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+        <ul id="username_errors"></ul>
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+        <ul id="password_errors"></ul>
+      </p>
+      <p>
+        <a href="authentication.html">Already registered? Sign in</a>
+      </p>
+    </form>
+    <div id="success_message" class="hide">
+      <h2>Confirm Your Account</h2>
+      <p>
+        We will send an email to:
+        <br /><span id="success_email"></span>
+      </p>
+      Before you can log in, you need to confirm your email address. Next time you check your email, click the verification link to confirm your Account.
+    </div>
+  </main>
+</section>
+<script src="js/libs/async_storage.js"></script>
+<script src="js/user.js" defer></script>
+
+<script src="js/libs/nunjucks.js" defer></script>
+<script src="js/templates.js" defer></script>
+
+<script src="js/utils.js" defer></script>
+<script src="js/sumo_db.js" defer></script>
+<script src="js/registration_controller.js" defer></script>
+</body>
+</html>

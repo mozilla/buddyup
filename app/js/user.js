@@ -140,6 +140,16 @@
       return SumoDB.get_token(username, password).then(function(token) {
         return set_user(username, password, token);
       });
+    },
+
+    register: function(username, password, email) {
+      var promise = SumoDB.register_user(username, password, email);
+
+      return promise.then(function() {
+        return User.authenticate_user(username, password);
+      }).then(function(token) {
+        return User.set_user(username, password, token);
+      });
     }
   };
   exports.User = User;
