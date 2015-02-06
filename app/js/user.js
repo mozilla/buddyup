@@ -40,8 +40,9 @@
     return user;
   }
 
-  function set_user(username, password, token) {
-    return set_credentials(username, password, token).then(function() {
+  function set_user(username, password, token, is_helper) {
+    return set_credentials(username, password, token, is_helper)
+    .then(function() {
       return SumoDB.get_user(username).then(sync_user);
     });
   }
@@ -53,8 +54,9 @@
     return SumoDB.create_user().then(function(response) {
       var promises = [];
 
+      var is_helper = false;
       promises.push(set_credentials(response.user.username, response.password,
-        response.token));
+        response.token, is_helper));
 
       var normalized_user = normalize_user(response.user);
       normalized_user.last_sync = Date.now();
@@ -66,11 +68,16 @@
     });
   }
 
-  function set_credentials(username, password, token) {
+  function set_credentials(username, password, token, is_helper) {
+    if (typeof is_helper == 'undefined') {
+      console.error('foo');
+      return;
+    }
     return asyncStorage.setItem(USER_CREDENTIALS_KEY, {
       username: username,
       password: password,
-      token: token
+      token: token,
+      is_helper: is_helper
     });
   }
 
@@ -124,6 +131,12 @@
       });
     },
 
+    is_helper: function() {
+      return User.get_credentials().then(function(credentials) {
+        return credentials.is_helper;
+      });
+    },
+
     /**
      * Updates the local user data as well as last sync time.
      * @param {object} user_data - The ammended user data and settings i.e.
@@ -139,7 +152,8 @@
 
     authenticate_user: function(username, password) {
       return SumoDB.get_token(username, password).then(function(token) {
-        return set_user(username, password, token);
+        var is_helper = true;
+        return set_user(username, password, token, is_helper);
       });
     },
 
@@ -149,7 +163,8 @@
       return promise.then(function() {
         return User.authenticate_user(username, password);
       }).then(function(token) {
-        return User.set_user(username, password, token);
+        var is_helper = true;
+        return User.set_user(username, password, token, is_helper);
       });
     }
   };

@@ -4,6 +4,7 @@
 
 (function(exports) {
   var question_thread;
+  var question_form;
   var suggestions;
   var thread_introduction;
   var question_id;
@@ -66,7 +67,7 @@
   }
 
   function close_question() {
-    document.getElementById('question_form').classList.add('hide');
+    question_form.parentElement.classList.add('hide');
   }
 
   /**
@@ -233,6 +234,8 @@
       close_question();
     }
 
+    display_sign_in_if_needed(question);
+
     question.content = question.title;
     answers.push(question);
     answers.reverse();
@@ -318,6 +321,23 @@
     });
   }
 
+  // Needed when the user is not a helper nor the question creator
+  function display_sign_in_if_needed(question) {
+    User.get_user().then(function(user) {
+      if (user.username == question.creator.username) {
+        return;
+      }
+      User.is_helper().then(function(is_helper) {
+        if (is_helper) {
+          return;
+        }
+        // FIXME Careful with the presence of those elements
+        document.getElementById('sign-in-link').classList.remove('hide');
+        question_form.classList.add('hide');
+      });
+    });
+  }
+
   var QuestionController = {
     init: function() {
       question_field = document.getElementById('question_field');
@@ -325,8 +345,8 @@
       question_field.addEventListener('input',
         _.throttle(give_suggestions, 500, {leading: false}));
 
-      var form = document.getElementById('question_form');
-      form.addEventListener('submit', submit_comment);
+      question_form = document.getElementById('question_form');
+      question_form.addEventListener('submit', submit_comment);
 
       question_thread = document.getElementById('question-thread');
       question_thread.addEventListener('click', handle_event);

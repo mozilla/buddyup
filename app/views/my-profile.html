@@ -2,17 +2,19 @@
   <fieldset class="user">
     <p>
       <label for="display_name" class="visuallyhidden">Your Display Name</label>
-      <input type="text" name="display_name" id="display_name" value="{{ results.user.display_name }}" required />
+      <input type="text" name="display_name" id="display_name" value="{{ user.display_name }}" required />
       <button type="reset">Clear</button>
     </p>
-    <ul class="achievements">
-      <li>
-        <span class="count" data-icon="tick">{{ results.user.solution_count }}</span> Questions Answered
-      </li>
-      <li>
-        <span class="count" data-icon="feedback">{{ results.user.helpfulness }}</span> Helpful Upvotes
-      </li>
-    </ul>
+    {% if is_helper %}
+      <ul class="achievements">
+        <li>
+          <span class="count" data-icon="tick">{{ user.solution_count }}</span> Questions Answered
+        </li>
+        <li>
+          <span class="count" data-icon="feedback">{{ user.helpfulness }}</span> Helpful Upvotes
+        </li>
+      </ul>
+    {% endif %}
   </fieldset>
 
   <fieldset class="notifications">
@@ -21,53 +23,66 @@
       <li>
         <label for="new_comment_notify" class="pack-switch">
           <input type="checkbox" id="new_comment_notify" name="new_comment_notify"
-            {% if results.user.new_comment_notify %}checked="checked"{% endif %} />
+            {% if user.new_comment_notify %}checked="checked"{% endif %} />
           <span>New Comments</span>
         </label>
       </li>
-      <li>
-        <label for="buddyup_reminder" class="pack-switch">
-          <input type="checkbox" id="buddyup_reminder" name="buddyup_reminder"
-            {% if results.user.buddyup_reminder %}checked="checked"{% endif %} />
-          <span>BuddyUp Reminder</span>
-        </label>
-      </li>
+      {% if is_helper %}
+        <li>
+          <label for="buddyup_reminder" class="pack-switch">
+            <input type="checkbox" id="buddyup_reminder" name="buddyup_reminder"
+              {% if user.buddyup_reminder %}checked="checked"{% endif %} />
+            <span>BuddyUp Reminder</span>
+          </label>
+        </li>
+      {% endif %}
+
     </ul>
   </fieldset>
 
-  <fieldset class="question-filters">
-    <h2>Answer A Question Filter</h2>
-    <section>
-      <p>The unanswered questions list will be filtered based on the setting below.</p>
+  {% if is_helper %}
 
-      <label for="locale">Language</label>
-      <span class="button icon icon-dialog">
-        <select id="locale">
-          {% for locale in results.locales %}
-            <option {% if locale == results.user.locale %}selected="selected"{% endif %}>{{ locale }}</option>
+    <fieldset class="question-filters">
+      <h2>Answer A Question Filter</h2>
+      <section>
+        <p>The unanswered questions list will be filtered based on the setting below.</p>
+
+        <label for="locale">Language</label>
+        <span class="button icon icon-dialog">
+          <select id="locale">
+            {% for locale in locales %}
+              <option {% if locale == user.locale %}selected="selected"{% endif %}>{{ locale }}</option>
+            {% endfor %}
+          </select>
+        </span>
+
+        <label for="handset_type">Handset Type</label>
+        <select id="handset_type" multiple="true">
+          {% if user.handset_type[0] == "All" %}
+            <option selected="selected">All</option>
+          {% endif %}
+          {% for handset in handsets %}
+            <option {% if handset in user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
           {% endfor %}
         </select>
-      </span>
 
-      <label for="handset_type">Handset Type</label>
-      <select id="handset_type" multiple="true">
-        {% if results.user.handset_type[0] == "All" %}
-          <option selected="selected">All</option>
-        {% endif %}
-        {% for handset in results.handsets %}
-          <option {% if handset in results.user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
-        {% endfor %}
-      </select>
-
-      <label for="operator">Operator</label>
-      <select id="operator">
-        {% if results.user.operator == "All" %}
-          <option selected="selected">All</option>
-        {% endif %}
-        {% for operator in results.operators %}
-          <option {% if operator == results.user.operator %}selected="selected"{% endif %}>{{ operator }}</option>
-        {% endfor %}
-      </select>
+        <label for="operator">Operator</label>
+        <select id="operator">
+          {% if user.operator == "All" %}
+            <option selected="selected">All</option>
+          {% endif %}
+          {% for operator in operators %}
+            <option {% if operator == user.operator %}selected="selected"{% endif %}>{{ operator }}</option>
+          {% endfor %}
+        </select>
+      </section>
+    </fieldset>
+  {% else %}
+    <section>
+      <h2>Answer questions</h2>
+      <p>Sign in to answer support questions from the Mozilla community.</p>
+      <a href="authentication.html" class="button-blue">Create account or sign in</a>
     </section>
-  </fieldset>
+  {% endif %}
+
 </form>

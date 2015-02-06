@@ -151,6 +151,23 @@
     Utils.toggle_spinner();
   }
 
+  function display_sign_in_if_needed() {
+    User.is_helper().then(function(is_helper) {
+      if (is_helper) {
+        return;
+      }
+
+      var sign_in = document.getElementById('sign-in-link');
+      if (sign_in) {
+        sign_in.classList.remove('hide');
+      }
+      var new_active_tabs = document.getElementById('new-active-tabs');
+      if (new_active_tabs) {
+        new_active_tabs.classList.add('hide');
+      }
+    });
+  }
+
   var QuestionsController = {
     init: function() {
       load_more_my_questions_button = document.getElementById(
@@ -170,7 +187,7 @@
       nunjucks.configure({ autoescape: true });
 
       add_tab_widget_handler();
-
+      display_sign_in_if_needed();
       Utils.toggle_spinner();
 
       my_questions_list_container = document.getElementById('myquestions');

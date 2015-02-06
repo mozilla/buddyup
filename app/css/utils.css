@@ -13,7 +13,7 @@
     border: 0;
 }
 .hide {
-    display: none;
+    display: none !important;
 }
 .spinner:before {
     display: inline-block;

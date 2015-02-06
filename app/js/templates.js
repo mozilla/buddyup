@@ -81,24 +81,36 @@ var colno = null;
 var output = "";
 try {
 output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user\">\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">Your Display Name</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"display_name", env.autoesc), env.autoesc);
-output += "\" required />\n      <button type=\"reset\">Clear</button>\n    </p>\n    <ul class=\"achievements\">\n      <li>\n        <span class=\"count\" data-icon=\"tick\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"solution_count", env.autoesc), env.autoesc);
-output += "</span> Questions Answered\n      </li>\n      <li>\n        <span class=\"count\" data-icon=\"feedback\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"helpfulness", env.autoesc), env.autoesc);
-output += "</span> Helpful Upvotes\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comment_notify\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comment_notify\" name=\"new_comment_notify\"\n            ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"new_comment_notify", env.autoesc)) {
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
+output += "\" required />\n      <button type=\"reset\">Clear</button>\n    </p>\n    ";
+if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
+output += "\n      <ul class=\"achievements\">\n        <li>\n          <span class=\"count\" data-icon=\"tick\">";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
+output += "</span> Questions Answered\n        </li>\n        <li>\n          <span class=\"count\" data-icon=\"feedback\">";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc), env.autoesc);
+output += "</span> Helpful Upvotes\n        </li>\n      </ul>\n    ";
+;
+}
+output += "\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comment_notify\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comment_notify\" name=\"new_comment_notify\"\n            ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"new_comment_notify", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
-output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      <li>\n        <label for=\"buddyup_reminder\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"buddyup_reminder\" name=\"buddyup_reminder\"\n            ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"buddyup_reminder", env.autoesc)) {
+output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      ";
+if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
+output += "\n        <li>\n          <label for=\"buddyup_reminder\" class=\"pack-switch\">\n            <input type=\"checkbox\" id=\"buddyup_reminder\" name=\"buddyup_reminder\"\n              ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"buddyup_reminder", env.autoesc)) {
 output += "checked=\"checked\"";
 ;
 }
-output += " />\n          <span>BuddyUp Reminder</span>\n        </label>\n      </li>\n    </ul>\n  </fieldset>\n\n  <fieldset class=\"question-filters\">\n    <h2>Answer A Question Filter</h2>\n    <section>\n      <p>The unanswered questions list will be filtered based on the setting below.</p>\n\n      <label for=\"locale\">Language</label>\n      <span class=\"button icon icon-dialog\">\n        <select id=\"locale\">\n          ";
+output += " />\n            <span>BuddyUp Reminder</span>\n          </label>\n        </li>\n      ";
+;
+}
+output += "\n\n    </ul>\n  </fieldset>\n\n  ";
+if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
+output += "\n\n    <fieldset class=\"question-filters\">\n      <h2>Answer A Question Filter</h2>\n      <section>\n        <p>The unanswered questions list will be filtered based on the setting below.</p>\n\n        <label for=\"locale\">Language</label>\n        <span class=\"button icon icon-dialog\">\n          <select id=\"locale\">\n            ";
 frame = frame.push();
-var t_3 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"locales", env.autoesc);
+var t_3 = runtime.contextOrFrameLookup(context, frame, "locales");
 if(t_3) {var t_2 = t_3.length;
 for(var t_1=0; t_1 < t_3.length; t_1++) {
 var t_4 = t_3[t_1];
@@ -110,26 +122,26 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n            <option ";
-if(t_4 == runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"locale", env.autoesc)) {
+output += "\n              <option ";
+if(t_4 == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"locale", env.autoesc)) {
 output += "selected=\"selected\"";
 ;
 }
 output += ">";
 output += runtime.suppressValue(t_4, env.autoesc);
-output += "</option>\n          ";
+output += "</option>\n            ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n        </select>\n      </span>\n\n      <label for=\"handset_type\">Handset Type</label>\n      <select id=\"handset_type\" multiple=\"true\">\n        ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc)),0, env.autoesc) == "All") {
-output += "\n          <option selected=\"selected\">All</option>\n        ";
+output += "\n          </select>\n        </span>\n\n        <label for=\"handset_type\">Handset Type</label>\n        <select id=\"handset_type\" multiple=\"true\">\n          ";
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc)),0, env.autoesc) == "All") {
+output += "\n            <option selected=\"selected\">All</option>\n          ";
 ;
 }
-output += "\n        ";
+output += "\n          ";
 frame = frame.push();
-var t_7 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"handsets", env.autoesc);
+var t_7 = runtime.contextOrFrameLookup(context, frame, "handsets");
 if(t_7) {var t_6 = t_7.length;
 for(var t_5=0; t_5 < t_7.length; t_5++) {
 var t_8 = t_7[t_5];
@@ -141,26 +153,26 @@ frame.set("loop.revindex0", t_6 - t_5 - 1);
 frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
-output += "\n          <option ";
-if((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"handset_type", env.autoesc).indexOf(t_8) !== -1)) {
+output += "\n            <option ";
+if((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc).indexOf(t_8) !== -1)) {
 output += "selected=\"selected\"";
 ;
 }
 output += ">";
 output += runtime.suppressValue(t_8, env.autoesc);
-output += "</option>\n        ";
+output += "</option>\n          ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n      </select>\n\n      <label for=\"operator\">Operator</label>\n      <select id=\"operator\">\n        ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"operator", env.autoesc) == "All") {
-output += "\n          <option selected=\"selected\">All</option>\n        ";
+output += "\n        </select>\n\n        <label for=\"operator\">Operator</label>\n        <select id=\"operator\">\n          ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"operator", env.autoesc) == "All") {
+output += "\n            <option selected=\"selected\">All</option>\n          ";
 ;
 }
-output += "\n        ";
+output += "\n          ";
 frame = frame.push();
-var t_11 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"operators", env.autoesc);
+var t_11 = runtime.contextOrFrameLookup(context, frame, "operators");
 if(t_11) {var t_10 = t_11.length;
 for(var t_9=0; t_9 < t_11.length; t_9++) {
 var t_12 = t_11[t_9];
@@ -172,19 +184,26 @@ frame.set("loop.revindex0", t_10 - t_9 - 1);
 frame.set("loop.first", t_9 === 0);
 frame.set("loop.last", t_9 === t_10 - 1);
 frame.set("loop.length", t_10);
-output += "\n          <option ";
-if(t_12 == runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "results")),"user", env.autoesc)),"operator", env.autoesc)) {
+output += "\n            <option ";
+if(t_12 == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"operator", env.autoesc)) {
 output += "selected=\"selected\"";
 ;
 }
 output += ">";
 output += runtime.suppressValue(t_12, env.autoesc);
-output += "</option>\n        ";
+output += "</option>\n          ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n      </select>\n    </section>\n  </fieldset>\n</form>\n";
+output += "\n        </select>\n      </section>\n    </fieldset>\n  ";
+;
+}
+else {
+output += "\n    <section>\n      <h2>Answer questions</h2>\n      <p>Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"button-blue\">Create account or sign in</a>\n    </section>\n  ";
+;
+}
+output += "\n\n</form>\n";
 cb(null, output);
 ;
 } catch (e) {

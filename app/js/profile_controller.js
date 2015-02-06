@@ -38,6 +38,9 @@
     for (var i = 0, l = profile_elements.length; i < l; i++) {
       var elem_name = profile_elements[i];
       var elem = form.elements[profile_elements[i]];
+      if (!elem) {
+        break;
+      }
 
       switch(elem_name) {
         case 'handset_type':
@@ -83,14 +86,16 @@
   var ProfileController = {
     init: function() {
 
-      User.get_user().then(function(user) {
+      var promises = [];
+      promises.push(User.is_helper());
+      promises.push(User.get_user());
+      Promise.all(promises).then(function([is_helper, user]) {
         var html = nunjucks.render('my-profile.html', {
-          results: {
-            user: user,
-            locales: LOCALES,
-            handsets: HANDSETS,
-            operators: OPERATORS
-          }
+          user: user,
+          locales: LOCALES,
+          handsets: HANDSETS,
+          operators: OPERATORS,
+          is_helper: is_helper
         });
 
         document.querySelector('#my-profile').innerHTML = html;
