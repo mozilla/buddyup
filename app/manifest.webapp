@@ -15,11 +15,11 @@
   },
   "type": "privileged",
   "permissions": {
-    "alarms": {
-      "description": "Temporary to mock server side notifications"
+    "push": {
+      "description": "To know when new answers have been added to a question"
     },
     "desktop-notification": {
-      "description": ""
+      "description": "To know when new answers have been added to a question"
     },
     "mobilenetwork": {
       "description": "To classify questions based on your network"
@@ -27,7 +27,9 @@
   },
   "messages": [
     { "alarm": "/index.html" },
-    { "notification": "/index.html" }
+    { "notification": "/index.html" },
+    { "push": "/index.html" },
+    { "push-register": "/index.html" }
   ],
   "installs_allowed_from": ["*"],
   "locales": {},

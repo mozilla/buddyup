@@ -171,8 +171,6 @@
         is_my_question: question_object.creator.username === user.username,
         user: user
       });
-
-      window.top.postMessage({question_id: question_id, comment: comment}, '*');
     });
   }
 
@@ -180,6 +178,7 @@
     var user_meta = Utils.get_user_meta();
     return SumoDB.post_question(comment, user_meta).then(function(response) {
       question_id = response.id;
+      question_object = response;
       return response;
     });
   }

@@ -58,12 +58,10 @@
       promises.push(set_credentials(response.user.username, response.password,
         response.token, is_helper));
 
-      var normalized_user = normalize_user(response.user);
-      normalized_user.last_sync = Date.now();
-      promises.push(asyncStorage.setItem(USER_KEY, normalized_user));
+      promises.push(sync_user(response.user));
 
-      return Promise.all(promises).then(function() {
-        return normalized_user;
+      return Promise.all(promises).then(function([credentials, user]) {
+        return user;
       });
     });
   }
@@ -84,6 +82,9 @@
   function sync_user(user) {
     var normalized_user = normalize_user(user);
     normalized_user.last_sync = Date.now();
+    if (window.parent.Notif) {
+      window.parent.Notif.ensure_endpoint(user);
+    }
     return asyncStorage.setItem(USER_KEY, normalized_user).then(function() {
       return normalized_user;
     });
@@ -153,6 +154,7 @@
     authenticate_user: function(username, password) {
       return SumoDB.get_token(username, password).then(function(token) {
         var is_helper = true;
+        // Send the endpoint to SUMO
         return set_user(username, password, token, is_helper);
       });
     },
@@ -163,6 +165,7 @@
       return promise.then(function() {
         return User.authenticate_user(username, password);
       }).then(function(token) {
+        // This has never worked!
         var is_helper = true;
         return User.set_user(username, password, token, is_helper);
       });
