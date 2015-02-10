@@ -80,7 +80,9 @@
 
     var promise;
     if ('helper' === params.role) {
-      promise = SumoDB.get_unanswered_questions();
+      promise = User.get_user().then(function(user) {
+        return SumoDB.get_unanswered_questions(user.locale);
+      });
     } else {
       promise = User.get_user().then(SumoDB.get_my_questions);
     }

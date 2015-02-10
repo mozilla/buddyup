@@ -159,11 +159,12 @@
       });
     },
 
-    get_unanswered_questions: function() {
+    get_unanswered_questions: function(locale) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?product=' + PRODUCT;
       endpoint += '&is_solved=0';
       endpoint += '&is_taken=0';
+      endpoint += '&locale=' + locale;
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
