@@ -114,6 +114,10 @@
     evt.preventDefault();
     var comment = question_field.value;
 
+    if (comment === '') {
+      return;
+    }
+
     Utils.toggle_spinner();
 
     show_panel(question_thread);
