@@ -214,6 +214,7 @@
   }
 
   function check_if_taken([question, answers]) {
+    return [question, answers]; // Just for review to prevent bug 1132051
     return User.get_user().then(function(user) {
       if (!question.taken_by || question.taken_by.username == user.username) {
         return [question, answers];
