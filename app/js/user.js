@@ -4,6 +4,7 @@
 
 (function(exports) {
   var USER_CREDENTIALS_KEY = 'user_credentials';
+  var TMP_USER_CREDENTIALS_KEY = 'tmp_user_credentials';
   var USER_KEY = 'user';
 
   /**
@@ -45,6 +46,17 @@
     .then(function() {
       return SumoDB.get_user(username).then(sync_user);
     });
+  }
+
+  function set_inactive_user(username, password) {
+    return asyncStorage.setItem(TMP_USER_CREDENTIALS_KEY, {
+      username: username,
+      password: password
+    });
+  }
+
+  function get_inactive_user() {
+    return asyncStorage.getItem(TMP_USER_CREDENTIALS_KEY);
   }
 
   /**
@@ -132,6 +144,12 @@
       });
     },
 
+    is_active: function(username) {
+      return SumoDB.get_public_user(username).then(function(user) {
+        return user.is_active;
+      });
+    },
+
     is_helper: function() {
       return User.get_credentials().then(function(credentials) {
         return credentials.is_helper;
@@ -159,15 +177,24 @@
       });
     },
 
+    authenticate_temporary_user: function() {
+      return get_inactive_user().then(function(credentials) {
+        var promise = User.authenticate_user(credentials.username,
+          credentials.password);
+
+        return promise.then(function(user) {
+          asyncStorage.removeItem(TMP_USER_CREDENTIALS_KEY).then(function() {
+            return user;
+          });
+        });
+      });
+    },
+
     register: function(username, password, email) {
       var promise = SumoDB.register_user(username, password, email);
 
       return promise.then(function() {
-        return User.authenticate_user(username, password);
-      }).then(function(token) {
-        // This has never worked!
-        var is_helper = true;
-        return User.set_user(username, password, token, is_helper);
+        return set_inactive_user(username, password);
       });
     }
   };

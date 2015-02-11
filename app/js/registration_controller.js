@@ -3,6 +3,32 @@
 /* global User, Utils */
 
 (function(exports) {
+  var EMAIL_CONFIRMATION_TMPL = 'email_confirmation.html';
+  var success_msg;
+  var confirmation_poll_timeout;
+
+  function check_for_email_confirmation(username) {
+    return User.is_active(username).then(function(active) {
+      if (active) {
+        User.authenticate_temporary_user();
+        success_msg.classList.add('hide');
+      }
+      return active;
+    });
+  }
+
+  function poll_for_email_confirmation(username) {
+    confirmation_poll_timeout = window.setTimeout(function() {
+      var promise = check_for_email_confirmation(username);
+
+      promise.then(function(active) {
+        if (!active) {
+          poll_for_email_confirmation(username);
+        }
+      });
+    }, 5000);
+  }
+
   function register_user(evt) {
     evt.preventDefault();
 
@@ -16,13 +42,19 @@
     Utils.toggle_spinner();
 
     promise.then(function() {
-      var success = document.getElementById('success_message');
-      var success_email = document.getElementById('success_email');
-      success_email.appendChild(document.createTextNode(email));
+      success_msg.src = EMAIL_CONFIRMATION_TMPL + '?email=' + email;
+      success_msg.classList.remove('hide');
       form.classList.add('hide');
-      success.classList.remove('hide');
       Utils.toggle_spinner();
-    }).catch(function(response) {
+
+      poll_for_email_confirmation(username);
+
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+          check_for_email_confirmation(username);
+        }
+      });
+    }, function(response) {
       var errors = JSON.parse(response);
 
       Utils.refresh_error_list(
@@ -52,6 +84,7 @@
 
   var RegistrationController = {
     init: function() {
+      success_msg = document.getElementById('success_message');
       register_form();
     }
   };

@@ -54,18 +54,12 @@
         <a href="authentication.html">Already registered? Sign in</a>
       </p>
     </form>
-    <div id="success_message" class="hide">
-      <h2>Confirm Your Account</h2>
-      <p>
-        We will send an email to:
-        <br /><span id="success_email"></span>
-      </p>
-      Before you can log in, you need to confirm your email address. Next time you check your email, click the verification link to confirm your Account.
-    </div>
   </main>
 </section>
+<iframe id="success_message" class="hide overlay"></iframe>
 <script src="js/settings.js"></script>
 <script src="js/libs/async_storage.js"></script>
+<script src="js/libs/lodash.custom.min.js"></script>
 <script src="js/user.js" defer></script>
 
 <script src="js/libs/nunjucks.js" defer></script>

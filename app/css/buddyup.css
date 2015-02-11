@@ -116,6 +116,15 @@ html {
     padding: .7rem .9rem;
     border-radius: 6px;
 }
+.overlay {
+    background: #fff;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
 /* footer */
 footer button:hover {
     cursor: pointer;
