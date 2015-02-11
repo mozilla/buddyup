@@ -46,8 +46,8 @@
   }
 
   function register_form() {
-    var register_form = document.getElementById('register');
-    register_form.addEventListener('submit', register_user);
+    var register_elem = document.getElementById('register');
+    register_elem.addEventListener('submit', register_user);
   }
 
   var RegistrationController = {

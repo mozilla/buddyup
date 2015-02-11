@@ -144,8 +144,8 @@
           return comment;
         });
       }
-      return submit_promise;
-    }).then(function(comment) {
+      return Promise.all([submit_promise, user]);
+    }).then(function([comment, user]) {
 
       Utils.toggle_spinner();
 
@@ -153,9 +153,9 @@
 
       // Only handle first time help message scenario for questions
       if (comment.answers) {
-        asyncStorage.getItem('seen_first_question_help').then(function(response) {
+        asyncStorage.getItem('seen_first_question_help').then(function(resp) {
           // See if the flag exist
-          if (!response) {
+          if (!resp) {
             // flag does not exist, show the dialog and set the flag
             var dialog = document.querySelector('#first_question_help');
             dialog.classList.remove('hide');
