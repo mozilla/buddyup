@@ -463,6 +463,8 @@ output += "\n    <li>\n      <img src=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"avatar", env.autoesc), env.autoesc);
 output += "\" title=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"display_name", env.autoesc), env.autoesc);
+output += "\" alt=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"display_name", env.autoesc), env.autoesc);
 output += "\" />\n    </li>\n  ";
 ;
 }
