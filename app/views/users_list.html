@@ -1,0 +1,7 @@
+<ul>
+  {% for user in users %}
+    <li>
+      <img src="{{ user.avatar }}" title="{{ user.display_name }}" alt="{{ user.display_name }}" />
+    </li>
+  {% endfor %}
+</ul>

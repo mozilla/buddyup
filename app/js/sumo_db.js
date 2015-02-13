@@ -366,6 +366,13 @@
       endpoint += '?format=json';
 
       return request_with_auth(endpoint, 'POST');
+    },
+
+    get_top_helpers: function() {
+      var endpoint = API_V2_BASE + 'user/weekly-solutions/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request(endpoint, 'GET').then(JSON.parse);
     }
   };
   exports.SumoDB = SumoDB;
