@@ -43,6 +43,7 @@ html {
 }
 .user-list ul img {
     border-radius: 24px;
+    width: 24px;
 }
 /* profile */
 .profile fieldset {
