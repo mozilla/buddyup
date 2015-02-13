@@ -114,7 +114,7 @@
     evt.preventDefault();
     var comment = question_field.value;
     
-    if(comment = NULL){
+    if(comment == NULL){
       return false;
     }
 
