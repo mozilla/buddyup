@@ -20,6 +20,7 @@
       });
 
       top_helpers_container.insertAdjacentHTML('beforeend', html);
+      top_helpers_container.classList.remove('hide');
     });
   }
 

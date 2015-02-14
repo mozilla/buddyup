@@ -1,0 +1,6 @@
+<img class="avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
+<div>Questions Solved: {{ user.solution_count }}</div>
+<div>Helpful Upvotes: {{ user.helpfulness }}</div>
+{% if user.last_answer_date %}
+  <div>Last Commented: {{ user.last_answer_date }}</div>
+{% endif %}

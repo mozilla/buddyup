@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="SUMO real time support app for FirefoxOS" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Welcome to BuddyUP</title>
+
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/lists.css" media="screen" />
+
+  <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/helper-profile.css" media="screen" />
+
+  <!-- localization -->
+  <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+  <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
+  <script src="js/libs/l10n.js" defer></script>
+  <script src="js/libs/l10n_date.js" defer></script>
+</head>
+<body class="skin-organic">
+<section role="region" class="vbox fit">
+  <header>
+    <h1 id="headline"></h1>
+    <a href="index.html" id="close" class="close-link" data-icon="close" data-action="back">
+      <span class="visuallyhidden">Close</span>
+    </a>
+  </header>
+  <main id="helper-profile" class="fit scroll">
+    <section id="profile-details" class="helper-profile"></section>
+    <section id="questions" class="questions">
+      <h2>Answered Questions</h2>
+    </section>
+  </main>
+</section>
+<script src="js/settings.js"></script>
+<script src="js/libs/async_storage.js"></script>
+<script src="js/libs/nunjucks.js" defer></script>
+<script src="js/libs/lodash.custom.min.js" defer></script>
+<script src="js/templates.js" defer></script>
+
+<script src="js/utils.js" defer></script>
+<script src="js/sumo_db.js" defer></script>
+<script src="js/user.js" defer></script>
+<script src="js/helper_profile_controller.js" defer></script>
+</body>
+</html>

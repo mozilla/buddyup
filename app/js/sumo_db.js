@@ -1,6 +1,6 @@
 'use strict';
 
-/* global Settings, User */
+/* global _, Settings, User */
 
 (function(exports) {
   var API_V1_BASE = Settings.BASE_SERVER + '/api/1/';
@@ -232,6 +232,20 @@
           return request_with_auth(endpoint, 'PATCH', user).then(JSON.parse);
         });
       });
+    },
+
+    get_public_user: function(username, options) {
+      var endpoint = API_V2_BASE + 'user/' + username + '/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      var defaults = {};
+      options = _.assign(defaults, options);
+
+      if (options.avatar_size) {
+        endpoint += '&avatar_size=' + options.avatar_size;
+      }
+
+      return request(endpoint, 'GET').then(JSON.parse);
     },
 
     get_user: function(username) {
