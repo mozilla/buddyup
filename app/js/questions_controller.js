@@ -131,7 +131,7 @@
       }
 
       var html = nunjucks.render(USERS_LIST_TMPL, {
-        users: users
+        users: users.slice(0, 5)
       });
 
       top_helpers_container.insertAdjacentHTML('beforeend', html);
