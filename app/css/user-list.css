@@ -1,0 +1,22 @@
+.user-list {
+    margin-top: 1rem;
+}
+.user-list h2 {
+    background-color: gray;
+    color: white;
+    margin: 0;
+    padding: .2rem 1rem;
+}
+.user-list ul {
+    display: flex;
+    margin-top: 1rem;
+    padding-left: 1rem;
+}
+.user-list li {
+    margin-right: 1rem;
+}
+.user-list ul img {
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+}
