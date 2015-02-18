@@ -5,20 +5,12 @@
 (function(exports) {
 var ENDPOINT_ID_KEY = 'endpoint';
 
-if (!navigator.mozSetMessageHandler) {
-  // "Silence" errors in dev environments
-  navigator.mozSetMessageHandler = function() {};
-  console.log('system messages are not supported');
-}
-
-function display_notification(notification, question) {
+function display_notification(title, body, icon, tag) {
   // FIXME We need support for 1.1 notifications
-  var title = notification.actor.display_name + ' has commented on a question:';
-  var body = question.title;
   var notif = new Notification(title, {
     body: body,
-    icon: '?question_id=' + notification.target.id,
-    tag: 'q' + notification.target.id
+    icon: icon,
+    tag: tag
   });
 
   notif.addEventListener('error', function(errorMsg) {
@@ -29,23 +21,45 @@ function display_notification(notification, question) {
   notif.addEventListener('click', notification_clicked);
 }
 
-navigator.mozSetMessageHandler('push', function(evt) {
-  SumoDB.get_unread_notifications().then(function(notifications) {
-    notifications.forEach(function(notification) {
-      SumoDB.get_question(notification.target.id)
-      .then(function(question) {
-        display_notification(notification, question);
+function push_handler(evt) {
+  return SumoDB.get_unread_notifications().then(function(notifications) {
+    var promises = notifications.map(function(notification) {
+      var title;
+      var icon;
+      var tag;
+
+      switch(notification.verb) {
+        case 'answered':
+          title = notification.actor.display_name;
+          title += ' has commented on a question';
+          icon = '?question_id=' + notification.target.id;
+          tag = 'question-' + notification.target.id;
+        break;
+
+        case 'marked as a solution':
+          title = notification.actor.display_name + ' chose your answer';
+          icon = '?question_id=' + notification.target.id;
+          tag = 'resolved-' + notification.target.id;
+        break;
+
+        default:
+          console.error('unknown notification type: ', notification.verb);
+        break;
+        }
+
+      if (!title) {
+        return notification.id;
+      }
+
+      return SumoDB.get_question(notification.target.id).then(function(question) {
+        display_notification(title, question.title, icon, tag);
         return notification.id;
       }).then(SumoDB.mark_notification_as_read);
     });
+
+    return Promise.all(promises);
   });
-});
-
-navigator.mozSetMessageHandler('push-register', function(evt) {
-  // TODO Implement in bug 1132526
-});
-
-navigator.mozSetMessageHandler('notification', notification_clicked);
+}
 
 function notification_clicked(evt) {
   navigator.mozApps.getSelf().onsuccess = function(appEvt) {
@@ -126,11 +140,24 @@ var Notif = {
 
   clear_endpoint: function() {
     return asyncStorage.removeItem(ENDPOINT_ID_KEY);
-  }
+  },
 
+  init: function() {
+    if (!navigator.mozSetMessageHandler) {
+      // "Silence" errors in dev environments
+      navigator.mozSetMessageHandler = function() {};
+      console.log('system messages are not supported');
+    }
+
+    navigator.mozSetMessageHandler('push', push_handler);
+    navigator.mozSetMessageHandler('push-register', function(evt) {
+      // TODO Implement in bug 1132526
+    });
+
+    navigator.mozSetMessageHandler('notification', notification_clicked);
+  }
 };
 
 exports.Notif = Notif;
-
+Notif.init();
 })(window);
-

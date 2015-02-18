@@ -99,4 +99,34 @@ suite('User', function() {
       });
     });
   });
+
+  suite('register', function() {
+    const FAKE_USERNAME = 'fake_username';
+    const FAKE_PASSWORD = 'fake_password';
+    const FAKE_EMAIL = 'fake_email';
+
+    setup(function() {
+      this.sinon.stub(SumoDB, 'get_token')
+        .returns(Promise.resolve('fake_token'));
+      this.sinon.stub(MockNotif, 'clear_endpoint').returns(Promise.resolve());
+      this.sinon.stub(asyncStorage, 'setItem').returns(Promise.resolve());
+      this.sinon.stub(SumoDB, 'get_user').returns(Promise.resolve({}));
+    });
+
+    test('resolves when registration successful', function(done) {
+      this.sinon.stub(SumoDB, 'register_user').returns(Promise.resolve());
+      User.register(FAKE_USERNAME, FAKE_PASSWORD, FAKE_EMAIL).then(function() {
+        sinon.assert.calledWith(SumoDB.register_user,
+          FAKE_USERNAME, FAKE_PASSWORD, FAKE_EMAIL);
+      }).then(done, done);
+    });
+
+    test('rejects when registration unsuccessful', function(done) {
+      this.sinon.stub(SumoDB, 'register_user').returns(Promise.reject());
+      User.register(FAKE_USERNAME, FAKE_PASSWORD, FAKE_EMAIL).catch(function() {
+        sinon.assert.calledWith(SumoDB.register_user,
+          FAKE_USERNAME, FAKE_PASSWORD, FAKE_EMAIL);
+      }).then(done, done);
+    });
+  });
 });
