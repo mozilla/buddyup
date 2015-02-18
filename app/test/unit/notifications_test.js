@@ -14,6 +14,8 @@ var mocksFor = new MocksHelper([
 ]).init();
 
 suite('notifications', function() {
+  this.timeout(500);
+
   mocksFor.attachTestHelpers();
 
   suite('ensure_endpoint', function() {
@@ -64,6 +66,15 @@ suite('notifications', function() {
         sinon.assert.notCalled(navigator.push.register);
         sinon.assert.notCalled(asyncStorage.setItem);
         sinon.assert.notCalled(SumoDB.register_push_endpoint);
+      }).then(done, done);
+    });
+  });
+
+  suite('clear_endpoint', function() {
+    test('should clear from client', function(done) {
+      this.sinon.stub(asyncStorage, 'removeItem').returns(Promise.resolve());
+      Notif.clear_endpoint().then(function() {
+        sinon.assert.calledWith(asyncStorage.removeItem, 'endpoint');
       }).then(done, done);
     });
   });

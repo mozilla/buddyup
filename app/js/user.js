@@ -95,7 +95,7 @@
     var normalized_user = normalize_user(user);
     normalized_user.last_sync = Date.now();
     if (window.parent.Notif) {
-      window.parent.Notif.ensure_endpoint(user);
+      window.parent.Notif.ensure_endpoint();
     }
     return asyncStorage.setItem(USER_KEY, normalized_user).then(function() {
       return normalized_user;
@@ -171,8 +171,15 @@
 
     authenticate_user: function(username, password) {
       return SumoDB.get_token(username, password).then(function(token) {
+        if (window.parent.Notif) {
+          return window.parent.Notif.clear_endpoint().then(function() {
+            return token;
+          });
+        } else {
+          return token;
+        }
+      }).then(function(token) {
         var is_helper = true;
-        // Send the endpoint to SUMO
         return set_user(username, password, token, is_helper);
       });
     },

@@ -122,7 +122,12 @@ var Notif = {
         return asyncStorage.removeItem(ENDPOINT_ID_KEY);
       });
     }).then(ensure_endpoint_done, ensure_endpoint_done);
+  },
+
+  clear_endpoint: function() {
+    return asyncStorage.removeItem(ENDPOINT_ID_KEY);
   }
+
 };
 
 exports.Notif = Notif;

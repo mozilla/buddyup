@@ -6,6 +6,8 @@ require('/js/mobile_operator.js');
 require('/js/utils.js');
 
 suite('utils', function() {
+  this.timeout(500);
+
   suite('get_user_meta', function() {
     var stub_user_agent;
 
