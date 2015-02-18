@@ -6,11 +6,9 @@
 
   var MSG_NO_QUESTIONS = 'No questions found';
   var QUESTION_LIST_TMPL = 'question_list_day.html';
-  var USERS_LIST_TMPL = 'users_list.html';
 
   var my_questions_list_container;
   var active_questions_list_container;
-  var top_helpers_container;
   var load_more_my_questions_button;
   var load_more_active_questions_button;
 
@@ -122,22 +120,6 @@
     }
   }
 
-  function load_top_helpers() {
-    var promise = SumoDB.get_top_helpers();
-
-    promise.then(function(users) {
-      if (users.length) {
-        top_helpers_container.classList.remove('hide');
-      }
-
-      var html = nunjucks.render(USERS_LIST_TMPL, {
-        users: users.slice(0, 5)
-      });
-
-      top_helpers_container.insertAdjacentHTML('beforeend', html);
-    });
-  }
-
   function display_questions(response, container, load_more_button) {
     var results = response.results;
     var html;
@@ -213,11 +195,9 @@
       my_questions_list_container = document.getElementById('myquestions');
       active_questions_list_container = document.getElementById(
           'activequestions');
-      top_helpers_container = document.getElementById('tophelpers');
 
       load_initial_questions();
       load_active_questions();
-      load_top_helpers();
     }
   };
 
