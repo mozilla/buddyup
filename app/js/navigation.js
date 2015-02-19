@@ -46,4 +46,17 @@
   }
 
   init();
+
+  var Navigation = {
+    go_to_view: function(url) {
+      var iframes = [].slice.call(document.querySelectorAll('iframe'));
+      current_iframe = iframes.shift();
+      iframes.forEach(function(iframe) {
+        document.body.removeChild(iframe);
+      });
+      open_link(url);
+    }
+  };
+
+  exports.Navigation = Navigation;
 })(window);

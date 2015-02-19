@@ -1,26 +1,24 @@
 'use strict';
 
-/* global Notification, Utils */
+/* global asyncStorage, Navigation, Notification, SumoDB, Utils */
 
 (function(exports) {
+var ENDPOINT_ID_KEY = 'endpoint';
 
-/* This is to send a fake notification */
-window.addEventListener('message', function(evt) {
-  var wake_up_date = new Date();
-  wake_up_date.setSeconds(wake_up_date.getSeconds() + 5);
-  navigator.mozAlarms.add(wake_up_date, 'honorTimezone', evt.data);
-});
+if (!navigator.mozSetMessageHandler) {
+  // "Silence" errors in dev environments
+  navigator.mozSetMessageHandler = function() {};
+  console.log('system messages are not supported');
+}
 
-navigator.mozSetMessageHandler('alarm', function(mozAlarm) {
+function display_notification(notification, question) {
   // FIXME We need support for 1.1 notifications
-  var display_name = mozAlarm.data.comment.creator.display_name ||
-    mozAlarm.data.comment.creator.username;
-  var title = display_name + ' has commented on a question:';
-  var body = mozAlarm.data.comment.content;
+  var title = notification.actor.display_name + ' has commented on a question:';
+  var body = question.title;
   var notif = new Notification(title, {
     body: body,
-    icon: '?question_id=' + mozAlarm.data.question_id,
-    tag: 'q' + mozAlarm.data.question_id
+    icon: '?question_id=' + notification.target.id,
+    tag: 'q' + notification.target.id
   });
 
   notif.addEventListener('error', function(errorMsg) {
@@ -29,6 +27,22 @@ navigator.mozSetMessageHandler('alarm', function(mozAlarm) {
   });
 
   notif.addEventListener('click', notification_clicked);
+}
+
+navigator.mozSetMessageHandler('push', function(evt) {
+  SumoDB.get_unread_notifications().then(function(notifications) {
+    notifications.forEach(function(notification) {
+      SumoDB.get_question(notification.target.id)
+      .then(function(question) {
+        display_notification(notification, question);
+        return notification.id;
+      }).then(SumoDB.mark_notification_as_read);
+    });
+  });
+});
+
+navigator.mozSetMessageHandler('push-register', function(evt) {
+  // TODO Implement in bug 1132526
 });
 
 navigator.mozSetMessageHandler('notification', notification_clicked);
@@ -41,8 +55,7 @@ function notification_clicked(evt) {
     location.href = iconURL;
     var parameters = Utils.get_url_parameters(location);
 
-    document.querySelector('iframe').src = 'question.html?id=' +
-      parameters.question_id;
+    Navigation.go_to_view('question.html?id=' + parameters.question_id);
 
     var app = appEvt.target.result;
     app.launch();
@@ -67,4 +80,52 @@ function delete_notification(evt) {
     }
   });
 }
+
+var ensure_endpoint_in_progress = false;
+var Notif = {
+  ensure_endpoint: function() {
+    if (!navigator.push) {
+      // Do nothing when push notifications are not supported
+      console.log('no support for push notifications');
+      return Promise.resolve();
+    }
+
+    if (ensure_endpoint_in_progress) {
+      return Promise.resolve();
+    }
+    ensure_endpoint_in_progress = true;
+
+    function ensure_endpoint_done() {
+      ensure_endpoint_in_progress = false;
+    }
+
+    return asyncStorage.getItem(ENDPOINT_ID_KEY).then(function(endpoint) {
+      if (endpoint) {
+        return Promise.resolve();
+      }
+
+      var defer = Utils.defer();
+      var req = navigator.push.register();
+      req.onsuccess = function() {
+        defer.resolve(req.result);
+      };
+      req.onerror = function() {
+        defer.reject();
+      };
+
+      return defer.promise.then(function(endpoint_url) {
+        var set_promise = asyncStorage.setItem(ENDPOINT_ID_KEY, endpoint_url);
+        return Promise.all([endpoint_url, set_promise]);
+      }).then(function([endpoint_url, set_promise]) {
+        return SumoDB.register_push_endpoint(endpoint_url);
+      }).catch(function() {
+        return asyncStorage.removeItem(ENDPOINT_ID_KEY);
+      });
+    }).then(ensure_endpoint_done, ensure_endpoint_done);
+  }
+};
+
+exports.Notif = Notif;
+
 })(window);
+

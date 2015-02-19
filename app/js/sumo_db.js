@@ -343,6 +343,36 @@
       endpoint += username + '/request_password_reset/';
 
       return request(endpoint, 'GET');
+    },
+
+    register_push_endpoint: function(push_url) {
+      var endpoint = API_V2_BASE + 'pushnotification/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(endpoint, 'POST', {push_url: push_url});
+    },
+
+    get_unread_notifications: function() {
+      var endpoint = API_V2_BASE + 'notification/';
+      endpoint += '?is_read=0';
+      endpoint += '&format=json';
+
+      return request_with_auth(endpoint, 'GET').then(JSON.parse);
+    },
+
+    mark_notification_as_read: function(notification_id) {
+      var endpoint = API_V2_BASE + 'notification/';
+      endpoint += notification_id + '/mark_read/';
+      endpoint += '?format=json';
+
+      return request_with_auth(endpoint, 'POST');
+    },
+
+    get_top_helpers: function() {
+      var endpoint = API_V2_BASE + 'user/weekly-solutions/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request(endpoint, 'GET').then(JSON.parse);
     }
   };
   exports.SumoDB = SumoDB;
