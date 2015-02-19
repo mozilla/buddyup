@@ -18,6 +18,82 @@ suite('notifications', function() {
 
   mocksFor.attachTestHelpers();
 
+  suite('receives notifications', function() {
+    const ANSWERED_NOTIF = {
+      id: 26,
+      actor: {display_name: 'Spongebob'},
+      target: {id: 12345},
+      'verb': 'answered'
+    };
+    const RESOLVED_NOTIF = {
+      id: 27,
+      actor: {display_name: 'Spongebob'},
+      target: {id: 12346},
+      'verb': 'marked as a solution'
+    };
+    const UNKNOWN_NOTIF = {
+      id: 28,
+      'verb': 'unknown action'
+    };
+
+    const FAKE_QUESTION = {
+      title: 'fake_title'
+    };
+
+    setup(function(done) {
+      this.sinon.spy(navigator, 'mozSetMessageHandler').withArgs('push');
+      this.sinon.stub(window, 'Notification').returns({
+        addEventListener: () => {}
+      });
+      this.sinon.stub(SumoDB, 'get_unread_notifications')
+        .returns(Promise.resolve([ANSWERED_NOTIF, UNKNOWN_NOTIF, RESOLVED_NOTIF]));
+      this.sinon.stub(SumoDB, 'get_question')
+        .returns(Promise.resolve(FAKE_QUESTION));
+      this.sinon.spy(SumoDB, 'mark_notification_as_read');
+      Notif.init();
+      var push_handler_spy = navigator.mozSetMessageHandler.withArgs('push');
+      var push_handler = push_handler_spy.firstCall.args[1];
+      push_handler().then(() => done());
+    });
+
+    test('listens to push system messages', function() {
+      var push_handler_spy = navigator.mozSetMessageHandler.withArgs('push');
+      sinon.assert.calledOnce(push_handler_spy);
+    });
+
+    test('displays answers notifications', function() {
+      sinon.assert.calledWithNew(window.Notification);
+      sinon.assert.calledWithMatch(window.Notification,
+        ANSWERED_NOTIF.actor.display_name + ' has commented on a question',
+        {
+          body: FAKE_QUESTION.title,
+          icon: '?question_id=' + ANSWERED_NOTIF.target.id,
+          tag: 'question-' + ANSWERED_NOTIF.target.id
+        }
+      );
+    });
+
+    test('displays resolved notifications', function() {
+      sinon.assert.calledWithNew(window.Notification);
+      sinon.assert.calledWithMatch(window.Notification,
+        RESOLVED_NOTIF.actor.display_name + ' chose your answer',
+        {
+          body: FAKE_QUESTION.title,
+          icon: '?question_id=' + RESOLVED_NOTIF.target.id,
+          tag: 'resolved-' + RESOLVED_NOTIF.target.id
+        }
+      );
+    });
+
+    test('marked known notifications as read', function() {
+      sinon.assert.calledTwice(SumoDB.mark_notification_as_read);
+      sinon.assert.calledWith(SumoDB.mark_notification_as_read,
+        ANSWERED_NOTIF.id);
+      sinon.assert.calledWith(SumoDB.mark_notification_as_read,
+        RESOLVED_NOTIF.id);
+    });
+  });
+
   suite('ensure_endpoint', function() {
     const FAKE_ENDPOINT = 'fake_endpoint';
     var register_request = {};
