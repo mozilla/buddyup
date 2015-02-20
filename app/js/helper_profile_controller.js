@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, nunjucks  */
+/* global SumoDB, Utils, nunjucks  */
 
 (function(exports) {
   var MSG_NO_QUESTIONS = 'No questions found';
