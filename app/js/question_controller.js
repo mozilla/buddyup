@@ -113,6 +113,10 @@
   function submit_comment(evt) {
     evt.preventDefault();
     var comment = question_field.value;
+    
+    if(comment === ''){
+      return;
+    }
 
     if (comment === '') {
       return;
