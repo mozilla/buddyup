@@ -114,8 +114,8 @@
     evt.preventDefault();
     var comment = question_field.value;
     
-    if(comment == NULL){
-      return false;
+    if(comment === ''){
+      return;
     }
 
     Utils.toggle_spinner();
