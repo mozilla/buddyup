@@ -3,9 +3,9 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<div class=\"message vbox\">\n  <p>";
+output += "<div class=\"message vbox\">\n  <div>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
-output += "</p>\n  ";
+output += "</div>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
 output += "\n    <p class=\"hbox\">\n      <span class=\"comment-meta fit\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
