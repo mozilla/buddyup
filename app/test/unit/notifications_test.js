@@ -46,7 +46,11 @@ suite('notifications', function() {
         addEventListener: () => {}
       });
       this.sinon.stub(SumoDB, 'get_unread_notifications')
-        .returns(Promise.resolve([ANSWERED_NOTIF, UNKNOWN_NOTIF, RESOLVED_NOTIF]));
+        .returns(Promise.resolve([
+          ANSWERED_NOTIF,
+          UNKNOWN_NOTIF,
+          RESOLVED_NOTIF
+      ]));
       this.sinon.stub(SumoDB, 'get_question')
         .returns(Promise.resolve(FAKE_QUESTION));
       this.sinon.spy(SumoDB, 'mark_notification_as_read');
