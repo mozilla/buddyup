@@ -51,10 +51,12 @@ function push_handler(evt) {
         return notification.id;
       }
 
-      return SumoDB.get_question(notification.target.id).then(function(question) {
-        display_notification(title, question.title, icon, tag);
-        return notification.id;
-      }).then(SumoDB.mark_notification_as_read);
+      return SumoDB.get_question(notification.target.id)
+        .then(function(question) {
+          display_notification(title, question.title, icon, tag);
+          return notification.id;
+        })
+        .then(SumoDB.mark_notification_as_read);
     });
 
     return Promise.all(promises);
