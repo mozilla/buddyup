@@ -1,0 +1,9 @@
+#question_field {
+    border: 0;
+    max-height: 100px;
+    overflow: auto;
+    padding: 0.5em 1em;
+    outline: none;
+    resize: none;
+    width: 100%;
+}

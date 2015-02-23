@@ -129,11 +129,6 @@ html {
 footer button:hover {
     cursor: pointer;
 }
-footer input[type="text"] {
-    padding: .8rem;
-    border: none;
-    font-size: 1rem;
-}
 footer button {
     background-color: #edecec;
     border: none;

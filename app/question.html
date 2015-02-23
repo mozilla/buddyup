@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/buddyup.css" media="screen" />
     <link rel="stylesheet" href="css/comment.css" media="screen" />
     <link rel="stylesheet" href="css/utils.css" media="screen" />
+    <link rel="stylesheet" href="css/question.css" media="screen" />
 
     <!-- localization -->
     <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
@@ -49,7 +50,7 @@
       </main>
       <footer>
         <form id="question_form" class="hbox">
-          <input type="text" id="question_field" class="fit" placeholder="Type your question" />
+          <textarea id="question_field" rows="1" placeholder="Type your question"></textarea>
           <button type="submit" data-icon-after="send"></button>
         </form>
         <a id="sign-in-link" href="authentication.html" class="button-blue hide">Sign in to reply</a>

@@ -61,6 +61,16 @@
     }
   }
 
+  function handle_autoresize(evt) {
+    var elem = evt.target;
+    if (elem.value.length) {
+      elem.style.height = 'auto';
+      elem.style.height = elem.scrollHeight + 'px';
+    } else {
+      elem.style.height = '';
+    }
+  }
+
   function handle_helpful_votes(elem, answer_id) {
     SumoDB.submit_vote(answer_id).then(function(response) {
       elem.classList.add('active');
@@ -384,6 +394,7 @@
       question_field.addEventListener('input', take_question);
       question_field.addEventListener('input',
         _.throttle(give_suggestions, 500, {leading: false}));
+      question_field.addEventListener('input', handle_autoresize);
 
       question_form = document.getElementById('question_form');
       question_form.addEventListener('submit', submit_comment);
