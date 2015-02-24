@@ -4,7 +4,9 @@ node_js:
 - "0.10"
 script: jshint app scripts
 notifications:
-  email: false
+  email:
+    on_success: change
+    on_failure: always
   irc:
     channels
     - irc.mozilla.org#buddyup
