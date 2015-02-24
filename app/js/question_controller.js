@@ -261,18 +261,8 @@
   }
 
   function check_if_taken([question, answers]) {
-    return User.get_user().then(function(user) {
-      if (!question.taken_by || question.taken_by.username == user.username) {
-        return [question, answers];
-      }
-
-      var dialog = document.getElementById('already_taken');
-      dialog.classList.remove('hide');
-      dialog.addEventListener('submit', function(evt) {
-        history.back();
-      });
-      throw new Error('Already taken');
-    });
+    // TODO bug 1136077
+    return [question, answers];
   }
 
   function display_question([question, answers]) {
