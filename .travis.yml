@@ -1,5 +1,12 @@
 sudo: false
 language: node_js
 node_js:
-   - "0.10"
+- "0.10"
 script: jshint app scripts
+notifications:
+  email: false
+  irc:
+    channels
+    - irc.mozilla.org#buddyup
+    on_success: always
+    on_failure: always
