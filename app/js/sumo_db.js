@@ -6,6 +6,7 @@
   var API_V1_BASE = Settings.BASE_SERVER + '/api/1/';
   var API_V2_BASE = Settings.BASE_SERVER + '/api/2/';
   var PRODUCT = 'firefox-os';
+  var CATEGORY_PREFIX = 'category:';
 
   var in_progress_requests = {};
   var sequence_id = 0;
@@ -45,6 +46,24 @@
         authorization: 'Token ' + credentials.token
       });
     });
+  }
+
+  function remove_tags(tags, question_id) {
+    var endpoint = API_V2_BASE + 'question/';
+    endpoint += question_id + '/remove_tags/';
+    endpoint += '?format=json'; // TODO bug 1088014
+
+    return request_with_auth(endpoint, 'POST',
+      {tags: tags});
+  }
+
+  function add_tags(tags, question_id) {
+    var endpoint = API_V2_BASE + 'question/';
+    endpoint += question_id + '/add_tags/';
+    endpoint += '?format=json'; // TODO bug 1088014
+
+    return request_with_auth(endpoint, 'POST',
+      {tags: tags}).then(JSON.parse);
   }
 
   var SumoDB = {
@@ -122,6 +141,21 @@
       return Promise.all([vote_promise, solved_promise]);
     },
 
+    set_category_for_question: function(category, question_id) {
+      var promise = SumoDB.get_question(question_id);
+      
+      return promise.then(function(question) {
+        var category_tags = question.tags.filter(function(tag) {
+          return tag.name.startsWith(CATEGORY_PREFIX);
+        }).map(function(elem) {
+          return elem.name;
+        });
+        var remove_promise = remove_tags(category_tags, question_id);
+        var add_promise = add_tags([CATEGORY_PREFIX + category], question_id);
+        return Promise.all([remove_promise, add_promise]);
+      });
+    },
+
     /**
      * Get list of questions for the current user
      */
@@ -141,7 +175,14 @@
       endpoint += '?format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response);
+        var question = JSON.parse(response);
+        var category_tag = question.tags.find(function(element) {
+          return element.name.startsWith(CATEGORY_PREFIX);
+        });
+        if (category_tag) {
+          question.category = category_tag.name.substr(CATEGORY_PREFIX.length);
+        }
+        return question;
       });
     },
 

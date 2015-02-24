@@ -1,3 +1,11 @@
 <h3 class="question-cat">
   {{ date_posted }} - {% if handset_type %} {{ handset_type }}, {% endif %} {{ author }}
 </h3>
+<select id="category_chooser" class="button-gray">
+  {% for key, value in categories %}
+    <option value="{{ key }}"
+      {% if selected_category == key %}selected{% endif %}>
+      {{ value }}
+    </option>
+  {% endfor %}
+</select>

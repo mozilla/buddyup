@@ -3,6 +3,31 @@
 /* global _, asyncStorage, SumoDB, Utils, User, nunjucks */
 
 (function(exports) {
+  /**
+   * If you add a new category, the appropriate tag will need to added on SUMO
+   * to ensure end users do not run into issues with not being authorized to add
+   * new tags.
+   */
+  var CATEGORIES = {
+    '': 'Choose a category',
+    'email': 'Email',
+    'clock': 'Clock/Alarm',
+    'camera': 'Camera/Gallery/Video',
+    'audio': 'Audio/Music/RadioFM',
+    'performance': 'Performance',
+    'radios': 'Cellular Data/WiFi/Bluetooth',
+    'sms': 'SMS/MMS',
+    'calls': 'Calling&Contacts',
+    'browser': 'Browser/Download',
+    'storage': 'Storage/SD card',
+    'geolocation': 'HERE Maps/GPS',
+    'keyboard': 'Keyboard',
+    'system-updates': 'System Updates',
+    'language': 'Language',
+    'marketplace': 'Marketplace/Apps Install',
+    'other': 'Other'
+  };
+
   var question_thread;
   var question_form;
   var suggestions;
@@ -18,13 +43,13 @@
     var elem = evt.target;
 
     var answer_id = null;
-    var node = elem.parentNode;
+    var node = elem.parentElement;
     while (node) {
       if (node.dataset.id) {
         answer_id = node.dataset.id;
         node = null;
       } else {
-        node = node.parentNode;
+        node = node.parentElement;
       }
     }
 
@@ -102,12 +127,24 @@
         break;
       }
     }
+
     var html = nunjucks.render('thread_header.html', {
       date_posted: date_posted,
       handset_type: handset_type,
-      author: author
+      author: author,
+      categories: CATEGORIES,
+      selected_category: question.category
     });
     question_thread.insertAdjacentHTML('afterbegin', html);
+
+    var category_chooser = document.getElementById('category_chooser');
+    category_chooser.addEventListener('change', function(evt) {
+      var category = evt.target.value;
+      if (category == question.category) {
+        return;
+      }
+      SumoDB.set_category_for_question(category, question.id);
+    });
   }
 
   function submit_comment(evt) {

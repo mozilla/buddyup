@@ -462,7 +462,67 @@ output += ", ";
 }
 output += " ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
-output += "\n</h3>\n";
+output += "\n</h3>\n<select id=\"category_chooser\" class=\"button-gray\">\n  ";
+frame = frame.push();
+var t_3 = runtime.contextOrFrameLookup(context, frame, "categories");
+if(t_3) {var t_1;
+if(runtime.isArray(t_3)) {
+var t_2 = t_3.length;
+for(t_1=0; t_1 < t_3.length; t_1++) {
+var t_4 = t_3[t_1][0]
+frame.set("key", t_3[t_1][0]);
+var t_5 = t_3[t_1][1]
+frame.set("value", t_3[t_1][1]);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\n    <option value=\"";
+output += runtime.suppressValue(t_4, env.autoesc);
+output += "\"\n      ";
+if(runtime.contextOrFrameLookup(context, frame, "selected_category") == t_4) {
+output += "selected";
+;
+}
+output += ">\n      ";
+output += runtime.suppressValue(t_5, env.autoesc);
+output += "\n    </option>\n  ";
+;
+}
+} else {
+t_1 = -1;
+var t_2 = runtime.keys(t_3).length;
+for(var t_6 in t_3) {
+t_1++;
+var t_7 = t_3[t_6];
+frame.set("key", t_6);
+frame.set("value", t_7);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\n    <option value=\"";
+output += runtime.suppressValue(t_6, env.autoesc);
+output += "\"\n      ";
+if(runtime.contextOrFrameLookup(context, frame, "selected_category") == t_6) {
+output += "selected";
+;
+}
+output += ">\n      ";
+output += runtime.suppressValue(t_7, env.autoesc);
+output += "\n    </option>\n  ";
+;
+}
+}
+}
+frame = frame.pop();
+output += "\n</select>\n";
 cb(null, output);
 ;
 } catch (e) {
