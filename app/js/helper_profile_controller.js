@@ -24,7 +24,7 @@
 
       profile_details_container.innerHTML = profile_html;
 
-      SumoDB.get_my_questions(user).then(function(response) {
+      SumoDB.get_solved_questions(user).then(function(response) {
         var results = response.results;
         var html;
 
