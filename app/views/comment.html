@@ -1,4 +1,4 @@
-<div class="message vbox">
+<div class="message vbox {% if comment.failed %}js-failed{% endif %}">
   <div>{{ comment.content }}</div>
   {% if comment.updated %}
     <p class="hbox">
@@ -15,6 +15,8 @@
         <button class="js-solve">Mark question as resolved</button>
       {% endif %}
     {% endif %}
+  {% elif comment.failed %}
+    <span>Failed</span>
   {% else %}
     <span>Sending…</span>
   {% endif %}

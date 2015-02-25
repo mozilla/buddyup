@@ -3,7 +3,12 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<div class=\"message vbox\">\n  <div>";
+output += "<div class=\"message vbox ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"failed", env.autoesc)) {
+output += "js-failed";
+;
+}
+output += "\">\n  <div>";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
 output += "</div>\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
@@ -37,7 +42,14 @@ output += "\n  ";
 ;
 }
 else {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"failed", env.autoesc)) {
+output += "\n    <span>Failed</span>\n  ";
+;
+}
+else {
 output += "\n    <span>Sending…</span>\n  ";
+;
+}
 ;
 }
 output += "\n</div>\n";

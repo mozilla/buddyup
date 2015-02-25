@@ -170,6 +170,12 @@
 
     show_panel(question_thread);
 
+    var failed = document.getElementsByClassName('js-failed');
+    for(var i = 0, il = failed.length; i < il; i++) {
+      var failed_comment = failed[i].parentElement;
+      failed_comment.parentElement.removeChild(failed_comment);
+    }
+
     var fake_comment = nunjucks.render('comment.html',
       {comment: {content: comment}});
     var list = document.getElementById('comment-list');
@@ -222,6 +228,10 @@
         comment: comment,
         is_my_question: question_object.creator.username === user.username,
         user: user
+      });
+    }).catch(function() {
+      list_item.innerHTML = nunjucks.render('comment.html', {
+        comment: {content: comment, failed: true},
       });
     });
   }
