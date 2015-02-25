@@ -96,6 +96,7 @@
         p.textContent = 'Solution ✓';
         p.classList.add('is_solution');
         elem.parentNode.replaceChild(p, elem);
+        close_question();
       });
     });
 
