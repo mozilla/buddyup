@@ -41,6 +41,16 @@
     }
 
     var new_iframe = current_iframe.previousElementSibling;
+    var refresh_mode = new_iframe.contentDocument.documentElement // <html>
+      .dataset.refreshMode;
+    if (refresh_mode != 'manual') {
+      new_iframe.contentWindow.location.reload();
+      new_iframe.addEventListener('load', function newFrameLoad() {
+        new_iframe.removeEventListener('load', newFrameLoad);
+        new_iframe.contentWindow.addEventListener('click', iframe_clicked);
+      });
+    }
+
     document.body.removeChild(current_iframe);
     current_iframe = new_iframe;
   }
