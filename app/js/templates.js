@@ -64,6 +64,23 @@ root: root
 };
 })();
 })();
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["generic_error.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<form id=\"generic_error\" role=\"dialog\" data-type=\"confirm\">\n  <section>\n    <h1>Whoops!</h1>\n    <p>There was a problem with Buddy Up.</p>\n  </section>\n  <menu>\n    <button class=\"recommend\">OK</button>\n  </menu>\n</form>\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["helper_profile.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;

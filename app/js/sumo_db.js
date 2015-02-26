@@ -12,6 +12,11 @@
   var sequence_id = 0;
   var last_request;
 
+  function trigger_error() {
+    var event = new Event('network-error');
+    document.dispatchEvent(event);
+  }
+
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
       var req = new XMLHttpRequest();
@@ -27,12 +32,16 @@
       req.onload = function() {
         if (req.status >= 200 && req.status < 300) {
           resolve(req.responseText);
+        } else if (req.status >= 500) {
+          trigger_error();
+          reject(req.responseText);
         } else {
           reject(req.responseText);
         }
       };
 
       req.onerror = function() {
+        trigger_error();
         reject(Error('Network Error'));
       };
 
