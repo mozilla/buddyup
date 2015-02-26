@@ -3,7 +3,6 @@
     <p>
       <label for="display_name" class="visuallyhidden">Your Display Name</label>
       <input type="text" name="display_name" id="display_name" value="{{ user.display_name }}" required />
-      <button type="reset">Clear</button>
     </p>
     {% if is_helper %}
       <ul class="achievements">
@@ -15,29 +14,6 @@
         </li>
       </ul>
     {% endif %}
-  </fieldset>
-
-  <fieldset class="notifications">
-    <h2>Notifications</h2>
-    <ul>
-      <li>
-        <label for="new_comment_notify" class="pack-switch">
-          <input type="checkbox" id="new_comment_notify" name="new_comment_notify"
-            {% if user.new_comment_notify %}checked="checked"{% endif %} />
-          <span>New Comments</span>
-        </label>
-      </li>
-      {% if is_helper %}
-        <li>
-          <label for="buddyup_reminder" class="pack-switch">
-            <input type="checkbox" id="buddyup_reminder" name="buddyup_reminder"
-              {% if user.buddyup_reminder %}checked="checked"{% endif %} />
-            <span>BuddyUp Reminder</span>
-          </label>
-        </li>
-      {% endif %}
-
-    </ul>
   </fieldset>
 
   {% if is_helper %}

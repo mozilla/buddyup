@@ -128,7 +128,7 @@ var output = "";
 try {
 output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user\">\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">Your Display Name</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\" required />\n      <button type=\"reset\">Clear</button>\n    </p>\n    ";
+output += "\" required />\n    </p>\n    ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
 output += "\n      <ul class=\"achievements\">\n        <li>\n          <span class=\"count\" data-icon=\"tick\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
@@ -137,22 +137,7 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "</span> Helpful Upvotes\n        </li>\n      </ul>\n    ";
 ;
 }
-output += "\n  </fieldset>\n\n  <fieldset class=\"notifications\">\n    <h2>Notifications</h2>\n    <ul>\n      <li>\n        <label for=\"new_comment_notify\" class=\"pack-switch\">\n          <input type=\"checkbox\" id=\"new_comment_notify\" name=\"new_comment_notify\"\n            ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"new_comment_notify", env.autoesc)) {
-output += "checked=\"checked\"";
-;
-}
-output += " />\n          <span>New Comments</span>\n        </label>\n      </li>\n      ";
-if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n        <li>\n          <label for=\"buddyup_reminder\" class=\"pack-switch\">\n            <input type=\"checkbox\" id=\"buddyup_reminder\" name=\"buddyup_reminder\"\n              ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"buddyup_reminder", env.autoesc)) {
-output += "checked=\"checked\"";
-;
-}
-output += " />\n            <span>BuddyUp Reminder</span>\n          </label>\n        </li>\n      ";
-;
-}
-output += "\n\n    </ul>\n  </fieldset>\n\n  ";
+output += "\n  </fieldset>\n\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
 output += "\n\n    <fieldset class=\"question-filters\">\n      <h2>Answer A Question Filter</h2>\n      <section>\n        <p>The unanswered questions list will be filtered based on the setting below.</p>\n\n        <label for=\"locale\">Language</label>\n        <span class=\"button icon icon-dialog\">\n          <select id=\"locale\">\n            ";
 frame = frame.push();
