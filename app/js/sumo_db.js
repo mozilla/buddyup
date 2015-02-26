@@ -219,6 +219,7 @@
       endpoint += '&is_solved=0';
       endpoint += '&is_taken=0';
       endpoint += '&locale=' + locale;
+      endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
@@ -227,6 +228,7 @@
     get_active_questions: function(username) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?involved=' + username;
+      endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
