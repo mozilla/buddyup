@@ -11,6 +11,9 @@
   var CATEGORIES = {
     '': 'Choose a category',
     'email': 'Email/Calendar',
+    'browser':'Browser/Download',
+    'calling':'Calling/Contacts',
+    'clock':'Clock/Alarm',
     'camera': 'Camera/Gallery/Video',
     'audio': 'Audio/Music/FMRadio',
     'performance': 'Performance',
