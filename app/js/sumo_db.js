@@ -1,6 +1,6 @@
 'use strict';
 
-/* global _, nunjucks, Settings, User */
+/* global _, Settings, User */
 
 (function(exports) {
   var API_V1_BASE = Settings.BASE_SERVER + '/api/1/';
@@ -12,25 +12,12 @@
   var sequence_id = 0;
   var last_request;
 
-  function show_generic_error() {
-    var generic_error = document.getElementById('generic_error');
-
-    if (!generic_error) {
-      var html = nunjucks.render('generic_error.html');
-      document.body.insertAdjacentHTML('beforeend', html);
-
-      generic_error = document.getElementById('generic_error');
-      generic_error.addEventListener('click', function(evt) {
-        if (!evt.target.classList.contains('recommend')) {
-          return;
-        }
-        evt.preventDefault();
-        generic_error.classList.add('hide');
-      });
-    }
-
-    generic_error.classList.remove('hide');
+  function trigger_error() {
+    var event = new Event('network-error');
+    document.dispatchEvent(event);
   }
+
+
 
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
@@ -48,7 +35,7 @@
         if (req.status >= 200 && req.status < 300) {
           resolve(req.responseText);
         } else if (req.status >= 500) {
-          show_generic_error();
+          trigger_error();
           reject(req.responseText);
         } else {
           reject(req.responseText);
@@ -56,7 +43,7 @@
       };
 
       req.onerror = function() {
-        show_generic_error();
+        trigger_error();
         reject(Error('Network Error'));
       };
 
