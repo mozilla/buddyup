@@ -17,8 +17,6 @@
     document.dispatchEvent(event);
   }
 
-
-
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
       var req = new XMLHttpRequest();
