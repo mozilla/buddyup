@@ -329,6 +329,11 @@
   }
 
   function show_panel(elt) {
+    // Never hide the question panel
+    if (!question_thread.classList.contains('hide')) {
+      return;
+    }
+
     var panels = [question_thread, suggestions, thread_introduction];
     panels.forEach(function(panel) {
       if (panel == elt) {
