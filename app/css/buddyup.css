@@ -36,6 +36,18 @@ html {
 .profile fieldset.user {
     padding: 0 1rem;
 }
+.profile fieldset.user.is-helper {
+    margin-left: 2rem;
+    overflow: visible;
+    padding-left: 48px;
+    position: relative;
+}
+.profile fieldset.user .avatar {
+    border-radius: 50%;
+    left: -1rem;
+    position: absolute;
+    top: 0;
+}
 .profile h2 {
     padding: .7rem 1rem;
 }

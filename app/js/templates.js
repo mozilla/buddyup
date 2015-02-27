@@ -126,7 +126,23 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user\">\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">Your Display Name</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
+output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user ";
+if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
+output += "is-helper";
+;
+}
+output += "\">\n    ";
+if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
+output += "\n      <img class=\"avatar\" src=\"";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"avatar", env.autoesc), env.autoesc);
+output += "\" alt=\"";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
+output += "\" title=\"";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
+output += "\">\n    ";
+;
+}
+output += "\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">Your Display Name</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
 output += "\" required />\n    </p>\n    ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
