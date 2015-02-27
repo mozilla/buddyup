@@ -1,5 +1,8 @@
 <form name="profile" id="profile" class="profile" method="get">
-  <fieldset class="user">
+  <fieldset class="user {% if is_helper %}is-helper{% endif %}">
+    {% if is_helper %}
+      <img class="avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
+    {% endif %}
     <p>
       <label for="display_name" class="visuallyhidden">Your Display Name</label>
       <input type="text" name="display_name" id="display_name" value="{{ user.display_name }}" required />
