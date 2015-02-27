@@ -12,7 +12,7 @@
     '': 'Choose a category',
     'email': 'Email/Calendar',
     'browser':'Browser/Download',
-    'calling':'Calling/Contacts',
+    'calling':'Dialer/Contacts',
     'clock':'Clock/Alarm',
     'camera': 'Camera/Gallery/Video',
     'audio': 'Audio/Music/FMRadio',
