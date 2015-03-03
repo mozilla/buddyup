@@ -39,6 +39,16 @@
   var question_object;
   var solution_id;
 
+  var last_displayed_answer;
+
+  function format_answer(answer) {
+    var created = answer.created;
+    answer.author = answer.creator.display_name ||
+      answer.creator.username;
+    answer.created = Utils.time_since(new Date(created));
+    return answer;
+  }
+
   function handle_event(evt) {
     var elem = evt.target;
 
@@ -217,8 +227,7 @@
         });
       }
 
-      comment.created = Utils.time_since(new Date(comment.created));
-      comment.author = comment.creator.display_name || comment.creator.username;
+      comment = format_answer(comment);
       list_item.innerHTML = nunjucks.render('comment.html', {
         comment: comment,
         is_my_question: question_object.creator.username === user.username,
@@ -236,12 +245,21 @@
     return SumoDB.post_question(comment, user_meta).then(function(response) {
       question_id = response.id;
       question_object = response;
+      if (window.parent.Notif) {
+        window.parent.Notif.listen_to_realtime(question_id);
+      }
       return response;
     });
   }
 
   function submit_answer(question_id, comment) {
-    return SumoDB.post_answer(question_id, comment).then(function(response) {
+    var promise = SumoDB.post_answer(question_id, comment);
+
+    promise.then(function(response) {
+      last_displayed_answer = response.id;
+    });
+
+    return promise.then(function(response) {
       return response;
     });
   }
@@ -257,6 +275,10 @@
     question_content.push(SumoDB.get_question(question_id));
 
     question_content.push(SumoDB.get_answers_for_question(question_id));
+
+    if (window.parent.Notif) {
+      window.parent.Notif.listen_to_realtime(question_id);
+    }
 
     Promise.all(question_content).
       then(check_if_taken).
@@ -277,18 +299,17 @@
       close_question();
     }
 
+    if (answers.length) {
+      last_displayed_answer = answers[0].id;
+    }
+
     display_sign_in_if_needed(question);
 
     question.content = question.title;
     answers.push(question);
     answers.reverse();
 
-    for (var i = 0, l = answers.length; i < l; i++) {
-      var created = answers[i].created;
-      answers[i].author = answers[i].creator.display_name ||
-        answers[i].creator.username;
-      answers[i].created = Utils.time_since(new Date(created));
-    }
+    answers = answers.map(format_answer);
 
     add_thread_header(question);
     User.get_user().then(function(user) {
@@ -413,9 +434,59 @@
           load_question();
         }
       }
+    },
+
+    display_new_answers: function() {
+      if (!question_id) {
+        return Promise.resolve();
+      }
+
+      var user_promise = User.get_user();
+
+      return window.parent.Notif.get_realtime_id(question_id)
+      .then(function(realtime_id) {
+        return Promise.all([user_promise, SumoDB.get_new_answers(realtime_id)]);
+      }).then(function([user, new_answers]) {
+        var list = document.getElementById('comment-list');
+
+        new_answers.filter(function(answer) {
+          if (answer.verb != 'answered') {
+            return false;
+          }
+          if (!last_displayed_answer) {
+            return true;
+          }
+          if (answer.action_object.id > last_displayed_answer) {
+            return true;
+          }
+        }).map(function(answer) {
+          return format_answer(answer.action_object);
+        }).forEach(function(answer) {
+          var list_item = document.createElement('li');
+
+          if (answer.creator.username !== question_object.creator.username) {
+            list_item.classList.add('helper-comment');
+          }
+
+          list_item.innerHTML = nunjucks.render('comment.html', {
+            comment: answer,
+            is_my_question: question_object.creator.username === user.username,
+            user: user
+          });
+          list.appendChild(list_item);
+
+          last_displayed_answer = answer.id;
+        });
+      });
+    },
+
+    get question_id() {
+      return question_id;
     }
   };
   exports.QuestionController = QuestionController;
   QuestionController.init();
 
 })(window);
+
+

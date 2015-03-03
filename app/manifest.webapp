@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "BuddyUP",
+  "name": "BuddyUp",
   "description": "Realtime help system for FirefoxOS",
   "launch_path": "/index.html",
   "icons": {

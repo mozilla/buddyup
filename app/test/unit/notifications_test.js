@@ -1,8 +1,9 @@
 'use strict';
 
-/* global asyncStorage, Notif, SumoDB */
+/* global asyncStorage, Navigation, Notif, SumoDB */
 
 require('/test/unit/mocks/mock_async_storage.js');
+require('/test/unit/mocks/mock_navigation.js');
 require('/test/unit/mocks/mock_sumo_db.js');
 
 require('/js/utils.js');
@@ -10,6 +11,7 @@ require('/js/notifications.js');
 
 var mocksFor = new MocksHelper([
   'asyncStorage',
+  'Navigation',
   'SumoDB'
 ]).init();
 
@@ -27,7 +29,7 @@ suite('notifications', function() {
     };
     const RESOLVED_NOTIF = {
       id: 27,
-      actor: {display_name: 'Spongebob'},
+      actor: {display_name: 'Patrick the star'},
       target: {id: 12346},
       'verb': 'marked as a solution'
     };
@@ -49,6 +51,8 @@ suite('notifications', function() {
       }
     };
 
+    const FAKE_ENDPOINT = 'fake_endpoint';
+
     setup(function(done) {
       this.sinon.spy(navigator, 'mozSetMessageHandler').withArgs('push');
       this.sinon.stub(navigator.mozApps, 'getSelf', function() {
@@ -62,6 +66,8 @@ suite('notifications', function() {
       this.sinon.stub(window, 'Notification').returns({
         addEventListener: () => {}
       });
+      this.sinon.stub(asyncStorage, 'getItem')
+        .returns(Promise.resolve(FAKE_ENDPOINT));
       this.sinon.stub(SumoDB, 'get_unread_notifications')
         .returns(Promise.resolve([
           ANSWERED_NOTIF,
@@ -74,7 +80,7 @@ suite('notifications', function() {
       Notif.init();
       var push_handler_spy = navigator.mozSetMessageHandler.withArgs('push');
       var push_handler = push_handler_spy.firstCall.args[1];
-      push_handler().then(() => done());
+      push_handler({pushEndpoint: FAKE_ENDPOINT}).then(() => done());
     });
 
     test('listens to push system messages', function() {
@@ -115,6 +121,55 @@ suite('notifications', function() {
       sinon.assert.calledWith(SumoDB.mark_notification_as_read,
         RESOLVED_NOTIF.id);
     });
+
+    suite('when viewing a question', function() {
+      setup(function() {
+        Navigation.current_view = {
+          QuestionController: {
+            question_id: ANSWERED_NOTIF.target.id
+          }
+        };
+      });
+
+      teardown(function(){
+        Navigation.current_view = {};
+      });
+
+      function reset_test() {
+        navigator.mozSetMessageHandler.reset();
+        window.Notification.reset();
+        Notif.init();
+        var push_handler_spy = navigator.mozSetMessageHandler.withArgs('push');
+        var push_handler = push_handler_spy.firstCall.args[1];
+        return push_handler({pushEndpoint: FAKE_ENDPOINT});
+      }
+
+      test('does not display notification for this question', function(done) {
+        reset_test().then(() => {
+          sinon.assert.calledOnce(window.Notification);
+          sinon.assert.calledWithMatch(window.Notification,
+            RESOLVED_NOTIF.actor.display_name);
+        }).then(done, done);
+      });
+
+      test('displays the notification if app in background', function(done) {
+        Object.defineProperty(document, 'hidden', {
+          configurable: true,
+          get: function() {
+            return true;
+          }
+        });
+
+        reset_test().then(() => {
+          sinon.assert.calledTwice(window.Notification);
+          sinon.assert.calledWithMatch(window.Notification,
+            ANSWERED_NOTIF.actor.display_name);
+        }).then(() => {
+          delete document.hidden;
+        }).then(done, done);
+      });
+
+    });
   });
 
   suite('ensure_endpoint', function() {
@@ -137,6 +192,10 @@ suite('notifications', function() {
       this.sinon.stub(SumoDB, 'register_push_endpoint')
         .returns(Promise.resolve());
       this.sinon.spy(navigator.push, 'register');
+    });
+
+    teardown(function() {
+      navigator.push = null;
     });
 
     test('gets an endpoint and saves it', function(done) {
@@ -175,6 +234,105 @@ suite('notifications', function() {
       Notif.clear_endpoint().then(function() {
         sinon.assert.calledWith(asyncStorage.removeItem, 'endpoint');
       }).then(done, done);
+    });
+  });
+});
+
+suite('realtime', function() {
+  this.timeout(500);
+
+  mocksFor.attachTestHelpers();
+
+  const KNOWN_QUESTION = 12;
+  const UNKNOWN_QUESTION = 13;
+
+  const KNOWN_REALTIME_ID = 26;
+
+  const FAKE_ENDPOINT = 'fake_endpoint';
+
+  const FAKE_REALTIME_ID = 14;
+
+  setup(function() {
+    var register_request = {};
+
+    navigator.push = {
+      register: function() {
+        setTimeout(function() {
+          register_request.onsuccess();
+        });
+        register_request.result = FAKE_ENDPOINT;
+        return register_request;
+      }
+    };
+
+    this.sinon.stub(asyncStorage, 'getItem');
+    asyncStorage.getItem.withArgs('realtime-' + KNOWN_QUESTION)
+      .returns(Promise.resolve(KNOWN_REALTIME_ID));
+    asyncStorage.getItem.returns(Promise.resolve());
+
+    this.sinon.stub(SumoDB, 'register_realtime_endpoint')
+      .returns(Promise.resolve({id: FAKE_REALTIME_ID}));
+
+    this.sinon.stub(asyncStorage, 'setItem');
+  });
+
+  suite('listen_to_realtime', function() {
+    test('saves endpoint', function(done) {
+      Notif.listen_to_realtime(UNKNOWN_QUESTION).then(() => {
+        sinon.assert.calledWith(SumoDB.register_realtime_endpoint,
+          UNKNOWN_QUESTION, FAKE_ENDPOINT);
+        sinon.assert.calledWith(asyncStorage.setItem,
+          'realtime-' + UNKNOWN_QUESTION, FAKE_REALTIME_ID);
+      }).then(done, done);
+    });
+
+    test('does not request a new endpoint if question already known',
+    function(done) {
+      Notif.listen_to_realtime(KNOWN_QUESTION).catch(() => {
+        sinon.assert.notCalled(SumoDB.register_realtime_endpoint);
+        sinon.assert.notCalled(asyncStorage.setItem);
+      }).then(done, done);
+    });
+  });
+
+  suite('get_realtime_id', function() {
+    test('known question', function(done) {
+      Notif.get_realtime_id(KNOWN_QUESTION).then((realtime_id) => {
+        assert.equal(realtime_id, KNOWN_REALTIME_ID);
+      }).then(done, done);
+    });
+
+    test('unknown question', function(done) {
+      Notif.get_realtime_id(UNKNOWN_QUESTION).then((realtime_id) => {
+        assert.isUndefined(realtime_id);
+      }).then(done, done);
+    });
+  });
+
+  suite('transmit realtime messages', function() {
+    var display_new_answers_spy;
+
+    setup(function(done){
+      this.sinon.spy(navigator, 'mozSetMessageHandler').withArgs('push');
+      Notif.init();
+      var push_handler_spy = navigator.mozSetMessageHandler.withArgs('push');
+      var push_handler = push_handler_spy.firstCall.args[1];
+
+      display_new_answers_spy = this.sinon.spy();
+      Navigation.current_view = {
+        QuestionController: {
+          display_new_answers: display_new_answers_spy
+        }
+      };
+      push_handler({pushEndpoint: FAKE_ENDPOINT}).then(() => done());
+    });
+
+    teardown(function(){
+      Navigation.current_view = {};
+    });
+
+    test('to the visible view', function() {
+      sinon.assert.calledWith(display_new_answers_spy);
     });
   });
 });

@@ -4,6 +4,7 @@
 
 (function(exports) {
 var ENDPOINT_ID_KEY = 'endpoint';
+var REALTIME_PREFIX = 'realtime-';
 
 function display_notification(title, body, icon_info, tag) {
   // FIXME We need support for 1.1 notifications
@@ -32,6 +33,16 @@ function display_notification(title, body, icon_info, tag) {
 }
 
 function push_handler(evt) {
+  return asyncStorage.getItem(ENDPOINT_ID_KEY).then(function(endpoint) {
+    if (evt.pushEndpoint == endpoint) {
+      return push_notification();
+    } else {
+      return push_realtime();
+    }
+  });
+}
+
+function push_notification() {
   return SumoDB.get_unread_notifications().then(function(notifications) {
     var promises = notifications.map(function(notification) {
       var title;
@@ -40,10 +51,17 @@ function push_handler(evt) {
 
       switch(notification.verb) {
         case 'answered':
-          title = notification.actor.display_name;
-          title += ' has commented on a question';
-          icon_info = '?question_id=' + notification.target.id;
-          tag = 'question-' + notification.target.id;
+          var QuestionC = window.Navigation.current_view.QuestionController;
+          var question_displayed = !document.hidden &&
+            QuestionC &&
+            QuestionC.question_id == notification.target.id;
+          // FIXME Bug 1139899 - We should still mark them as read
+          if (!question_displayed) {
+            title = notification.actor.display_name;
+            title += ' has commented on a question';
+            icon_info = '?question_id=' + notification.target.id;
+            tag = 'question-' + notification.target.id;
+          }
         break;
 
         case 'marked as a solution':
@@ -71,6 +89,13 @@ function push_handler(evt) {
 
     return Promise.all(promises);
   });
+}
+
+function push_realtime() {
+  var current_view = window.Navigation.current_view;
+  if (current_view.QuestionController) {
+    current_view.QuestionController.display_new_answers();
+  }
 }
 
 function notification_clicked(evt) {
@@ -152,6 +177,32 @@ var Notif = {
 
   clear_endpoint: function() {
     return asyncStorage.removeItem(ENDPOINT_ID_KEY);
+  },
+
+  listen_to_realtime: function(question_id) {
+    return asyncStorage.getItem(REALTIME_PREFIX + question_id)
+    .then(function(realtime_endpoint) {
+      if (realtime_endpoint) {
+        // We already have an endpoint for this, no need to get a new one
+        return Promise.reject();
+      }
+    }).then(function() {
+      var defer = Utils.defer();
+      var req = navigator.push.register();
+      req.onsuccess = function() {
+        defer.resolve(req.result);
+      };
+
+      return defer.promise.then(function(endpoint_url) {
+        return SumoDB.register_realtime_endpoint(question_id, endpoint_url);
+      });
+    }).then(function(foo) {
+      return asyncStorage.setItem(REALTIME_PREFIX + question_id, foo.id);
+    });
+  },
+
+  get_realtime_id: function(question_id) {
+    return asyncStorage.getItem(REALTIME_PREFIX + question_id);
   },
 
   init: function() {

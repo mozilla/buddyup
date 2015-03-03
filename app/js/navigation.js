@@ -65,6 +65,10 @@
         document.body.removeChild(iframe);
       });
       open_link(url);
+    },
+
+    get current_view() {
+      return current_iframe.contentWindow;
     }
   };
 

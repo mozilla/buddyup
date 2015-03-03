@@ -1,6 +1,6 @@
 'use strict';
 
-/* global _, Settings, User */
+/* global _, Event, Settings, User */
 
 (function(exports) {
   var API_V1_BASE = Settings.BASE_SERVER + '/api/1/';
@@ -465,6 +465,25 @@
       endpoint += '?format=json'; // TODO bug 1088014
 
       return request(endpoint, 'GET').then(JSON.parse);
+    },
+
+    register_realtime_endpoint: function(question_id, realtime_endpoint) {
+      var endpoint = API_V2_BASE + 'realtime/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(endpoint, 'POST', {
+        endpoint: realtime_endpoint,
+        content_type: 'question',
+        object_id: question_id
+      }).then(JSON.parse);
+    },
+
+    get_new_answers: function(realtime_id) {
+      var endpoint = API_V2_BASE + 'realtime/';
+      endpoint += realtime_id + '/updates/';
+      endpoint += '?format=json'; // TODO bug 1088014
+
+      return request_with_auth(endpoint, 'GET').then(JSON.parse);
     }
   };
   exports.SumoDB = SumoDB;
