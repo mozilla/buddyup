@@ -5,40 +5,50 @@
 (function(exports) {
 var ENDPOINT_ID_KEY = 'endpoint';
 
-function display_notification(title, body, icon, tag) {
+function display_notification(title, body, icon_info, tag) {
   // FIXME We need support for 1.1 notifications
-  var notif = new Notification(title, {
-    body: body,
-    icon: icon,
-    tag: tag
-  });
+  var defer = Utils.defer();
 
-  notif.addEventListener('error', function(errorMsg) {
-    console.log('something went wrong');
-    console.log(errorMsg);
-  });
+  navigator.mozApps.getSelf().onsuccess = function (evt) {
+    defer.resolve(evt.target.result);
+  };
 
-  notif.addEventListener('click', notification_clicked);
+  return defer.promise.then(function(app) {
+    var icon_base = app.installOrigin + app.manifest.icons['32'];
+
+    var notif = new Notification(title, {
+      body: body,
+      icon: icon_base + icon_info,
+      tag: tag
+    });
+
+    notif.addEventListener('error', function(errorMsg) {
+      console.log('something went wrong');
+      console.log(errorMsg);
+    });
+
+    notif.addEventListener('click', notification_clicked);
+  });
 }
 
 function push_handler(evt) {
   return SumoDB.get_unread_notifications().then(function(notifications) {
     var promises = notifications.map(function(notification) {
       var title;
-      var icon;
+      var icon_info;
       var tag;
 
       switch(notification.verb) {
         case 'answered':
           title = notification.actor.display_name;
           title += ' has commented on a question';
-          icon = '?question_id=' + notification.target.id;
+          icon_info = '?question_id=' + notification.target.id;
           tag = 'question-' + notification.target.id;
         break;
 
         case 'marked as a solution':
           title = notification.actor.display_name + ' chose your answer';
-          icon = '?question_id=' + notification.target.id;
+          icon_info = '?question_id=' + notification.target.id;
           tag = 'resolved-' + notification.target.id;
         break;
 
@@ -52,11 +62,11 @@ function push_handler(evt) {
       }
 
       return SumoDB.get_question(notification.target.id)
-        .then(function(question) {
-          display_notification(title, question.title, icon, tag);
-          return notification.id;
-        })
-        .then(SumoDB.mark_notification_as_read);
+      .then(function(question) {
+        return display_notification(title, question.title, icon_info, tag);
+      }).then(function() {
+        return notification.id;
+      }).then(SumoDB.mark_notification_as_read);
     });
 
     return Promise.all(promises);

@@ -40,8 +40,25 @@ suite('notifications', function() {
       title: 'fake_title'
     };
 
+    const FAKE_APP = {
+      installOrigin: 'installOrigin/',
+      manifest: {
+        icons: {
+          '32': '32.png'
+        }
+      }
+    };
+
     setup(function(done) {
       this.sinon.spy(navigator, 'mozSetMessageHandler').withArgs('push');
+      this.sinon.stub(navigator.mozApps, 'getSelf', function() {
+        var getSelf_request = {
+        };
+        setTimeout(() => {
+          getSelf_request.onsuccess({target: {result: FAKE_APP}});
+        });
+        return getSelf_request;
+      });
       this.sinon.stub(window, 'Notification').returns({
         addEventListener: () => {}
       });
@@ -71,7 +88,8 @@ suite('notifications', function() {
         ANSWERED_NOTIF.actor.display_name + ' has commented on a question',
         {
           body: FAKE_QUESTION.title,
-          icon: '?question_id=' + ANSWERED_NOTIF.target.id,
+          icon: FAKE_APP.installOrigin + FAKE_APP.manifest.icons[32] +
+            '?question_id=' + ANSWERED_NOTIF.target.id,
           tag: 'question-' + ANSWERED_NOTIF.target.id
         }
       );
@@ -83,7 +101,8 @@ suite('notifications', function() {
         RESOLVED_NOTIF.actor.display_name + ' chose your answer',
         {
           body: FAKE_QUESTION.title,
-          icon: '?question_id=' + RESOLVED_NOTIF.target.id,
+          icon: FAKE_APP.installOrigin + FAKE_APP.manifest.icons[32] +
+            '?question_id=' + RESOLVED_NOTIF.target.id,
           tag: 'resolved-' + RESOLVED_NOTIF.target.id
         }
       );
