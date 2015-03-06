@@ -14,13 +14,13 @@
 
       spinner.classList.add('spinner');
       spinner.classList.add('hide');
-      document.querySelector('body').appendChild(spinner);
+      document.body.appendChild(spinner);
     }
 
     return spinner;
   }
 
-  var SpinnerController = {
+  var LoadingIndicator = {
     init: function() {
       document.addEventListener('request-start', function() {
         request_count++;
@@ -38,6 +38,6 @@
     }
   };
 
-  exports.SpinnerController = SpinnerController;
-  SpinnerController.init();
+  exports.LoadingIndicator = LoadingIndicator;
+  LoadingIndicator.init();
 })(window);
