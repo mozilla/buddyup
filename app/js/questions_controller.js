@@ -108,7 +108,6 @@
   }
 
   function load_more_questions(evt) {
-    Utils.toggle_spinner();
     var load_more_button = evt.target;
     var url = load_more_button.dataset.next;
     var container = load_more_button.parentElement
@@ -149,8 +148,6 @@
       });
       container.insertAdjacentHTML('beforeend', html);
     }
-
-    Utils.toggle_spinner();
   }
 
   function display_sign_in_if_needed() {
@@ -190,7 +187,6 @@
 
       add_tab_widget_handler();
       display_sign_in_if_needed();
-      Utils.toggle_spinner();
 
       my_questions_list_container = document.getElementById('myquestions');
       active_questions_list_container = document.getElementById(

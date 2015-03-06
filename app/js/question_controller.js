@@ -166,8 +166,6 @@
       return;
     }
 
-    Utils.toggle_spinner();
-
     show_panel(question_thread);
 
     var failed = document.getElementsByClassName('js-failed');
@@ -204,9 +202,6 @@
       }
       return Promise.all([submit_promise, user]);
     }).then(function([comment, user]) {
-
-      Utils.toggle_spinner();
-
       question_field.value = '';
 
       // Only handle first time help message scenario for questions
@@ -253,7 +248,6 @@
 
   function load_question() {
     if (!question_id) {
-      Utils.toggle_spinner();
       return;
     }
 
@@ -277,8 +271,6 @@
   }
 
   function display_question([question, answers]) {
-    Utils.toggle_spinner();
-
     question_object = question;
     solution_id = question.solution;
     if (solution_id) {
@@ -417,9 +409,6 @@
       if (question_view) {
         var params = Utils.get_url_parameters(location);
         if (params.id) {
-
-          Utils.toggle_spinner();
-
           question_id = params.id;
           load_question();
         }

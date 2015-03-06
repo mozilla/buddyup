@@ -11,18 +11,14 @@
 
     var promise = SumoDB.request_password_reset(username);
 
-    Utils.toggle_spinner();
-
     promise.then(function() {
       var success = document.getElementById('success_message');
       form.classList.add('hide');
       success.classList.remove('hide');
-      Utils.toggle_spinner();
     }).catch(function(response) {
       Utils.refresh_error_list(
         document.getElementById('pw_reset_errors'),
         ['User not found.']);
-      Utils.toggle_spinner();
     });
   }
 

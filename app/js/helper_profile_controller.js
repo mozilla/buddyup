@@ -45,8 +45,6 @@
           });
         }
         questions_container.insertAdjacentHTML('beforeend', html);
-
-        Utils.toggle_spinner();
       });
     });
   }
@@ -60,8 +58,6 @@
 
       var params = Utils.get_url_parameters(location);
       if (params.username) {
-        Utils.toggle_spinner();
-
         username = params.username;
         load_profile();
       }
