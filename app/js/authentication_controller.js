@@ -12,11 +12,7 @@
 
     var promise = User.authenticate_user(username, password);
 
-    Utils.toggle_spinner();
-
-    promise.then(function() {
-      Utils.toggle_spinner();
-    }).catch(function(response) {
+    promise.catch(function(response) {
       var errors = JSON.parse(response);
 
       Utils.refresh_error_list(
@@ -30,8 +26,6 @@
       Utils.refresh_error_list(
         document.getElementById('password_errors'),
         errors.password);
-
-      Utils.toggle_spinner();
     });
   }
 

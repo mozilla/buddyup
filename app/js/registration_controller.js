@@ -39,13 +39,10 @@
 
     var promise = User.register(username, password, email);
 
-    Utils.toggle_spinner();
-
     promise.then(function() {
       success_msg.src = EMAIL_CONFIRMATION_TMPL + '?email=' + email;
       success_msg.classList.remove('hide');
       form.classList.add('hide');
-      Utils.toggle_spinner();
 
       poll_for_email_confirmation(username);
 
@@ -72,8 +69,6 @@
       Utils.refresh_error_list(
         document.getElementById('password_errors'),
         errors.password);
-
-      Utils.toggle_spinner();
     });
   }
 

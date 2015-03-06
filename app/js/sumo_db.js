@@ -17,6 +17,16 @@
     document.dispatchEvent(event);
   }
 
+  function trigger_request_start() {
+    var event = new Event('request-start');
+    document.dispatchEvent(event);
+  }
+
+  function trigger_request_complete() {
+    var event = new Event('request-complete');
+    document.dispatchEvent(event);
+  }
+
   function request(url, method, data, headers) {
     return new Promise(function(resolve, reject) {
       var req = new XMLHttpRequest();
@@ -30,6 +40,7 @@
       }
 
       req.onload = function() {
+        trigger_request_complete();
         if (req.status >= 200 && req.status < 300) {
           resolve(req.responseText);
         } else if (req.status >= 500) {
@@ -41,11 +52,13 @@
       };
 
       req.onerror = function() {
+        trigger_request_complete();
         trigger_error();
         reject(Error('Network Error'));
       };
 
       req.send(JSON.stringify(data));
+      trigger_request_start();
     });
   }
 
