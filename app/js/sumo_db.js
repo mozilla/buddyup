@@ -165,7 +165,7 @@
 
     set_category_for_question: function(category, question_id) {
       var promise = SumoDB.get_question(question_id);
-      
+
       return promise.then(function(question) {
         var category_tags = question.tags.filter(function(tag) {
           return tag.name.startsWith(CATEGORY_PREFIX);
@@ -427,7 +427,6 @@
           delete in_progress_requests[request_sequence];
         }
       });
-      return request(endpoint, 'GET');
     },
 
     request_password_reset: function(username) {

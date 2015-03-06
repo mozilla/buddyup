@@ -2,6 +2,8 @@
 
 /* global SumoDB */
 
+require('/js/settings.js');
+
 require('/js/sumo_db.js');
 
 suite('sumo_db', function() {
