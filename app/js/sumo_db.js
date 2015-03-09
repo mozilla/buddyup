@@ -410,6 +410,7 @@
       endpoint += '?q=' + query;
       endpoint += '&max_questions=3&max_documents=3';
       endpoint += '&locale=' + navigator.language;
+      endpoint += '&product=firefox-os';
       endpoint += '&format=json';
 
       var current_request = request(endpoint, 'GET');
