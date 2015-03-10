@@ -47,7 +47,7 @@
       var elem_name = profile_elements[i];
       var elem = form.elements[profile_elements[i]];
       if (!elem) {
-        break;
+        continue;
       }
 
       switch(elem_name) {

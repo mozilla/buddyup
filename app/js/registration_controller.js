@@ -52,7 +52,7 @@
         }
       });
     }, function(response) {
-      var errors = JSON.parse(response);
+      var errors = JSON.parse(response.responseText);
 
       Utils.refresh_error_list(
         document.getElementById('register_errors'),

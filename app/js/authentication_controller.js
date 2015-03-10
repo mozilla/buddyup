@@ -13,7 +13,7 @@
     var promise = User.authenticate_user(username, password);
 
     promise.catch(function(response) {
-      var errors = JSON.parse(response);
+      var errors = JSON.parse(response.responseText);
 
       Utils.refresh_error_list(
         document.getElementById('login_errors'),

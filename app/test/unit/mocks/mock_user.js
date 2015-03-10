@@ -3,5 +3,6 @@
 /* exported MockUser */
 
 var MockUser = {
-  get_user: function() {}
+  get_user: function() {},
+  get_credentials: function() {}
 };

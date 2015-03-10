@@ -45,9 +45,9 @@
           resolve(req.responseText);
         } else if (req.status >= 500) {
           trigger_error();
-          reject(req.responseText);
+          reject(req);
         } else {
-          reject(req.responseText);
+          reject(req);
         }
       };
 
@@ -368,7 +368,7 @@
           // currently if the settings item did not exist, the server
           // will respond with a 404 error
           // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1074959#c7
-          if (error.message === 'NOT FOUND') {
+          if (error.statusText.toUpperCase() === 'NOT FOUND') {
             // settings item did not already exist, safe to set
             return request_with_auth(set_user_setting, 'POST', setting)
             .then(JSON.parse);
@@ -397,7 +397,7 @@
         // currently if the metadata item did not exist, the server
         // will respond with a 404 error
         // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1074959#c7
-        if (error.message === 'NOT FOUND') {
+        if (error.statusText.toUpperCase() === 'NOT FOUND') {
           // metadata item did not already exist, save to set
           return request_with_auth(set_metadata, 'POST', metadata)
           .then(JSON.parse);
