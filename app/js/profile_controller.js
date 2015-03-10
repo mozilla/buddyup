@@ -5,7 +5,15 @@
 (function(exports) {
 
   var LOCALES = ['en-US', 'fr', 'de'];
-  var HANDSETS = ['Alcatel', 'Flame'];
+  var HANDSETS = [
+    'All',
+    'Alcatel',
+    'Flame  ',
+    'Intex',
+    'LG',
+    'Spice',
+    'ZTE ',
+  ];
   var OPERATORS = ['Movistar', 'MTN'];
 
   /**
