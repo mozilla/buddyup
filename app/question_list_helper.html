@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
 
+    <link rel="stylesheet" type="text/css" href="css/question_list.css" media="screen" />
+
     <!-- localization -->
     <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
     <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
@@ -48,9 +50,15 @@
             </li>
           </ul>
 
-          <div id="panel_new" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab1" aria-hidden="false">
+          <div id="panel_new" class="bb-tabpanel questionList" role="tabpanel" aria-labelledby="tab1" aria-hidden="false">
             <section id="myquestions" class="questions js-question-container all" data-all="true"></section>
             <button id="load-more-my-questions" class="button-gray hide">Load more…</button>
+            <div id="refresh-toolbar" class="ql-bottomToolbar hide">
+              <button id="refresh-my-questions" data-icon="sync"></button>
+              <span>Last sync:
+                <time id="last-refreshed-time">x hours ago</time>
+              </span>
+            </div>
           </div>
 
           <div id="panel_active" class="bb-tabpanel" role="tabpanel" aria-labelledby="tab2" aria-hidden="true">

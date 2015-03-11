@@ -12,6 +12,7 @@
   var load_more_my_questions_button;
   var load_more_active_questions_button;
 
+  var last_refreshed;
   /**
    * Toggles the state of the specified Aria attribute between true and false.
    * @param {array} elems - The array of elements to toggle state on.
@@ -75,6 +76,15 @@
     });
   }
 
+  function display_last_refreshed_time() {
+    if (!last_refreshed.dateTime) {
+      return;
+    }
+
+    last_refreshed.textContent = Utils.time_since(last_refreshed.dateTime);
+  }
+
+
   function load_initial_questions() {
     var params = Utils.get_url_parameters(location);
 
@@ -101,6 +111,11 @@
           all_questions.classList.remove('hide');
         }
       }
+
+      my_questions_list_container.innerHTML = '';
+      last_refreshed.dateTime = new Date().valueOf();
+      display_last_refreshed_time();
+      document.getElementById('refresh-toolbar').classList.remove('hide');
 
       display_questions(response, my_questions_list_container,
           load_more_my_questions_button);
@@ -191,6 +206,12 @@
       my_questions_list_container = document.getElementById('myquestions');
       active_questions_list_container = document.getElementById(
           'activequestions');
+
+      document.getElementById('refresh-my-questions')
+        .addEventListener('click', load_initial_questions);
+
+      last_refreshed = document.getElementById('last-refreshed-time');
+      setInterval(display_last_refreshed_time, 60 * 1000);
 
       load_initial_questions();
       load_active_questions();
