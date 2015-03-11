@@ -80,7 +80,9 @@
       settings: settings
     };
     // update the user details
-    User.update_user(user_data);
+    User.update_user(user_data).then(function() {
+      window.parent.Navigation.close_current_view();
+    });
   }
 
   /**
