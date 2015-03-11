@@ -69,6 +69,7 @@
     close_current_view: function() {
       close_iframe('back');
     },
+    
     get current_view() {
       return current_iframe.contentWindow;
     }
