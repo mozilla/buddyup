@@ -14,7 +14,17 @@
     'Spice',
     'ZTE ',
   ];
-  var OPERATORS = ['Movistar', 'MTN'];
+  var OPERATORS = [
+    'All',
+    'AMX',
+    'Claro',
+    'DT',
+    'Grameenphone',
+    'Movistar',
+    'Orange',
+    'Telenor',
+    'Vivo',
+  ];
 
   /**
    * Get the list of selected handset types from the form element and returns
