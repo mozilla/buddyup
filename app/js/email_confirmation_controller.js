@@ -43,6 +43,13 @@
 
   var EmailConfirmationController = {
     init: function() {
+      var cancel_button = document.getElementById('cancel_button');
+      cancel_button.addEventListener('click', function() {
+        User.clear_temporary_user().then(function() {
+          window.parent.Navigation.close_current_view();
+        });
+      });
+
       User.get_temporary_user().then(function(user) {
         tmp_user = user;
 

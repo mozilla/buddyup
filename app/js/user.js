@@ -145,6 +145,10 @@
       return asyncStorage.getItem(TMP_USER_CREDENTIALS_KEY);
     },
 
+    clear_temporary_user: function() {
+      return asyncStorage.removeItem(TMP_USER_CREDENTIALS_KEY);
+    },
+
     is_active: function(username) {
       return SumoDB.get_public_user(username).then(function(user) {
         return user.is_active;
