@@ -48,15 +48,12 @@
     });
   }
 
-  function set_inactive_user(username, password) {
+  function set_inactive_user(username, password, email) {
     return asyncStorage.setItem(TMP_USER_CREDENTIALS_KEY, {
       username: username,
-      password: password
+      password: password,
+      email: email
     });
-  }
-
-  function get_inactive_user() {
-    return asyncStorage.getItem(TMP_USER_CREDENTIALS_KEY);
   }
 
   /**
@@ -144,6 +141,10 @@
       });
     },
 
+    get_temporary_user: function() {
+      return asyncStorage.getItem(TMP_USER_CREDENTIALS_KEY);
+    },
+
     is_active: function(username) {
       return SumoDB.get_public_user(username).then(function(user) {
         return user.is_active;
@@ -185,7 +186,7 @@
     },
 
     authenticate_temporary_user: function() {
-      return get_inactive_user().then(function(credentials) {
+      return User.get_temporary_user().then(function(credentials) {
         var promise = User.authenticate_user(credentials.username,
           credentials.password);
 
@@ -201,7 +202,7 @@
       var promise = SumoDB.register_user(username, password, email);
 
       return promise.then(function() {
-        return set_inactive_user(username, password);
+        return set_inactive_user(username, password, email);
       });
     }
   };
