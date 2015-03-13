@@ -464,6 +464,8 @@
         }).forEach(function(answer) {
           var list_item = document.createElement('li');
 
+          list_item.dataset.id = answer.id;
+
           if (answer.creator.username !== question_object.creator.username) {
             list_item.classList.add('helper-comment');
           }
