@@ -112,10 +112,12 @@
         }
       }
 
-      my_questions_list_container.innerHTML = '';
-      last_refreshed.dateTime = new Date().valueOf();
-      display_last_refreshed_time();
-      document.getElementById('refresh-toolbar').classList.remove('hide');
+      if (last_refreshed) {
+        my_questions_list_container.innerHTML = '';
+        last_refreshed.dateTime = new Date().valueOf();
+        display_last_refreshed_time();
+        document.getElementById('refresh-toolbar').classList.remove('hide');
+      }
 
       display_questions(response, my_questions_list_container,
           load_more_my_questions_button);
@@ -207,11 +209,12 @@
       active_questions_list_container = document.getElementById(
           'activequestions');
 
-      document.getElementById('refresh-my-questions')
-        .addEventListener('click', load_initial_questions);
-
-      last_refreshed = document.getElementById('last-refreshed-time');
-      setInterval(display_last_refreshed_time, 60 * 1000);
+      var refresh_questions = document.getElementById('refresh-my-questions');
+      if (refresh_questions) {
+        refresh_questions.addEventListener('click', load_initial_questions);
+        last_refreshed = document.getElementById('last-refreshed-time');
+        setInterval(display_last_refreshed_time, 60 * 1000);
+      }
 
       load_initial_questions();
       load_active_questions();
