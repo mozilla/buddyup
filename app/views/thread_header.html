@@ -1,5 +1,10 @@
 <h3 class="question-cat">
-  {{ date_posted }} - {% if handset_type %} {{ handset_type }}, {% endif %} {{ author }}
+  {{ date_posted }} -
+  {{ displayable_metadata.handset_type }}
+  {{ displayable_metadata.os_version }}
+  {% if (displayable_metadata.handset_type or displayable_metadata.os_version) and displayable_metadata.operator %}
+  , {% endif %}
+  {{ displayable_metadata.operator }}
 </h3>
 <select id="category_chooser" class="button-gray">
   {% for key, value in categories %}

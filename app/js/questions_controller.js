@@ -145,6 +145,8 @@
         var updated = results[i].updated;
         results[i].updated_day = updated.split('T')[0];
         results[i].updated = Utils.time_since(new Date(updated));
+        results[i].displayable_metadata =
+          Utils.convert_metadata_for_display(results[i].metadata);
       }
 
       if (load_more_button && response.next) {

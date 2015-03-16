@@ -3,6 +3,101 @@
 /* global MobileOperator */
 
 (function(exports) {
+  const GECKO_TO_FXOS = {
+    '18.0': '1.0.1',
+    '18.1': '1.1',
+    '26.0': '1.2',
+    '28.0': '1.3',
+    '30.0': '1.4',
+    '32.0': '2.0',
+  };
+  /* jshint -W101 */
+  /* Adapted from https://developer.mozilla.org/en-US/docs/Web/HTTP/Gecko_user_agent_string_reference */
+  /* jshint +W101 */
+
+  function gecko_to_fxos(gecko_version) {
+    return GECKO_TO_FXOS[gecko_version];
+  }
+
+  /* jshint -W101 */
+  // Adapted from https://github.com/WhichBrowser/WhichBrowser/blob/master/data/models-firefoxos.php
+  /* jshint +W101 */
+  const DEVICES = [
+    {useragent: 'ALCATEL ONE TOUCH FIRE',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire'},
+    {useragent: 'ALCATEL ONE TOUCH 4012A',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire' },
+    {useragent: 'ALCATEL ONE TOUCH 4012X',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire' },
+    {useragent: 'ALCATELOneTouch4012A',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire' },
+    {useragent: 'ALCATELOneTouch4012X',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire' },
+    {useragent: 'OneTouch4019A',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire C' },
+    {useragent: 'ALCATELOneTouch4019A',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire C' },
+    {useragent: 'ALCATELOneTouch4019X',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire C' },
+    {useragent: 'ALCATELOneTouch4020D',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire C' },
+    {useragent: 'ALCATELOneTouch4022',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Pixi 3 (3.5)' },
+    {useragent: 'ALCATELOneTouch4023',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Pixi 3 (3.5)' },
+    {useragent: 'ALCATELOneTouch6015X',
+      manufacturer: 'Alcatel',
+      model: 'One Touch Fire E' },
+    {useragent: 'HUAWEI Ascend Y300-F1',
+      manufacturer: 'Huawei',
+      model: 'Ascend Y300 F1' },
+    {useragent: 'HUAWEIY300-F1',
+      manufacturer: 'Huawei',
+      model: 'Ascend Y300 F1' },
+    {useragent: 'LG-D300',
+      manufacturer: 'LG',
+      model: 'Fireweb' },
+    {useragent: 'LGL25',
+      manufacturer: 'LG',
+      model: 'Fx0' },
+    {useragent: 'madai',
+      manufacturer: 'LG',
+      model: 'Fx0' },
+    {useragent: 'ZTEOPEN',
+      manufacturer: 'ZTE',
+      model: 'Open' },
+    {useragent: 'OpenC',
+      manufacturer: 'ZTE',
+      model: 'Open C' },
+    {useragent: 'Open C',
+      manufacturer: 'ZTE',
+      model: 'Open C' },
+    {useragent: 'OPEN2',
+      manufacturer: 'ZTE',
+      model: 'Open II' },
+  ];
+
+  function useragent_to_device(useragent) {
+    var device = DEVICES.find(function(device) {
+      return useragent.toLowerCase().startsWith(device.useragent.toLowerCase());
+    });
+
+    if (device) {
+      return device.manufacturer + ' ' + device.model;
+    }
+  }
+
   var Utils = {
     /**
      * Display a human-readable relative timestamp.
@@ -70,6 +165,25 @@
         metadata: metas
       };
     },
+
+    convert_metadata_for_display: function(metas) {
+      var result = {};
+      metas.forEach(function(meta) {
+        switch(meta.name) {
+          case 'os_version':
+            result[meta.name] = gecko_to_fxos(meta.value);
+          break;
+          case 'handset_type':
+            result[meta.name] = useragent_to_device(meta.value);
+          break;
+          default:
+            result[meta.name] = meta.value;
+          break;
+        }
+      });
+      return result;
+    },
+
     /**
      * Clear then load the list of errors for a field or a form.
      */

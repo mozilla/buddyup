@@ -111,4 +111,43 @@ suite('utils', function() {
 
     });
   });
+
+  suite('convert_metadata_for_display', function() {
+    test('knwown fxos', function() {
+      var human = Utils.convert_metadata_for_display([
+        {name: 'os_version', value: '18.0'}]);
+      assert.equal(human.os_version, '1.0.1');
+    });
+
+    test('unknown fxos', function() {
+      var human = Utils.convert_metadata_for_display([
+        {name: 'os_version', value: '39.0'}]);
+      assert.isUndefined(human.os_version);
+    });
+
+    test('known device', function() {
+      var human = Utils.convert_metadata_for_display([
+        {name: 'handset_type', value: 'alcatelonetouch4012x'}]);
+      assert.equal(human.handset_type, 'Alcatel One Touch Fire');
+    });
+
+    test('known device with partial user agent', function() {
+      var human = Utils.convert_metadata_for_display([
+        {name: 'handset_type', value: 'HUAWEI Ascend Y300-F1 mega version'}]);
+      assert.equal(human.handset_type, 'Huawei Ascend Y300 F1');
+    });
+
+    test('unknown device', function() {
+      var human = Utils.convert_metadata_for_display([
+        {name: 'handset_type', value: ''}]);
+      assert.isUndefined(human.handset_type);
+
+    });
+
+    test('operator', function() {
+      var human = Utils.convert_metadata_for_display([
+        {name: 'operator', value: 'foo'}]);
+      assert.equal(human.operator, 'foo');
+    });
+  });
 });

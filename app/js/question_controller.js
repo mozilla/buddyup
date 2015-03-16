@@ -137,21 +137,15 @@
   * @param {object} question - The question JSON object
   */
   function add_thread_header(question) {
-    var handset_type;
     var date_posted = Utils.time_since(new Date(question.updated));
     var author = question.creator.display_name || question.creator.username;
 
-    for (var i = 0, l = question.metadata.length; i < l; i++) {
-      var current_item = question.metadata[i];
-      if (current_item.name === 'handset_type') {
-        handset_type = current_item.value;
-        break;
-      }
-    }
+    var displayable_metadata =
+      Utils.convert_metadata_for_display(question.metadata);
 
     var html = nunjucks.render('thread_header.html', {
       date_posted: date_posted,
-      handset_type: handset_type,
+      displayable_metadata: displayable_metadata,
       author: author,
       categories: CATEGORIES,
       selected_category: question.category
@@ -379,6 +373,8 @@
         });
       });
       var question_items = response.questions.map(function(question_item) {
+        question_item.displayable_metadata =
+          Utils.convert_metadata_for_display(question_item.metadata);
         return nunjucks.render('question.html', {
           question: question_item
         });

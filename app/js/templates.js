@@ -288,9 +288,18 @@ output += "<li class=\"list-item\">\n  <a href=\"question.html?id=";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"id", env.autoesc), env.autoesc);
 output += "\">\n    <p class=\"li__title ellipsis\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"title", env.autoesc), env.autoesc);
-output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle fit\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"updated", env.autoesc), env.autoesc);
-output += "</span>\n      <span class=\"li__comments\" data-icon=\"messages\">";
+output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle fit\">\n      ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"handset_type", env.autoesc), env.autoesc);
+output += "\n      ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"os_version", env.autoesc), env.autoesc);
+output += "\n      ";
+if((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"handset_type", env.autoesc) || runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"os_version", env.autoesc)) && runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"operator", env.autoesc)) {
+output += "\n      , ";
+;
+}
+output += "\n      ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"operator", env.autoesc), env.autoesc);
+output += "\n      </span>\n      <span class=\"li__comments\" data-icon=\"messages\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"num_answers", env.autoesc), env.autoesc);
 output += "</span>\n    </div>\n  </a>\n</li>\n";
 cb(null, output);
@@ -483,15 +492,17 @@ var output = "";
 try {
 output += "<h3 class=\"question-cat\">\n  ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
-output += " - ";
-if(runtime.contextOrFrameLookup(context, frame, "handset_type")) {
-output += " ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "handset_type"), env.autoesc);
-output += ", ";
+output += " -\n  ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"handset_type", env.autoesc), env.autoesc);
+output += "\n  ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"os_version", env.autoesc), env.autoesc);
+output += "\n  ";
+if((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"handset_type", env.autoesc) || runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"os_version", env.autoesc)) && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"operator", env.autoesc)) {
+output += "\n  , ";
 ;
 }
-output += " ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
+output += "\n  ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"operator", env.autoesc), env.autoesc);
 output += "\n</h3>\n<select id=\"category_chooser\" class=\"button-gray\">\n  ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "categories");
