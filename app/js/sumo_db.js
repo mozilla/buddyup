@@ -1,6 +1,6 @@
 'use strict';
 
-/* global _, Event, Settings, User */
+/* global _, Event, Settings, User, Utils */
 
 (function(exports) {
   var API_V1_BASE = Settings.BASE_SERVER + '/api/1/';
@@ -11,6 +11,7 @@
   var in_progress_requests = {};
   var sequence_id = 0;
   var last_request;
+  var reauth_in_progress;
 
   function trigger_error() {
     var event = new Event('network-error');
@@ -28,38 +29,64 @@
   }
 
   function request(url, method, data, headers) {
-    return new Promise(function(resolve, reject) {
-      var req = new XMLHttpRequest();
-      last_request = req;
-      req.open(method, url);
-      if (data) {
-        req.setRequestHeader('Content-Type', 'application/json');
-      }
-      for (var field in headers) {
-        req.setRequestHeader(field, headers[field]);
-      }
+    var defer = Utils.defer();
 
-      req.onload = function() {
-        trigger_request_complete();
-        if (req.status >= 200 && req.status < 300) {
-          resolve(req.responseText);
-        } else if (req.status >= 500) {
+    var req = new XMLHttpRequest();
+    last_request = req;
+    req.open(method, url);
+    if (data) {
+      req.setRequestHeader('Content-Type', 'application/json');
+    }
+    for (var field in headers) {
+      req.setRequestHeader(field, headers[field]);
+    }
+
+    req.onload = function() {
+      trigger_request_complete();
+      if (req.status >= 200 && req.status < 300) {
+        defer.resolve(req.responseText);
+      } else if (req.status == 401) {
+        attempt_reauth(defer, req, url, method, data, headers);
+      } else {
+        if (req.status >= 500) {
           trigger_error();
-          reject(req);
-        } else {
-          reject(req);
         }
-      };
+        defer.reject(req);
+      }
+    };
 
-      req.onerror = function() {
-        trigger_request_complete();
-        trigger_error();
-        reject(Error('Network Error'));
-      };
+    req.onerror = function() {
+      trigger_request_complete();
+      trigger_error();
+      defer.reject(Error('Network Error'));
+    };
 
-      req.send(JSON.stringify(data));
-      trigger_request_start();
-    });
+    req.send(JSON.stringify(data));
+    trigger_request_start();
+
+    return defer.promise;
+  }
+
+  function attempt_reauth(defer, req, url, method, data, headers) {
+    if (reauth_in_progress) {
+      reauth_in_progress = false;
+      defer.reject(req);
+      return;
+    }
+
+    reauth_in_progress = true;
+    User.reauthenticate_user().then(function() {
+      var res = request(url, method, data, headers);
+
+      res.then(function() {
+        reauth_in_progress = false;
+      }, function() {
+        reauth_in_progress = false;
+      });
+
+      return res;
+    }).then(defer.resolve, defer.reject);
+
   }
 
   function request_with_auth(url, method, data) {

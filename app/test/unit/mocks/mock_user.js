@@ -4,5 +4,6 @@
 
 var MockUser = {
   get_user: function() {},
-  get_credentials: function() {}
+  get_credentials: function() {},
+  reauthenticate_user: function() {}
 };

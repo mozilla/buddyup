@@ -5,6 +5,7 @@
 require('/test/unit/mocks/mock_user.js');
 
 require('/js/settings.js');
+require('/js/utils.js');
 
 require('/js/sumo_db.js');
 
@@ -69,6 +70,38 @@ suite('sumo_db', function() {
         setTimeout(function() {
           sinon.assert.match(fake_xhr.requests[1].url, 'set_setting');
           done();
+        });
+      });
+    });
+  });
+
+  suite('fetch a new token when expired', function() {
+    test('can get a new token', function(done) {
+      this.sinon.stub(User, 'reauthenticate_user').returns(Promise.resolve());
+      SumoDB.take_question(12).then((request) => {
+        sinon.assert.calledOnce(User.reauthenticate_user);
+        done();
+      });
+
+      setTimeout(function() {
+        fake_xhr.requests[0].respond(401);
+        setTimeout(function() {
+          fake_xhr.requests[1].respond(200);
+        });
+      });
+    });
+
+    test('only tries once and fails otherwise', function(done) {
+      this.sinon.stub(User, 'reauthenticate_user').returns(Promise.resolve());
+      SumoDB.take_question(12).catch((request) => {
+        sinon.assert.calledOnce(User.reauthenticate_user);
+        done();
+      });
+
+      setTimeout(function() {
+        fake_xhr.requests[0].respond(401);
+        setTimeout(function() {
+          fake_xhr.requests[1].respond(401);
         });
       });
     });
