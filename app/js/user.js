@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, asyncStorage */
+/* global _, SumoDB, asyncStorage */
 
 (function(exports) {
   var USER_CREDENTIALS_KEY = 'user_credentials';
@@ -174,7 +174,12 @@
       return SumoDB.update_user(user_data).then(sync_user);
     },
 
-    authenticate_user: function(username, password) {
+    authenticate_user: function(username, password, options) {
+      var defaults = {
+        is_helper: true
+      };
+      options = _.assign(defaults, options);
+
       return SumoDB.get_token(username, password).then(function(token) {
         if (window.parent.Notif) {
           return window.parent.Notif.clear_endpoint().then(function() {
@@ -184,8 +189,7 @@
           return token;
         }
       }).then(function(token) {
-        var is_helper = true;
-        return set_user(username, password, token, is_helper);
+        return set_user(username, password, token, options.is_helper);
       });
     },
 
@@ -207,6 +211,15 @@
 
       return promise.then(function() {
         return set_inactive_user(username, password, email);
+      });
+    },
+
+    reauthenticate_user: function() {
+      return User.is_helper().then(function(is_helper) {
+        return User.get_credentials().then(function(credentials) {
+          return User.authenticate_user(credentials.username,
+            credentials.password, {is_helper: is_helper});
+        });
       });
     }
   };

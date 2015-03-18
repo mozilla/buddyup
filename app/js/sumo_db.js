@@ -11,6 +11,7 @@
   var in_progress_requests = {};
   var sequence_id = 0;
   var last_request;
+  var reauth_attempted;
 
   function trigger_error() {
     var event = new Event('network-error');
@@ -43,10 +44,20 @@
         trigger_request_complete();
         if (req.status >= 200 && req.status < 300) {
           resolve(req.responseText);
-        } else if (req.status >= 500) {
-          trigger_error();
-          reject(req);
+        } else if (req.status == 401) {
+          if (reauth_attempted) {
+            reauth_attempted = false;
+            reject(req);
+          } else {
+            reauth_attempted = true;
+            User.reauthenticate_user().then(function() {
+              request(url, method, data, headers);
+            });
+          }
         } else {
+          if (req.status >= 500) {
+            trigger_error();
+          }
           reject(req);
         }
       };
