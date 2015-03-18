@@ -24,11 +24,13 @@
 <body class="skin-organic">
 <section role="region" class="vbox fit">
   <header>
-    <h1>Create Account</h1>
-    <a href="authentication.html" id="close" class="close-link" data-icon="close" data-action="back">
+    <button id="close" data-icon="close" data-action="back">
       <span class="visuallyhidden">Close</span>
-    </a>
-    <input type="submit" class="button-done" value="Done" form="register" />
+    </button>
+    <menu type="toolbar">
+      <button type="submit" form="register">Done</button>
+    </menu>
+    <h1>Create Account</h1>
   </header>
   <main id="register_container" class="fit scroll">
     <form name="register" id="register" method="post">

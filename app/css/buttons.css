@@ -29,20 +29,6 @@ button {
     color: #333;
     text-decoration: none;
 }
-.button-done {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: transparent;
-    color: white;
-    padding: 0 1rem;
-    border: none;
-    min-width: 5rem;
-    width: auto;
-    height: 5rem;
-    font-size: .9rem;
-    cursor: pointer;
-}
 .button-recommend,
 .button-danger {
     display: inline-block;

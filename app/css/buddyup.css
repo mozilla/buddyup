@@ -165,27 +165,6 @@ form[role="dialog"][data-type="confirm"] p {
 .bb-tablist[data-type="filter"] > li > a {
     font-style: normal;
 }
-.skin-organic section[role="region"] > header:first-child a {
-    position: absolute;
-    top: 0;
-    color: white;
-    min-width: 3rem;
-    font-style: normal;
-}
-section.skin-organic[role="region"] > header:first-child,
-.skin-organic section[role="region"] > header:first-child {
-    background-color: gray;
-    color: white;
-    border-bottom: 1px solid #333;
-}
-section.skin-organic section[role="region"] > header:first-child h1,
-.skin-organic section[role="region"] > header:first-child h1 {
-    color: white;
-    padding: 0;
-    font-size: 1.5rem;
-    font-style: normal;
-    text-align: inherit;
-}
 
 /* Overrides confirm.css to adapt to the number of buttons */
 form[role="dialog"][data-type="confirm"] menu {

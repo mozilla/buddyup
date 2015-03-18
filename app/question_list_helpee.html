@@ -25,13 +25,15 @@
   <body class="skin-organic">
     <section role="region" class="vbox fit">
       <header>
+        <button id="back" data-icon="back-light" data-action="back">
+          <span class="visuallyhidden">Close</span>
+        </button>
+        <menu type="toolbar">
+          <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
+            <span class="visuallyhidden">Settings</span>
+          </a>
+        </menu>
         <h1 id="main_heading">My Questions</h1>
-        <a href="index.html" id="back" class="back-link" data-icon="back-light" data-action="back">
-          <span class="visuallyhidden">Back</span>
-        </a>
-        <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
-          <span class="visuallyhidden">Settings</span>
-        </a>
       </header>
       <main class="fit scroll">
         <section id="myquestions" class="questions all" data-all="true"></section>
@@ -41,6 +43,7 @@
     <script src="js/libs/async_storage.js" defer></script>
     <script src="js/libs/nunjucks.js" defer></script>
     <script src="js/templates.js" defer></script>
+    <script src="js/libs/font_size_utils.js" defer></script>
 
     <script src="js/utils.js" defer></script>
     <script src="js/user.js" defer></script>

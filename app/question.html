@@ -27,13 +27,15 @@
   <body class="skin-organic">
     <section role="region" class="vbox fit">
       <header>
+        <button id="back" data-icon="back-light" data-action="back">
+          <span class="visuallyhidden">Close</span>
+        </button>
+        <menu type="toolbar">
+          <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
+            <span class="visuallyhidden">Settings</span>
+          </a>
+        </menu>
         <h1>My Question</h1>
-        <a href="index.html" id="back" class="back-link" data-icon="back-light" data-action="back">
-          <span class="visuallyhidden">Back</span>
-        </a>
-        <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
-          <span class="visuallyhidden">Settings</span>
-        </a>
       </header>
       <main id="thread-scroll" class="fit scroll">
         <section id="thread-introduction" class="thread-introduction">
@@ -93,6 +95,7 @@
     <script src="js/libs/nunjucks.js" defer></script>
     <script src="js/libs/lodash.custom.min.js" defer></script>
     <script src="js/templates.js" defer></script>
+    <script src="js/libs/font_size_utils.js" defer></script>
 
     <script src="js/mobile_operator.js" defer></script>
     <script src="js/utils.js" defer></script>

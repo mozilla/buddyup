@@ -28,11 +28,13 @@
   <body class="skin-organic">
     <section role="region" class="vbox fit">
       <header>
-        <h1>My Profile</h1>
-        <a href="index.html" id="close" class="close-link" data-icon="close" data-action="back">
+        <button id="close" data-icon="close" data-action="back">
           <span class="visuallyhidden">Close</span>
-        </a>
-        <input type="submit" class="button-done" value="Done" form="profile" />
+        </button>
+        <menu type="toolbar">
+          <button type="submit" form="profile">Done</button>
+        </menu>
+        <h1>My Profile</h1>
       </header>
       <main id="my-profile" class="fit scroll"></main>
     </section>
@@ -40,6 +42,7 @@
     <script src="js/libs/async_storage.js"></script>
     <script src="js/libs/nunjucks.js" defer></script>
     <script src="js/templates.js" defer></script>
+    <script src="js/libs/font_size_utils.js" defer></script>
 
     <script src="js/utils.js" defer></script>
     <script src="js/sumo_db.js" defer></script>
