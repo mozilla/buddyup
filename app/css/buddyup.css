@@ -10,22 +10,6 @@ html {
   font-size: 10px;
 }
 
-.intro {
-    padding: .2rem 1rem;
-}
-.questions {
-    margin-top: 1rem;
-}
-.questions.all {
-    margin-top: 0;
-}
-.questions h2,
-.profile h2 {
-    background-color: gray;
-    color: white;
-    margin: 0;
-    padding: .2rem 1rem;
-}
 .no-data {
     margin: 1rem;
 }
@@ -47,9 +31,6 @@ html {
     left: -1rem;
     position: absolute;
     top: 0;
-}
-.profile h2 {
-    padding: .7rem 1rem;
 }
 .profile .count:before {
     padding-right: .5rem;
@@ -127,15 +108,6 @@ html {
     background-color: #EDECEC;
     padding: .7rem .9rem;
     border-radius: 6px;
-}
-.overlay {
-    background: #fff;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 100;
 }
 /* footer */
 footer button:hover {

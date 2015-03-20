@@ -172,7 +172,7 @@ output += "</span> Helpful Upvotes\n        </li>\n      </ul>\n    ";
 }
 output += "\n  </fieldset>\n\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n\n    <fieldset class=\"question-filters\">\n      <h2>Answer A Question Filter</h2>\n      <section>\n        <p>The unanswered questions list will be filtered based on the setting below.</p>\n\n        <label for=\"locale\">Language</label>\n        <span class=\"button icon icon-dialog\">\n          <select id=\"locale\">\n            ";
+output += "\n\n    <fieldset class=\"question-filters\">\n      <header>\n        <h2>Answer A Question Filter</h2>\n      </header>\n      <section>\n        <p>The unanswered questions list will be filtered based on the setting below.</p>\n\n        <label for=\"locale\">Language</label>\n        <span class=\"button icon icon-dialog\">\n          <select id=\"locale\">\n            ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "locales");
 if(t_3) {var t_2 = t_3.length;
@@ -264,7 +264,7 @@ output += "\n        </select>\n      </section>\n    </fieldset>\n  ";
 ;
 }
 else {
-output += "\n    <section>\n      <h2>Answer questions</h2>\n      <p>Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"button-blue\">Create account or sign in</a>\n    </section>\n  ";
+output += "\n    <section>\n      <header>\n        <h2>Answer questions</h2>\n      </header>\n      <p>Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"button-blue\">Create account or sign in</a>\n    </section>\n  ";
 ;
 }
 output += "\n\n</form>\n";

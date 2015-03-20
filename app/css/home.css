@@ -1,0 +1,54 @@
+.HomeCallout {
+  align-items: center;
+  background: black;
+  color: white;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.HomeCallout--ask {
+  background-image: url(ui-images/img_city@2x.jpg);
+  background-size: cover;
+}
+
+.HomeCallout::before {
+  background-size: cover;
+  content: "";
+  display: block;
+  height: 70px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 70px;
+}
+
+.HomeCallout--ask::before {
+  background-image: url(ui-images/img_questions@2x.png);
+}
+
+.HomeCallout--answer::before {
+  background-image: url(ui-images/img_lightbulb@2x.png);
+}
+
+
+.HomeCallout--answer {
+  background: #00aac5;
+}
+
+.HomeCallout-title {
+  font-size:18px;
+  line-height: 22px;
+  margin: 0;
+  text-shadow: black 0 0 3px;
+}
+
+.HomeCallout-subtitle {
+  font-size: 13px;
+  font-style: italic;
+  line-height: 16px;
+  text-shadow: black 0 0 3px;
+}
+
+.HomeCallout-button {
+  margin-bottom: 13px;
+  margin-top: 13px;
+}

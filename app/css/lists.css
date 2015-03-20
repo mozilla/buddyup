@@ -10,10 +10,6 @@
   text-transform: capitalize;
 }
 
-a {
-  text-decoration: none;
-}
-
 .list-item {
   border-bottom: 1px solid #e7e7e7;
   margin-left: 15px;
@@ -21,11 +17,8 @@ a {
   padding-bottom: 15px;
   padding-left: 15px;
   padding-top: 15px;
+  display: block;
 }
-.list-item:last-child {
-  border-bottom: none;
-}
-
 .li__title {
   color: #333;
   line-height: 22px;

@@ -1,20 +1,17 @@
 * {
   box-sizing: border-box;
 }
+a {
+  color: unset;
+  text-decoration: none;
+}
 body,
 textarea {
   font-family: 'Fira Sans';
 }
-header {
-  text-align: center;
-}
 main {
   position: relative;
   scroll-behavior: smooth;
-}
-h2 {
-  font-size: 1.2rem;
-  font-weight: 300;
 }
 
 /* Makes the vertical boxes scrollable */
