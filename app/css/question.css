@@ -7,3 +7,22 @@
     resize: none;
     width: 100%;
 }
+.StartAskingMessage {
+    align-items: center;
+    color: #4d4d4d;
+    font-size: 16px;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+}
+.StartAskingMessage > span {
+    display: block;
+}
+.StartAskingMessage > span::before {
+    background: url('ui-images/img_start_asking@2x.png');
+    background-size: contain;
+    content: '';
+    display: block;
+    height: 96px;
+    width: 96px;
+}

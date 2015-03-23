@@ -73,20 +73,6 @@ html {
     font-size: 1rem;
 }
 /* ask a question */
-.thread-introduction {
-    display: flex;
-    flex-flow: row-reverse;
-    margin-top: 30%;
-}
-.thread-introduction p:first-child {
-    padding: 1rem;
-    align-self: center;
-    flex: 1 1 60%;
-}
-.thread-introduction .ask {
-    padding: 1rem;
-    flex: 1 1 40%;
-}
 .question-thread {
     padding: 0 1rem;
 }
