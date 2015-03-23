@@ -30,6 +30,7 @@
 
   var question_thread;
   var question_form;
+  var question_submit_button;
   var suggestions;
   var thread_introduction;
   var question_id;
@@ -434,6 +435,10 @@
 
       question_form = document.getElementById('question_form');
       question_form.addEventListener('submit', submit_comment);
+
+      question_submit_button =
+        document.getElementById('question_submit_button');
+      question_submit_button.addEventListener('click', submit_comment);
 
       question_thread = document.getElementById('question-thread');
       question_thread.addEventListener('click', handle_event);

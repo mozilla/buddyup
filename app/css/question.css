@@ -1,11 +1,37 @@
-#question_field {
+.QuestionFooter {
+    border-top: 1px solid #e7e7e7;
+}
+.QuestionField {
+    background: none;
     border: 0;
-    max-height: 100px;
+    color: #000;
+    font-size: 17px;
+    max-height: 142px; /* 20px (padding top/bottom) + 122px (5 rows of text) */
+    min-height: 44px; /* 20px (padding top/bottom) + 24px (1 row of text) */
     overflow: auto;
-    padding: 0.5em 1em;
+    padding: 10px 15px;
     outline: none;
     resize: none;
     width: 100%;
+}
+.QuestionField::-moz-placeholder {
+    color: #858585;
+    font-style: italic;
+}
+.QuestionSubmitButton {
+    background: #fff;
+    border-left: 1px solid #e7e7e7;
+    cursor: pointer;
+    font-size: 28px;
+    height: auto;
+    justify-content: flex-end;
+    margin: 5px 0;
+    position: relative;
+    text-align: center;
+    width: 64px;
+}
+.QuestionSubmitButton::before {
+    line-height: 36px;
 }
 .StartAskingMessage {
     align-items: center;
@@ -32,7 +58,7 @@
     padding: 2px 0;
 }
 .SignInLink {
-  margin: 15px 15px 5px;
+    margin: 15px 15px 5px;
 }
 
 .QuestionThread {
