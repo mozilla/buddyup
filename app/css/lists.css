@@ -36,7 +36,13 @@
   text-align: right;
 }
 .li__comments:before {
-  font-style: normal;
+  background: url('ui-images/messaging@2x.png');
+  background-size: contain;
+  content: '';
+  display: inline-block;
+  height: 16px;
   position: relative;
   right: 5px;
+  vertical-align: top;
+  width: 16px;
 }

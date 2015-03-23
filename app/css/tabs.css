@@ -1,0 +1,12 @@
+/* Override the building block styles */
+
+.bb-tablist[data-type="filter"] > li > a,
+.bb-tablist[data-type="filter"] > li > button {
+    color: #858585;
+    font-size: 1.4rem;
+}
+.bb-tablist[data-type="filter"] > li > a[aria-selected="true"],
+.bb-tablist[data-type="filter"] > li > button[aria-selected="true"] {
+    color: #00caf2;
+    border-color: #00caf2;
+}

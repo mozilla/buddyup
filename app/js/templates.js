@@ -299,7 +299,7 @@ output += "\n      , ";
 }
 output += "\n      ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"operator", env.autoesc), env.autoesc);
-output += "\n      </span>\n      <span class=\"li__comments\" data-icon=\"messages\">";
+output += "\n      </span>\n      <span class=\"li__comments\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"num_answers", env.autoesc), env.autoesc);
 output += "</span>\n    </div>\n  </a>\n</li>\n";
 cb(null, output);

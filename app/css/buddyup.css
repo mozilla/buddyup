@@ -120,9 +120,6 @@ form[role="dialog"][data-type="confirm"] p {
     font-size: 1rem;
     line-height: 1.7;
 }
-.bb-tablist[data-type="filter"] > li > a {
-    font-style: normal;
-}
 
 /* Overrides confirm.css to adapt to the number of buttons */
 form[role="dialog"][data-type="confirm"] menu {
