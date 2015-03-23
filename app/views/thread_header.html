@@ -1,10 +1,14 @@
-<h3 class="question-cat">
-  {{ date_posted }} -
+<div class="QuestionMeta">
   {{ displayable_metadata.handset_type }}
   {{ displayable_metadata.os_version }}
-  {% if (displayable_metadata.handset_type or displayable_metadata.os_version) and displayable_metadata.operator %}
-  , {% endif %}
-  {{ displayable_metadata.operator }}
+  {%- if (displayable_metadata.handset_type or displayable_metadata.os_version) and displayable_metadata.operator -%}
+    ,
+    {# Notice the dashes in the start block above for whitespace control #}
+  {% endif %}
+  <span class="text-blue">{{ displayable_metadata.operator }}</span>
+</div>
+<h3 class="question-cat">
+  {{ date_posted }}
 </h3>
 <select id="category_chooser" class="button-gray">
   {% for key, value in categories %}

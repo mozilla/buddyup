@@ -490,19 +490,19 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<h3 class=\"question-cat\">\n  ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
-output += " -\n  ";
+output += "<div class=\"QuestionMeta\">\n  ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"handset_type", env.autoesc), env.autoesc);
 output += "\n  ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"os_version", env.autoesc), env.autoesc);
-output += "\n  ";
 if((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"handset_type", env.autoesc) || runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"os_version", env.autoesc)) && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"operator", env.autoesc)) {
-output += "\n  , ";
+output += ",\n    ";
+output += "\n  ";
 ;
 }
-output += "\n  ";
+output += "\n  <span class=\"text-blue\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"operator", env.autoesc), env.autoesc);
+output += "</span>\n</div>\n<h3 class=\"question-cat\">\n  ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
 output += "\n</h3>\n<select id=\"category_chooser\" class=\"button-gray\">\n  ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "categories");
