@@ -18,11 +18,10 @@
     user.display_name = user.display_name || user.username;
     // newly created users will not have any settings so,
     // we set the defaults here.
-    user.handset_type = [];
     if (!user.settings) {
       user.new_comment_notify = false;
       user.buddyup_reminder = false;
-      user.handset_type = ['All'];
+      user.handset_type = 'All';
       user.operator = 'All';
     } else {
       // this is not a new user so, just flatten the setting for

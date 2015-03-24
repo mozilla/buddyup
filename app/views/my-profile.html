@@ -21,41 +21,53 @@
 
   {% if is_helper %}
 
-    <fieldset class="question-filters">
+    <fieldset>
       <header>
-        <h2>Answer A Question Filter</h2>
+        <h2>My preferences</h2>
       </header>
-      <section>
-        <p>The unanswered questions list will be filtered based on the setting below.</p>
+      <section class="QuestionFilters">
+        <p class="QuestionFilters-description">Too many questions? Use the settings below to narrow down the "Answer a Question" list.</p>
 
-        <label for="locale">Language</label>
-        <span class="button icon icon-dialog">
-          <select id="locale">
-            {% for locale in locales %}
-              <option {% if locale == user.locale %}selected="selected"{% endif %}>{{ locale }}</option>
-            {% endfor %}
-          </select>
-        </span>
+        <ul>
+          <li>
+            <label class="QuestionFilters-label" for="locale">Language</label>
+            <div class="button" data-icon="expand">
+              <select id="locale">
+              {% for locale in locales %}
+                <option {% if locale == user.locale %}selected="selected"{% endif %}>{{ locale }}</option>
+              {% endfor %}
+              </select>
+            </div>
+          </li>
 
-        <label for="handset_type">Handset Type</label>
-        <select id="handset_type" multiple="true">
-          {% if user.handset_type[0] == "All" %}
-            <option selected="selected">All</option>
-          {% endif %}
-          {% for handset in handsets %}
-            <option {% if handset in user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
-          {% endfor %}
-        </select>
+          <li>
+            <label class="QuestionFilters-label" for="handset_type">Device</label>
+            <div class="button" data-icon="expand">
+              <select id="handset_type"> {# DO I have to take care of the rest? #}
+                {% if user.handset_type == "All" %}
+                  <option selected="selected">All</option>
+                {% endif %}
+                {% for handset in handsets %}
+                  <option {% if handset == user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
 
-        <label for="operator">Operator</label>
-        <select id="operator">
-          {% if user.operator == "All" %}
-            <option selected="selected">All</option>
-          {% endif %}
-          {% for operator in operators %}
-            <option {% if operator == user.operator %}selected="selected"{% endif %}>{{ operator }}</option>
-          {% endfor %}
-        </select>
+          <li>
+            <label class="QuestionFilters-label" for="operator">Operator</label>
+            <div class="button" data-icon="expand">
+              <select id="operator">
+                {% if user.operator == "All" %}
+                  <option selected="selected">All</option>
+                {% endif %}
+                {% for operator in operators %}
+                  <option {% if operator == user.operator %}selected="selected"{% endif %}>{{ operator }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+        </ul>
       </section>
     </fieldset>
   {% else %}

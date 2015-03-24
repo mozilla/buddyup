@@ -1,0 +1,15 @@
+.QuestionFilters {
+    margin: 15px;
+}
+
+.QuestionFilters-label {
+    display: block;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 15px 15px 10px;
+}
+
+.QuestionFilters-description {
+  font-size: 14px;
+  margin-left: 15px;
+}

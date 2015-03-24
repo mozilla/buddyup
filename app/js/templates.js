@@ -172,7 +172,7 @@ output += "</span> Helpful Upvotes\n        </li>\n      </ul>\n    ";
 }
 output += "\n  </fieldset>\n\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n\n    <fieldset class=\"question-filters\">\n      <header>\n        <h2>Answer A Question Filter</h2>\n      </header>\n      <section>\n        <p>The unanswered questions list will be filtered based on the setting below.</p>\n\n        <label for=\"locale\">Language</label>\n        <span class=\"button icon icon-dialog\">\n          <select id=\"locale\">\n            ";
+output += "\n\n    <fieldset>\n      <header>\n        <h2>My preferences</h2>\n      </header>\n      <section class=\"QuestionFilters\">\n        <p class=\"QuestionFilters-description\">Too many questions? Use the settings below to narrow down the \"Answer a Question\" list.</p>\n\n        <ul>\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"locale\">Language</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"locale\">\n              ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "locales");
 if(t_3) {var t_2 = t_3.length;
@@ -186,24 +186,25 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n              <option ";
+output += "\n                <option ";
 if(t_4 == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"locale", env.autoesc)) {
 output += "selected=\"selected\"";
 ;
 }
 output += ">";
 output += runtime.suppressValue(t_4, env.autoesc);
-output += "</option>\n            ";
+output += "</option>\n              ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n          </select>\n        </span>\n\n        <label for=\"handset_type\">Handset Type</label>\n        <select id=\"handset_type\" multiple=\"true\">\n          ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc)),0, env.autoesc) == "All") {
-output += "\n            <option selected=\"selected\">All</option>\n          ";
+output += "\n              </select>\n            </div>\n          </li>\n\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"handset_type\">Device</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"handset_type\"> ";
+output += "\n                ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc) == "All") {
+output += "\n                  <option selected=\"selected\">All</option>\n                ";
 ;
 }
-output += "\n          ";
+output += "\n                ";
 frame = frame.push();
 var t_7 = runtime.contextOrFrameLookup(context, frame, "handsets");
 if(t_7) {var t_6 = t_7.length;
@@ -217,24 +218,24 @@ frame.set("loop.revindex0", t_6 - t_5 - 1);
 frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
-output += "\n            <option ";
-if((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc).indexOf(t_8) !== -1)) {
+output += "\n                  <option ";
+if(t_8 == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc)) {
 output += "selected=\"selected\"";
 ;
 }
 output += ">";
 output += runtime.suppressValue(t_8, env.autoesc);
-output += "</option>\n          ";
+output += "</option>\n                ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n        </select>\n\n        <label for=\"operator\">Operator</label>\n        <select id=\"operator\">\n          ";
+output += "\n              </select>\n            </div>\n          </li>\n\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"operator\">Operator</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"operator\">\n                ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"operator", env.autoesc) == "All") {
-output += "\n            <option selected=\"selected\">All</option>\n          ";
+output += "\n                  <option selected=\"selected\">All</option>\n                ";
 ;
 }
-output += "\n          ";
+output += "\n                ";
 frame = frame.push();
 var t_11 = runtime.contextOrFrameLookup(context, frame, "operators");
 if(t_11) {var t_10 = t_11.length;
@@ -248,19 +249,19 @@ frame.set("loop.revindex0", t_10 - t_9 - 1);
 frame.set("loop.first", t_9 === 0);
 frame.set("loop.last", t_9 === t_10 - 1);
 frame.set("loop.length", t_10);
-output += "\n            <option ";
+output += "\n                  <option ";
 if(t_12 == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"operator", env.autoesc)) {
 output += "selected=\"selected\"";
 ;
 }
 output += ">";
 output += runtime.suppressValue(t_12, env.autoesc);
-output += "</option>\n          ";
+output += "</option>\n                ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n        </select>\n      </section>\n    </fieldset>\n  ";
+output += "\n              </select>\n            </div>\n          </li>\n        </ul>\n      </section>\n    </fieldset>\n  ";
 ;
 }
 else {
@@ -503,7 +504,8 @@ output += "\n  <span class=\"text-blue\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "displayable_metadata")),"operator", env.autoesc), env.autoesc);
 output += "</span>\n</div>\n<h3 class=\"question-cat\">\n  ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
-output += "\n</h3>\n<select id=\"category_chooser\" class=\"button-gray\">\n  ";
+output += "\n</h3>\n\n";
+output += "\n<ul>\n  <li>\n    <div class=\"button\" data-icon=\"forward\">\n      <select id=\"category_chooser\">\n      ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "categories");
 if(t_3) {var t_1;
@@ -521,16 +523,16 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n    <option value=\"";
+output += "\n        <option value=\"";
 output += runtime.suppressValue(t_4, env.autoesc);
-output += "\"\n      ";
+output += "\"\n          ";
 if(runtime.contextOrFrameLookup(context, frame, "selected_category") == t_4) {
 output += "selected";
 ;
 }
-output += ">\n      ";
+output += ">\n          ";
 output += runtime.suppressValue(t_5, env.autoesc);
-output += "\n    </option>\n  ";
+output += "\n        </option>\n      ";
 ;
 }
 } else {
@@ -548,22 +550,22 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n    <option value=\"";
+output += "\n        <option value=\"";
 output += runtime.suppressValue(t_6, env.autoesc);
-output += "\"\n      ";
+output += "\"\n          ";
 if(runtime.contextOrFrameLookup(context, frame, "selected_category") == t_6) {
 output += "selected";
 ;
 }
-output += ">\n      ";
+output += ">\n          ";
 output += runtime.suppressValue(t_7, env.autoesc);
-output += "\n    </option>\n  ";
+output += "\n        </option>\n      ";
 ;
 }
 }
 }
 frame = frame.pop();
-output += "\n</select>\n";
+output += "\n      </select>\n    </div>\n  </li>\n</ul>\n";
 cb(null, output);
 ;
 } catch (e) {

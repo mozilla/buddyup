@@ -6,14 +6,16 @@
   font-style: normal;
 }
 [data-icon]:before {
-    font-family: "gaia-icons";
     content: attr(data-icon);
+    font-family: "gaia-icons";
+    font-style: normal;
     text-rendering: optimizeLegibility;
 }
 [data-icon-after]:after {
+    content: attr(data-icon-after);
     float: right;
     font-family: "gaia-icons";
-    content: attr(data-icon-after);
+    font-style: normal;
     text-rendering: optimizeLegibility;
 }
 

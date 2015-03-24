@@ -27,20 +27,6 @@
   ];
 
   /**
-   * Get the list of selected handset types from the form element and returns
-   * them as an array.
-   * @param {array} selected_options - The selected handset types
-   * @returns {array} Selected handset types as an array
-   */
-  function get_selected_handset_types(selected_options) {
-    var handset_types = [];
-    for (var i = 0, l = selected_options.length; i < l; i++) {
-      handset_types.push(selected_options[i].value);
-    }
-    return handset_types;
-  }
-
-  /**
    * Collect information from the profile form on submission and
    * submits new data to server.
    */
@@ -62,11 +48,6 @@
 
       switch(elem_name) {
         case 'handset_type':
-          settings.push({
-            name: elem_name,
-            value: get_selected_handset_types(elem.selectedOptions)
-          });
-          break;
         case 'operator':
           settings.push({
             name: elem_name,
