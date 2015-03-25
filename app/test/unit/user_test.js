@@ -6,6 +6,8 @@ require('/test/unit/mocks/mock_async_storage.js');
 require('/test/unit/mocks/mock_sumo_db.js');
 require('/test/unit/mocks/mock_notifications.js');
 
+require('/js/libs/lodash.custom.min.js');
+
 require('/js/user.js');
 
 var mocksFor = new MocksHelper([
