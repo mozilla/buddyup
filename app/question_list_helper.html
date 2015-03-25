@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/building_blocks/lists.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/tabs.css" media="screen" />
     <link rel="stylesheet" href="css/building_blocks/confirm.css" media="screen" />
+    <link rel="stylesheet" href="css/building_blocks/buttons.css" media="screen" />
 
     <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
@@ -28,21 +29,21 @@
   <body class="skin-organic">
     <section role="region" class="vbox fit">
       <header>
-        <button id="back" data-icon="back-light" data-action="back">
+        <a href="index.html" id="back" data-icon="back-light" data-action="back">
           <span class="visuallyhidden">Close</span>
-        </button>
+        </a>
         <menu type="toolbar">
           <a href="profile.html" id="settings" class="settings-icon" data-icon="settings">
             <span class="visuallyhidden">Settings</span>
           </a>
         </menu>
-        <h1 id="main_heading">My Questions</h1>
+        <h1 id="main_heading">Answer a Question</h1>
       </header>
       <main class="fit scroll">
         <section class="tabbed-section" role="region">
-          <div id="sign-in-link" class="hide">
-            <p>Sign in to answer support questions from the Mozilla community.</p>
-            <a href="authentication.html" class="button-blue">Create account or sign in</a>
+          <div id="sign-in-link" class="ql-signIn hide">
+            <p class="ql-signIn-label">Sign in to answer questions from Firefox OS users.</p>
+            <a href="authentication.html" class="bb-button recommend">Create account or sign in</a>
           </div>
           <ul id="new-active-tabs" role="tablist" class="bb-tablist" data-type="filter">
             <li id="new" role="presentation">
@@ -57,7 +58,7 @@
             <section id="myquestions" class="questions js-question-container all" data-all="true"></section>
             <button id="load-more-my-questions" class="button-gray hide">Load more…</button>
             <div id="refresh-toolbar" class="ql-bottomToolbar hide">
-              <button id="refresh-my-questions" data-icon="sync"></button>
+              <a href="#" id="refresh-my-questions" class="ql-refresh" data-icon="sync"></a>
               <span>Last sync:
                 <time id="last-refreshed-time">x hours ago</time>
               </span>

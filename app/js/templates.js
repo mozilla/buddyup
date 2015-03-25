@@ -265,7 +265,7 @@ output += "\n              </select>\n            </div>\n          </li>\n     
 ;
 }
 else {
-output += "\n    <section>\n      <header>\n        <h2>Answer questions</h2>\n      </header>\n      <p>Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"button-blue\">Create account or sign in</a>\n    </section>\n  ";
+output += "\n    <header>\n      <h2>Answer questions</h2>\n    </header>\n    <section class=\"QuestionFilters\">\n      <p class=\"QuestionFilters-description\">Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"bb-button recommend\">Create account or sign in</a>\n    </section>\n  ";
 ;
 }
 output += "\n\n</form>\n";

@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-.ql-bottomToolbar button {
+.ql-refresh {
   background: white;
   border: none;
   color: #5f5f5f;
@@ -27,4 +27,14 @@
   display: block;
   line-height: 45px;
   text-align: center;
+}
+
+.ql-signIn {
+  margin: 15px;
+}
+
+.ql-signIn-label {
+  font-size: 16px;
+  line-height: 20px;
+  margin: 15px;
 }
