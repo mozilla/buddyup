@@ -1,7 +1,12 @@
 {% for comment in results %}
   <li
   data-id="{{ comment.id }}"
-  {% if comment.author != author %}class="helper-comment"{% endif %}>
+  class="Comment vbox
+  {% if comment.author != author %}
+    Comment--helper
+  {% else %}
+    Comment--helpee
+  {% endif %}">
     {% include 'comment.html' %}
   </li>
 {% endfor %}

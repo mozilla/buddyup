@@ -39,29 +39,6 @@ html {
     margin-top: 1.2rem;
 }
 
-/* ask a question */
-.question-thread {
-    padding: 0 1rem;
-}
-.question-thread h3 {
-    font-size: .9rem;
-    font-weight: normal;
-}
-.questions-cat {
-    text-transform: uppercase;
-}
-.discuss .avatar {
-    flex: 1 0 10%;
-    align-self: center;
-    text-align: center;
-}
-.message {
-    display: inline-block;
-    flex: 1 0 85%;
-    background-color: #EDECEC;
-    padding: .7rem .9rem;
-    border-radius: 6px;
-}
 /* footer */
 footer button:hover {
     cursor: pointer;

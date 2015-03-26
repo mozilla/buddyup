@@ -83,10 +83,10 @@
 
   function handle_helpful_votes(elem, answer_id) {
     SumoDB.submit_vote(answer_id).then(function(response) {
-      elem.classList.add('active');
+      elem.classList.add('has-voted');
 
       if (response.num_helpful_votes) {
-        elem.textContent = response.num_helpful_votes;
+        elem.textContent = ' ' + response.num_helpful_votes;
       } else if (response.message === 'CONFLICT') {
         // Do nothing, user has already voted
       }
@@ -104,7 +104,8 @@
       SumoDB.solve_question(question_id, answer_id).then(function(response) {
         var p = document.createElement('p');
         p.textContent = 'Solution ✓';
-        p.classList.add('is_solution');
+        p.classList.add('Comment-solution');
+        p.classList.add('Comment-solutionBox');
         elem.parentNode.replaceChild(p, elem);
         close_question();
       });
@@ -162,6 +163,23 @@
     });
   }
 
+  /* The logic should mirror views/thread.html */
+  function create_comment_wrapper(params) {
+    var li = document.createElement('li');
+    li.classList.add('Comment');
+    li.classList.add('vbox');
+
+    li.dataset.id = params.id;
+
+    if (params.is_helper) {
+      li.classList.add('Comment--helper');
+    } else {
+      li.classList.add('Comment--helpee');
+    }
+
+    return li;
+  }
+
   function submit_comment(evt) {
     evt.preventDefault();
     var comment = question_field.value;
@@ -174,22 +192,23 @@
 
     var failed = document.getElementsByClassName('js-failed');
     for(var i = 0, il = failed.length; i < il; i++) {
-      var failed_comment = failed[i].parentElement;
+      var failed_comment = failed[i];
       failed_comment.parentElement.removeChild(failed_comment);
     }
 
-    var fake_comment = nunjucks.render('comment.html',
-      {comment: {content: comment}});
-    var list = document.getElementById('comment-list');
-    var list_item = document.createElement('li');
-
-    list.appendChild(list_item).innerHTML += fake_comment;
+    var list_item;
     User.get_user().then(function(user) {
       var is_helper = question_object &&
         user.username !== question_object.creator.username;
-      if (is_helper) {
-        list_item.classList.add('helper-comment');
-      }
+
+      var fake_comment = nunjucks.render('comment.html',
+        {comment: {content: comment}});
+      var list = document.getElementById('comment-list');
+
+      list_item = create_comment_wrapper({is_helper: is_helper});
+
+      list.appendChild(list_item).innerHTML += fake_comment;
+
       list_item.scrollIntoView();
 
       var submit_promise;
@@ -228,6 +247,8 @@
         user: user
       });
     }).catch(function() {
+      list_item.classList.add('js-failed');
+      list_item.classList.add('is-failed');
       list_item.innerHTML = nunjucks.render('comment.html', {
         comment: {content: comment, failed: true},
       });
@@ -458,13 +479,12 @@
         }).map(function(answer) {
           return format_answer(answer.action_object);
         }).forEach(function(answer) {
-          var list_item = document.createElement('li');
-
-          list_item.dataset.id = answer.id;
-
-          if (answer.creator.username !== question_object.creator.username) {
-            list_item.classList.add('helper-comment');
-          }
+          var is_helper = answer.creator.username !==
+            question_object.creator.username;
+          var list_item = create_comment_wrapper({
+            is_helper: is_helper,
+            id: answer.id
+          });
 
           list_item.innerHTML = nunjucks.render('comment.html', {
             comment: answer,

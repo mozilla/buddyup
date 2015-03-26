@@ -18,18 +18,29 @@
 .StartAskingMessage > span {
     display: block;
 }
-.StartAskingMessage > span::before {
-    background: url('ui-images/img_start_asking@2x.png');
+.StartAskingMessage::before {
+    background-image: url('ui-images/img_start_asking@2x.png');
     background-size: contain;
     content: '';
     display: block;
     height: 96px;
+    margin-bottom: 18px;
     width: 96px;
 }
-.QuestionMeta {
+.QuestionThread-meta {
     font-size: 14px;
     padding: 2px 0;
 }
 .SignInLink {
   margin: 15px 15px 5px;
+}
+
+.QuestionThread {
+    padding: 0 10px;
+}
+
+.QuestionThread-date {
+    font-size: 14px;
+    font-weight: normal;
+    text-transform: uppercase;
 }

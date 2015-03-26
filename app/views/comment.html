@@ -1,19 +1,13 @@
-<div class="message vbox {% if comment.failed %}js-failed{% endif %}">
-  <div>{{ comment.content }}</div>
+<div class="Comment-content">{{ comment.content }}</div>
+
+<div class="Comment-meta hbox">
   {% if comment.updated %}
-    <p class="hbox">
-      <span class="comment-meta fit">{{ comment.created }} &ndash; {{ comment.author }}</span>
-      {# Comments with a question property are not the original question #}
-      {% if comment.question and not is_my_question %}
-        <button class="js-vote vote" data-icon="feedback">{{ comment.num_helpful_votes }}</button>
-      {% endif %}
-    </p>
-    {% if comment.id == solution_id %}
-      <p class="is_solution">Solution ✓</p>
-    {% else %}
-      {% if is_my_question and user.username != comment.creator.username  %}
-        <button class="js-solve">Mark question as resolved</button>
-      {% endif %}
+    <span class="fit ellipsis">{{ comment.created }} &ndash; {{ comment.author }}</span>
+    {# Comments with a question property are not the original question #}
+    {% if comment.question and not is_my_question %}
+      <a class="js-vote Comment-vote" data-icon="feedback">
+      {{ comment.num_helpful_votes }}
+      </a>
     {% endif %}
   {% elif comment.failed %}
     <span>Failed</span>
@@ -21,3 +15,13 @@
     <span>Sending…</span>
   {% endif %}
 </div>
+
+{% if comment.updated %}
+  {% if comment.id == solution_id %}
+    <p class="Comment-solution Comment-solutionBox">Solution ✓</p>
+  {% else %}
+    {% if is_my_question and user.username != comment.creator.username  %}
+      <a class="js-solve Comment-markSolution Comment-solutionBox">This solved my question</a>
+    {% endif %}
+  {% endif %}
+{% endif %}
