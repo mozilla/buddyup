@@ -1,23 +1,22 @@
-<form name="profile" id="profile" class="profile" method="get">
-  <fieldset class="user {% if is_helper %}is-helper{% endif %}">
+<form name="profile" id="profile">
+  <div class="hbox SettingsInfo {% if is_helper %}is-helper{% endif %}">
     {% if is_helper %}
-      <img class="avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
+      <img class="SettingsInfo-avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
     {% endif %}
-    <p>
-      <label for="display_name" class="visuallyhidden">Your Display Name</label>
-      <input type="text" name="display_name" id="display_name" value="{{ user.display_name }}" required />
-    </p>
-    {% if is_helper %}
-      <ul class="achievements">
-        <li>
-          <span class="count" data-icon="tick">{{ user.solution_count }}</span> Questions Answered
-        </li>
-        <li>
-          <span class="count" data-icon="feedback">{{ user.helpfulness }}</span> Helpful Upvotes
-        </li>
-      </ul>
-    {% endif %}
-  </fieldset>
+    <div class="fit vbox">
+      <input type="text" name="display_name" id="display_name" value="{{ user.display_name }}" class="SettingsInfo-name" required />
+      {% if is_helper %}
+        <ul class="SettingsInfo-achievements">
+          <li data-icon="tick">
+            {{ user.solution_count }} Questions solved
+          </li>
+          <li data-icon="feedback">
+            {{ user.helpfulness }} Helpful upvotes
+          </li>
+        </ul>
+      {% endif %}
+    </div>
+  </div>
 
   {% if is_helper %}
 

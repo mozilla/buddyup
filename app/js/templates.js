@@ -143,14 +143,14 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<form name=\"profile\" id=\"profile\" class=\"profile\" method=\"get\">\n  <fieldset class=\"user ";
+output += "<form name=\"profile\" id=\"profile\">\n  <div class=\"hbox SettingsInfo ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
 output += "is-helper";
 ;
 }
 output += "\">\n    ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n      <img class=\"avatar\" src=\"";
+output += "\n      <img class=\"SettingsInfo-avatar\" src=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"avatar", env.autoesc), env.autoesc);
 output += "\" alt=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
@@ -159,18 +159,18 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "\">\n    ";
 ;
 }
-output += "\n    <p>\n      <label for=\"display_name\" class=\"visuallyhidden\">Your Display Name</label>\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
+output += "\n    <div class=\"fit vbox\">\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\" required />\n    </p>\n    ";
+output += "\" class=\"SettingsInfo-name\" required />\n      ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n      <ul class=\"achievements\">\n        <li>\n          <span class=\"count\" data-icon=\"tick\">";
+output += "\n        <ul class=\"SettingsInfo-achievements\">\n          <li data-icon=\"tick\">\n            ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
-output += "</span> Questions Answered\n        </li>\n        <li>\n          <span class=\"count\" data-icon=\"feedback\">";
+output += " Questions solved\n          </li>\n          <li data-icon=\"feedback\">\n            ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc), env.autoesc);
-output += "</span> Helpful Upvotes\n        </li>\n      </ul>\n    ";
+output += " Helpful upvotes\n          </li>\n        </ul>\n      ";
 ;
 }
-output += "\n  </fieldset>\n\n  ";
+output += "\n    </div>\n  </div>\n\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
 output += "\n\n    <fieldset>\n      <header>\n        <h2>My preferences</h2>\n      </header>\n      <section class=\"QuestionFilters\">\n        <p class=\"QuestionFilters-description\">Too many questions? Use the settings below to narrow down the \"Answer a Question\" list.</p>\n\n        <ul>\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"locale\">Language</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"locale\">\n              ";
 frame = frame.push();

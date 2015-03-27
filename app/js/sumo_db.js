@@ -355,7 +355,8 @@
 
     get_user: function(username) {
       var endpoint = API_V2_BASE + 'user/' + username + '/';
-      endpoint += '?format=json'; // TODO bug 1088014
+      endpoint += '?avatar_size=100';
+      endpoint += '&format=json'; // TODO bug 1088014
 
       // settings is only visible if the user authenticated so, we need
       // to do a request_with_auth here.
