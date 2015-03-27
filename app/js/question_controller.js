@@ -185,7 +185,7 @@
     evt.preventDefault();
     var comment = question_field.value;
 
-    if (comment === '') {
+    if (comment.trim() === '') {
       return;
     }
 
