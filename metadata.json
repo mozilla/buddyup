@@ -1,0 +1,7 @@
+{
+  "manifestURL": "https://marketplace.firefox.com/buddyup/manifest.webapp",
+  "installOrigin": "https://marketplace.firefox.com",
+  "removable": true,
+  "type": "privileged",
+  "external": true
+}
