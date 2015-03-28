@@ -13,9 +13,7 @@
   var questions_container;
 
   function load_profile() {
-    var promise = SumoDB.get_public_user(username, {avatar_size: 100});
-
-    promise.then(function(user) {
+    SumoDB.get_public_user(username, {avatar_size: 100}).then(function(user) {
       headline.textContent = user.display_name;
 
       var profile_html = nunjucks.render(PROFILE_DETAILS_TMPL, {
@@ -23,31 +21,32 @@
       });
 
       profile_details_container.innerHTML = profile_html;
+    });
 
-      SumoDB.get_solved_questions(user).then(function(response) {
-        var results = response.results;
-        var html;
+    SumoDB.get_solved_questions(username).then(function(response) {
+      var results = response.results;
+      var html;
 
-        if (results.length) {
-          for (var i = 0, l = results.length; i < l; i++) {
-            var updated = results[i].updated;
-            results[i].updated_day = updated.split('T')[0];
-            results[i].updated = Utils.time_since(new Date(updated));
-            results[i].displayable_metadata =
-              Utils.convert_metadata_for_display(results[i].metadata);
-          }
-
-          html = nunjucks.render(QUESTION_LIST_TMPL, {
-            next: response.next,
-            results: results
-          });
-        } else {
-          html = nunjucks.render(QUESTION_LIST_TMPL, {
-            message: MSG_NO_QUESTIONS
-          });
+      if (results.length) {
+        for (var i = 0, l = results.length; i < l; i++) {
+          var updated = results[i].updated;
+          results[i].updated_day = updated.split('T')[0];
+          results[i].updated = Utils.time_since(new Date(updated));
+          results[i].displayable_metadata =
+            Utils.convert_metadata_for_display(results[i].metadata);
         }
-        questions_container.insertAdjacentHTML('beforeend', html);
-      });
+
+        html = nunjucks.render(QUESTION_LIST_TMPL, {
+          next: response.next,
+          results: results
+        });
+      } else {
+        html = nunjucks.render(QUESTION_LIST_TMPL, {
+          message: MSG_NO_QUESTIONS
+        });
+      }
+      questions_container.insertAdjacentHTML('beforeend', html);
+      questions_container.classList.remove('hide');
     });
   }
 

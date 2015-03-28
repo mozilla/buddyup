@@ -221,10 +221,10 @@
     /**
      * Get the list of question a user has solved.
      */
-    get_solved_questions: function(user) {
+    get_solved_questions: function(username) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?product=' + PRODUCT;
-      endpoint += '&solved_by=' + user.username;
+      endpoint += '&solved_by=' + username;
       endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
