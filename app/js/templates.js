@@ -86,24 +86,17 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<img class=\"avatar\" src=\"";
+output += "<img class=\"ProfileDetails-avatar\" src=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"avatar", env.autoesc), env.autoesc);
 output += "\" alt=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
 output += "\" title=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\">\n<div>Questions Solved: ";
+output += "\">\n<div class=\"hbox ProfileDetails-stats\">\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
-output += "</div>\n<div>Helpful Upvotes: ";
+output += "</div>\n    <div data-icon=\"tick\"> Questions solved</div>\n  </div>\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc), env.autoesc);
-output += "</div>\n";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"last_answer_date", env.autoesc)) {
-output += "\n  <div>Last Commented: ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"last_answer_date", env.autoesc), env.autoesc);
-output += "</div>\n";
-;
-}
-output += "\n";
+output += "</div>\n    <div data-icon=\"feedback\"> Helpful upvotes</div>\n  </div>\n</div>\n";
 cb(null, output);
 ;
 } catch (e) {

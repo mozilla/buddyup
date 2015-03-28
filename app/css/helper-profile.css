@@ -1,18 +1,20 @@
-.helper-profile {
-    box-sizing: content-box;
-    min-height: 96px;
-    padding: 1rem 1rem 0 1rem;
-    position: relative;
+.ProfileDetails {
+    margin: 15px;
 }
-.helper-profile .avatar {
-    border-radius: 48px;
-    height: 96px;
-    left: 1rem;
-    position: absolute;
-    top: 1rem;
-    width: 96px;
+.ProfileDetails-avatar {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
 }
-.helper-profile div {
-    margin-left: 1rem;
-    padding-left: 96px;
+
+.ProfileDetails-stats {
+    text-align: center;
+    color: #858585;
+    font-size: 12px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.ProfileDetails-statcounts {
+    font-size: 32px;
 }

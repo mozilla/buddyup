@@ -1,6 +1,11 @@
-<img class="avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
-<div>Questions Solved: {{ user.solution_count }}</div>
-<div>Helpful Upvotes: {{ user.helpfulness }}</div>
-{% if user.last_answer_date %}
-  <div>Last Commented: {{ user.last_answer_date }}</div>
-{% endif %}
+<img class="ProfileDetails-avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
+<div class="hbox ProfileDetails-stats">
+  <div class="fit vbox">
+    <div class="ProfileDetails-statcounts">{{ user.solution_count }}</div>
+    <div data-icon="tick"> Questions solved</div>
+  </div>
+  <div class="fit vbox">
+    <div class="ProfileDetails-statcounts">{{ user.helpfulness }}</div>
+    <div data-icon="feedback"> Helpful upvotes</div>
+  </div>
+</div>

@@ -13,10 +13,10 @@
   var questions_container;
 
   function load_profile() {
-    var promise = SumoDB.get_public_user(username, {avatar_size: 96});
+    var promise = SumoDB.get_public_user(username, {avatar_size: 100});
 
     promise.then(function(user) {
-      headline.innerHTML = user.display_name;
+      headline.textContent = user.display_name;
 
       var profile_html = nunjucks.render(PROFILE_DETAILS_TMPL, {
         user: user
