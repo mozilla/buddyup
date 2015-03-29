@@ -1,16 +1,22 @@
 .AuthForm {
     padding: 15px;
 }
-.AuthForm > p {
+.AuthForm-description {
     font-size: 16px;
     line-height: 20px;
     margin-bottom: 15px;
     margin-left: 15px;
 }
+.gaia-footer--pinned {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+.gaia-footer .bb-button {
+    margin: 0;
+}
 .ForgotPasswordLink {
     color: #00caf2;
     font-size: 11px;
-}
-.ErrorList {
-    margin-left: 15px;
 }

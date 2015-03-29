@@ -8,6 +8,9 @@
 .ErrorList > li:last-of-type {
     margin-bottom: 10px;
 }
-input + .ErrorList > li {
-    margin-top: -4px;
+.ErrorList--field > li {
+    margin-top: -4px; /* Used to counter the margin under input fields */
+}
+.ErrorList--auth {
+    margin-left: 15px;
 }

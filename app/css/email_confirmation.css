@@ -6,7 +6,7 @@
     line-height: 20px;
     margin: 15px 30px;
 }
-.EmailConfirmationMessage .gaia-footer {
+.gaia-footer--pinned {
     bottom: 0;
     position: absolute;
     width: 100%;

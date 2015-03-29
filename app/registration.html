@@ -27,28 +27,28 @@
 <body class="skin-organic">
 <section role="region" class="vbox fit">
   <header>
-    <a href="authentication.html" id="close" data-icon="close" data-action="back">
+    <a href="index.html" id="close" data-icon="close" data-action="back">
       <span class="visuallyhidden">Close</span>
     </a>
     <h1>Create Account</h1>
   </header>
   <main id="register_container" class="fit scroll">
     <form name="register" class="AuthForm" id="register" method="post">
-      <p>
+      <p class="AuthForm-description">
         A support account lets you answer support questions and receive alerts to responses.
       </p>
-      <ul class="ErrorList" id="register_errors"></ul>
+      <ul class="ErrorList ErrorList--auth FieldErrorList" id="register_errors"></ul>
       <div>
         <input type="email" name="email" id="email" placeholder="Email Address" />
-        <ul class="ErrorList" id="email_errors"></ul>
+        <ul class="ErrorList ErrorList--auth ErrorList--field" id="email_errors"></ul>
       </div>
       <div>
         <input type="text" name="username" id="username" placeholder="Username" />
-        <ul class="ErrorList" id="username_errors"></ul>
+        <ul class="ErrorList ErrorList--auth ErrorList--field" id="username_errors"></ul>
       </div>
       <div>
         <input type="password" name="password" id="password" placeholder="Password" />
-        <ul class="ErrorList" id="password_errors"></ul>
+        <ul class="ErrorList ErrorList--auth ErrorList--field" id="password_errors"></ul>
       </div>
       <button class="recommend" type="submit" form="register">Create Account</button>
       <hr>
