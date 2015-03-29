@@ -13,6 +13,12 @@ main {
   position: relative;
   scroll-behavior: smooth;
 }
+hr {
+  background: #e7e7e7;
+  border: none;
+  height: 1px;
+  margin: 0 0 10px;
+}
 
 /* Makes the vertical boxes scrollable */
 .vbox {

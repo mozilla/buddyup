@@ -1,0 +1,13 @@
+.ErrorList {
+    color: #e51e1e;
+    font-size: 14px;
+}
+.ErrorList > li {
+    margin-bottom: 6px;
+}
+.ErrorList > li:last-of-type {
+    margin-bottom: 10px;
+}
+input + .ErrorList > li {
+    margin-top: -4px;
+}

@@ -10,10 +10,13 @@
     <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/building_blocks/buttons.css" media="screen" />
     <link rel="stylesheet" href="css/building_blocks/confirm.css" media="screen" />
 
     <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/error-list.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/authentication.css" media="screen" />
 
     <!-- localization -->
     <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
@@ -24,36 +27,31 @@
   <body class="skin-organic">
   <section role="region" class="vbox fit">
     <header>
-      <button id="close" data-icon="close" data-action="back">
+      <a href="question_list_helpee.html" id="close" data-icon="close" data-action="back">
         <span class="visuallyhidden">Close</span>
-      </button>
-      <menu type="toolbar">
-        <button type="submit" form="login">Done</button>
-      </menu>
-      <h1>Login</h1>
+      </a>
+      <h1>Sign In</h1>
     </header>
     <main id="login_container" class="fit scroll">
-      <form name="login" id="login" method="post">
+      <form name="login" class="LoginForm" id="login" method="post">
         <p>
           A support account lets you answer support questions and receive alerts to responses.
         </p>
-        <ul id="login_errors"></ul>
+        <ul class="ErrorList" id="login_errors"></ul>
+        <div>
+          <input type="text" name="username" id="username" placeholder="Username">
+          <ul class="ErrorList" id="username_errors"></ul>
+        </div>
+        <div>
+          <input type="password" name="password" id="password" placeholder="Password">
+          <ul class="ErrorList" id="password_errors"></ul>
+        </div>
         <p>
-          <label for="username">Username</label>
-          <input type="text" name="username" id="username">
-          <ul id="username_errors"></ul>
+          <a class="ForgotPasswordLink" href="password_reset.html">Forgot your password?</a>
         </p>
-        <p>
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password">
-          <ul id="password_errors"></ul>
-        </p>
-        <p>
-          <a href="password_reset.html">Forgot your password?</a>
-        </p>
-        <p>
-          <a href="registration.html">Don't have an account? Register</a>
-        </p>
+        <button class="recommend" type="submit" form="login">Sign In</button>
+        <hr>
+        <a class="bb-button" href="registration.html" data-icon="forward">Don't have an account? Register</a>
       </form>
     </main>
   </section>

@@ -1,0 +1,16 @@
+.LoginForm {
+    padding: 15px;
+}
+.LoginForm > p {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+.ForgotPasswordLink {
+    color: #00caf2;
+    font-size: 11px;
+}
+.ErrorList {
+    margin-left: 15px;
+}
