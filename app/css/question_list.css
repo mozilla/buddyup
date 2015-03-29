@@ -55,3 +55,31 @@
     position: relative;
     top: 3px;
 }
+
+.ActivePanel {
+    height: calc(100% - 40px);
+}
+
+.NoQuestionsMessage {
+    color: #4d4d4d;
+    font-size: 14px;
+    justify-content: center;
+    line-height: 17px;
+    padding: 0 20px;
+    text-align: center;
+}
+.NoQuestionsMessage > strong {
+    display: block;
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 8px;
+}
+.NoQuestionsMessage > strong::before {
+    background-image: url('ui-images/img_no_questions@2x.png');
+    background-size: contain;
+    content: '';
+    display: block;
+    height: 96px;
+    margin: 0 auto 18px;
+    width: 96px;
+}

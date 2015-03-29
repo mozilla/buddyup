@@ -4,7 +4,6 @@
 
 (function(exports) {
 
-  var MSG_NO_QUESTIONS = 'No questions found';
   var QUESTION_LIST_TMPL = 'question_list_day.html';
 
   var my_questions_list_container;
@@ -160,13 +159,12 @@
         next: response.next,
         results: results
       });
-      container.insertAdjacentHTML('beforeend', html);
     } else {
       html = nunjucks.render(QUESTION_LIST_TMPL, {
-        message: MSG_NO_QUESTIONS
+        message: container.dataset.emptyMessage
       });
-      container.insertAdjacentHTML('beforeend', html);
     }
+    container.insertAdjacentHTML('beforeend', html);
   }
 
   function display_sign_in_if_needed() {

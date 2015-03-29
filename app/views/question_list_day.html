@@ -1,5 +1,5 @@
-<section>
-  {% if results %}
+{% if results %}
+  <section>
     {% for day, questions in results|groupby('updated_day') %}
       <h1 class="list-day">{{ day }}</h1>
       <ul>
@@ -8,7 +8,14 @@
       {% endfor %}
       </ul>
     {% endfor %}
+  </section>
+{% else %}
+  {% if message %}
+    <p class="margin-10">{{ message }}</p>
   {% else %}
-    <p class="no-data">{{ message }}</p>
+    <section class="NoQuestionsMessage vbox fit">
+      <strong>No active questions</strong>
+      Go to the New tab to answer some questions. We'll keep track of them here.
+    </section>
   {% endif %}
-</section>
+{% endif %}

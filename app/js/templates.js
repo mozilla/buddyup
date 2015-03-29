@@ -312,9 +312,8 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<section>\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "results")) {
-output += "\n    ";
+output += "\n  <section>\n    ";
 frame = frame.push();
 var t_3 = env.getFilter("groupby").call(context, runtime.contextOrFrameLookup(context, frame, "results"),"updated_day");
 if(t_3) {var t_1;
@@ -410,16 +409,25 @@ output += "\n      </ul>\n    ";
 }
 }
 frame = frame.pop();
-output += "\n  ";
+output += "\n  </section>\n";
 ;
 }
 else {
-output += "\n    <p class=\"no-data\">";
+output += "\n  ";
+if(runtime.contextOrFrameLookup(context, frame, "message")) {
+output += "\n    <p class=\"margin-10\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "message"), env.autoesc);
 output += "</p>\n  ";
 ;
 }
-output += "\n</section>\n";
+else {
+output += "\n    <section class=\"NoQuestionsMessage vbox fit\">\n      <strong>No active questions</strong>\n      Go to the New tab to answer some questions. We'll keep track of them here.\n    </section>\n  ";
+;
+}
+output += "\n";
+;
+}
+output += "\n";
 cb(null, output);
 ;
 } catch (e) {

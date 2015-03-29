@@ -10,10 +10,6 @@ html {
   font-size: 10px;
 }
 
-.no-data {
-    margin: 1rem;
-}
-
 /* footer */
 footer button:hover {
     cursor: pointer;
