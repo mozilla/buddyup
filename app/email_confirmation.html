@@ -10,9 +10,11 @@
   <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/buttons.css" media="screen" />
 
   <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="css/buddyup.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/email_confirmation.css" media="screen" />
 
   <!-- localization -->
   <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
@@ -23,20 +25,24 @@
 <body class="skin-organic">
   <section role="region">
     <header>
-      <h1>Confirm Your Account</h1>
+      <h1>Create Account</h1>
     </header>
   </section>
-  <p>
-    We will send an email to:
-    <br /><span id="success_email"></span>
-  </p>
-  <p>
-    Before you can log in, you need to confirm your email address. Next time you
-    check your email, click the verification link to confirm your Account.
-  </p>
-  <p>
-    <button id="cancel_button">Cancel email verification</button>
-  </p>
+  <main id="email_confimation_container" class="EmailConfirmationMessage fit scroll">
+    <p>Confirm your account.</p>
+    <p>
+      You're almost there. Click on the link in your email to confirm your
+      account:
+      <br /><strong id="success_email"></strong>
+    </p>
+    <p>
+      Before you can log in, you need to confirm your email address. Next time
+      you check your email, click the verification link to confirm your Account.
+    </p>
+    <div class="gaia-footer">
+      <button class="danger" id="cancel_button">Cancel Sign Up</button>
+    </div>
+  </main>
 
   <script src="js/libs/font_size_utils.js" defer></script>
   <script src="js/utils.js" defer></script>

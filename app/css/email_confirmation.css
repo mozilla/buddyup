@@ -1,0 +1,13 @@
+.EmailConfirmationMessage {
+    position: relative;
+}
+.EmailConfirmationMessage p {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 15px 30px;
+}
+.EmailConfirmationMessage .gaia-footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
