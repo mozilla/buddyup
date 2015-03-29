@@ -258,7 +258,7 @@ output += "\n              </select>\n            </div>\n          </li>\n     
 ;
 }
 else {
-output += "\n    <header>\n      <h2>Answer questions</h2>\n    </header>\n    <section class=\"QuestionFilters\">\n      <p class=\"QuestionFilters-description\">Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"bb-button recommend\">Create account or sign in</a>\n    </section>\n  ";
+output += "\n    <header>\n      <h2>Answer questions</h2>\n    </header>\n    <section class=\"QuestionFilters\">\n      <p class=\"QuestionFilters-description\">Sign in to answer support questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"bb-button recommend\" data-modal=\"true\">Create account or sign in</a>\n    </section>\n  ";
 ;
 }
 output += "\n\n</form>\n";
@@ -603,7 +603,7 @@ frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
 output += "\n    <li>\n      <a href=\"helper_profile.html?username=";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"username", env.autoesc), env.autoesc);
-output += "\">\n        <img src=\"";
+output += "\" data-modal=\"true\">\n        <img src=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"avatar", env.autoesc), env.autoesc);
 output += "\" title=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"display_name", env.autoesc), env.autoesc);

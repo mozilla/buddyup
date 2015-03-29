@@ -7,3 +7,57 @@
         transform: rotate(360deg);
     }
 }
+
+
+@keyframes from-right-to-center {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes from-center-to-left {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes from-bottom-to-center {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.push-inbound {
+    animation: from-right-to-center both ease-in-out .4s;
+}
+.push-outbound {
+    animation: from-center-to-left both ease-in-out .4s;
+}
+
+.pop-inbound {
+    animation: from-center-to-left both ease-in-out reverse .4s;
+}
+.pop-outbound {
+    animation: from-right-to-center both ease-in-out reverse .4s;
+}
+
+.modal-inbound {
+    animation: from-bottom-to-center both ease-in-out .4s;
+}
+
+.modal-outbound {
+    animation: from-bottom-to-center both ease-in-out reverse.4s;
+}
+
+.animation-paused {
+    animation-play-state: paused;
+}

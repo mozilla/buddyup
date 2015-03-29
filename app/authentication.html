@@ -27,7 +27,7 @@
   <body class="skin-organic">
   <section role="region" class="vbox fit">
     <header>
-      <a href="index.html" id="close" data-icon="close" data-action="back">
+      <a href="index.html" id="close" data-icon="close" data-action="close">
         <span class="visuallyhidden">Close</span>
       </a>
       <h1>Sign In</h1>
@@ -47,11 +47,11 @@
           <ul class="ErrorList ErrorList--auth ErrorList--field" id="password_errors"></ul>
         </div>
         <p class="AuthForm-description">
-          <a class="ForgotPasswordLink" href="password_reset.html">Forgot your password?</a>
+          <a class="ForgotPasswordLink" href="password_reset.html" data-modal="true">Forgot your password?</a>
         </p>
         <button class="recommend" type="submit" form="login">Sign In</button>
         <hr>
-        <a class="bb-button" href="registration.html" data-icon="forward">Don't have an account? Register</a>
+        <a class="bb-button" href="registration.html" data-icon="forward" data-modal="true">Don't have an account? Register</a>
       </form>
     </main>
   </section>

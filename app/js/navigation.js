@@ -1,10 +1,12 @@
 'use strict';
 
+/* global _, Utils */
+
 (function(exports) {
   var current_iframe;
 
   function init() {
-    open_link('home.html');
+    open_link('home.html', {should_animate: false});
   }
 
   function iframe_clicked(evt) {
@@ -22,25 +24,83 @@
     if (elem.dataset.action) {
       close_iframe(elem.dataset.action);
     } else if (elem.href) {
-      open_link(elem.href);
+      open_link(elem.href, {modal: elem.dataset.modal});
     }
     evt.preventDefault();
   }
 
-  function open_link(url) {
+  function animate(element, animation_class) {
+    element.classList.add(animation_class);
+    var defer = Utils.defer();
+    element.addEventListener('animationend', function animation_end() {
+      element.removeEventListener('animationend', animation_end);
+      defer.resolve();
+    });
+
+    defer.promise.then(function() {
+      setTimeout(function() {
+        element.classList.remove(animation_class);
+      });
+    });
+
+    return defer.promise;
+  }
+
+  function open_link(url, options) {
+    var defaults = {
+      should_animate: true,
+      modal: false
+    };
+    options = _.assign(defaults, options);
+
     var new_iframe = document.createElement('iframe');
     new_iframe.src = url;
+
     document.body.appendChild(new_iframe);
     new_iframe.contentWindow.addEventListener('click', iframe_clicked);
-    current_iframe = new_iframe;
+
+    if (options.should_animate) {
+      current_iframe.classList.add('animation-paused');
+      new_iframe.classList.add('animation-paused');
+      if (options.modal) {
+        animate(new_iframe, 'modal-inbound');
+      } else {
+        animate(current_iframe, 'push-outbound');
+        animate(new_iframe, 'push-inbound');
+      }
+    } else {
+      current_iframe = new_iframe;
+    }
+
+    new_iframe.addEventListener('load', function loaaaaad() {
+      new_iframe.removeEventListener('load', loaaaaad);
+      new_iframe.classList.remove('animation-paused');
+      current_iframe.classList.remove('animation-paused');
+
+      current_iframe = new_iframe;
+    });
   }
 
   function close_iframe(action) {
-    if (action !== 'back') {
+    if (action !== 'back' && action !== 'close') {
       return;
     }
 
     var new_iframe = current_iframe.previousElementSibling;
+
+    var animation_promise;
+    if (action == 'close') {
+      animation_promise = animate(current_iframe, 'modal-outbound');
+    } else {
+      animate(new_iframe, 'pop-inbound');
+      animation_promise = animate(current_iframe, 'pop-outbound');
+    }
+    animation_promise.then(function() {
+      document.body.removeChild(current_iframe);
+      current_iframe = new_iframe;
+    });
+
+
     var refresh_mode = new_iframe.contentDocument.documentElement // <html>
       .dataset.refreshMode;
     if (refresh_mode != 'manual') {
@@ -50,9 +110,6 @@
         new_iframe.contentWindow.addEventListener('click', iframe_clicked);
       });
     }
-
-    document.body.removeChild(current_iframe);
-    current_iframe = new_iframe;
   }
 
   init();
@@ -64,12 +121,12 @@
       iframes.forEach(function(iframe) {
         document.body.removeChild(iframe);
       });
-      open_link(url);
+      open_link(url, {should_animate: false});
     },
     close_current_view: function() {
-      close_iframe('back');
+      close_iframe('close');
     },
-    
+
     get current_view() {
       return current_iframe.contentWindow;
     }
