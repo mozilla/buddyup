@@ -28,8 +28,7 @@
   }
 
   /**
-   * Sets the specified tab to the active state. Also toggles the aria-hidden
-   * state of the relevant tab panels.
+   * Sets the specified tab to the active state.
    * @param {object} container - The tab container
    * @param {object} tab - The tab that received the click event.
    */
@@ -43,7 +42,9 @@
     toggle_state(tabs, 'aria-selected');
 
     var tab_panels = container.querySelectorAll('[role="tabpanel"]');
-    toggle_state(tab_panels, 'aria-hidden');
+    for (var i = 0, l = tab_panels.length; i < l; i++) {
+      tab_panels[i].classList.toggle('hide');
+    }
   }
 
   /**
