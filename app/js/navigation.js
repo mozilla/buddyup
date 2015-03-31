@@ -17,7 +17,7 @@
       }
       elem = elem.parentElement;
     }
-    if (!elem || elem.getAttribute('role') === 'tab') {
+    if (!elem || elem.getAttribute('role')) {
       return;
     }
 

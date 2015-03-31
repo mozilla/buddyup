@@ -5,7 +5,7 @@
     <span class="fit ellipsis">{{ comment.created }} &ndash; {{ comment.author }}</span>
     {# Comments with a question property are not the original question #}
     {% if comment.question and not is_my_question %}
-      <a class="js-vote Comment-vote" data-icon="feedback">
+      <a href="#" role="button" class="js-vote Comment-vote" data-icon="feedback">
       {{ comment.num_helpful_votes }}
       </a>
     {% endif %}

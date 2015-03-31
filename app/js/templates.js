@@ -14,7 +14,7 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "</span>\n    ";
 output += "\n    ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"question", env.autoesc) && !runtime.contextOrFrameLookup(context, frame, "is_my_question")) {
-output += "\n      <a class=\"js-vote Comment-vote\" data-icon=\"feedback\">\n      ";
+output += "\n      <a href=\"#\" role=\"button\" class=\"js-vote Comment-vote\" data-icon=\"feedback\">\n      ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"num_helpful_votes", env.autoesc), env.autoesc);
 output += "\n      </a>\n    ";
 ;
