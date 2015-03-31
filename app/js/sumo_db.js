@@ -267,7 +267,7 @@
       endpoint += '?product=' + PRODUCT;
       endpoint += '&is_solved=0';
       endpoint += '&is_taken=0';
-      endpoint += '&locale=' + locale;
+      // endpoint += '&locale=' + locale; Bug 1148428 - Temporary disabled
       endpoint += '&ordering=-updated';
       endpoint += '&format=json'; // TODO bug 1088014
 
