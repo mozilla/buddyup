@@ -56,17 +56,15 @@
     top: 3px;
 }
 
-.ActivePanel {
-    height: calc(100% - 40px);
-}
-
 .NoQuestionsMessage {
     color: #4d4d4d;
     font-size: 14px;
     justify-content: center;
     line-height: 17px;
     padding: 0 20px;
+    position: absolute;
     text-align: center;
+    top: calc(50% - 86px); /* Hardcoded vertical centering because of bug 1149705 */
 }
 .NoQuestionsMessage > strong {
     display: block;
