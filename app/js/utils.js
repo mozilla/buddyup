@@ -10,6 +10,7 @@
     '28.0': '1.3',
     '30.0': '1.4',
     '32.0': '2.0',
+    '34.0': '2.1',
   };
   /* jshint -W101 */
   /* Adapted from https://developer.mozilla.org/en-US/docs/Web/HTTP/Gecko_user_agent_string_reference */
