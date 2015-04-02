@@ -260,6 +260,7 @@
     var user_meta = Utils.get_user_meta();
     return SumoDB.post_question(comment, user_meta).then(function(response) {
       question_id = response.id;
+      window.history.replaceState(null, null, '?id=' + question_id);
       question_object = response;
       if (window.parent.Notif) {
         window.parent.Notif.listen_to_realtime(question_id);
@@ -371,6 +372,12 @@
         panel.classList.add('hide');
       }
     });
+
+    if (elt == question_thread) {
+      delete document.documentElement.dataset.refreshMode;
+    } else {
+      document.documentElement.dataset.refreshMode = 'manual';
+    }
   }
 
   function give_suggestions(evt) {
