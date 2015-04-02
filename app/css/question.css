@@ -46,6 +46,8 @@
 }
 .StartAskingMessage::before {
     background-image: url('ui-images/img_start_asking@2x.png');
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: contain;
     content: '';
     display: block;
