@@ -115,11 +115,9 @@ var output = "";
 try {
 output += "<li class=\"list-item\">\n  <a href=\"kb.html?slug=";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"slug", env.autoesc), env.autoesc);
-output += "\">\n    <p class=\"li__title ellipsis\">";
+output += "\">\n    <p class=\"li__title\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"title", env.autoesc), env.autoesc);
-output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle ellipsis\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"summary", env.autoesc), env.autoesc);
-output += "</span>\n    </div>\n  </a>\n</li>\n";
+output += "</p>\n  </a>\n</li>\n";
 cb(null, output);
 ;
 } catch (e) {
