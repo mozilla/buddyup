@@ -3,36 +3,38 @@
 (function(exports) {
   var request_count = 0;
 
-  function get_spinner() {
-    var spinner = document.getElementById('spinner');
+  function get_indicator() {
+    var indicator = document.getElementById('indicator');
 
-    // If the spinner does not exist create it and hide it.
-    if (!spinner) {
-      spinner = document.createElement('span');
-      spinner.setAttribute('id', 'spinner');
-      spinner.setAttribute('data-icon', 'sync');
+    // If the indicator does not exist create it and hide it.
+    if (!indicator) {
+      indicator = document.createElement('progress');
+      indicator.setAttribute('id', 'indicator');
+      indicator.value = 0;
 
-      spinner.classList.add('spinner');
-      spinner.classList.add('hide');
-      document.body.appendChild(spinner);
+      indicator.classList.add('pack-activity');
+      indicator.classList.add('hide');
+      var building_block_selector;
+      building_block_selector = 'section[role="region"] > header:first-child';
+      document.querySelector(building_block_selector).appendChild(indicator);
     }
 
-    return spinner;
+    return indicator;
   }
 
   var LoadingIndicator = {
     init: function() {
       document.addEventListener('request-start', function() {
         request_count++;
-        var spinner = get_spinner();
-        spinner.classList.remove('hide');
+        var indicator = get_indicator();
+        indicator.classList.remove('hide');
       });
 
       document.addEventListener('request-complete', function() {
         request_count--;
         if (request_count === 0) {
-          var spinner = get_spinner();
-          spinner.classList.add('hide');
+          var indicator = get_indicator();
+          indicator.classList.add('hide');
         }
       });
     }
