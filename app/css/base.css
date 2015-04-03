@@ -1,3 +1,14 @@
+@import 'lists.css';
+@import 'buttons.css';
+@import 'icons.css';
+@import 'animations.css';
+@import 'utils.css';
+
+html {
+  /* Use the same base size as Gaia for building blocks using rem units*/
+  font-size: 10px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -29,4 +40,9 @@ hr {
 }
 .margin-10 {
   margin: 10px;
+}
+
+/* Overrides confirm.css to adapt to the number of buttons */
+form[role="dialog"][data-type="confirm"] menu {
+    display: flex !important;
 }
