@@ -1,15 +1,17 @@
-<li class="list-item">
-  <a href="question.html?id={{ question.id }}">
-    <p class="li__title ellipsis">{{ question.title }}</p>
-    <div class="hbox">
-      <span class="li__subtitle fit">
-      {{ question.displayable_metadata.handset_type }}
-      {{ question.displayable_metadata.os_version }}
-      {% if (question.displayable_metadata.handset_type or question.displayable_metadata.os_version) and question.displayable_metadata.operator %}
-      , {% endif %}
-      {{ question.displayable_metadata.operator }}
-      </span>
-      <span class="li__comments">{{ question.num_answers }}</span>
+<li>
+  <a href="question.html?id={{ question.id }}" class="ListItem">
+    <div class="ListItem-inside">
+      <p class="li__title ellipsis">{{ question.title }}</p>
+      <div class="hbox">
+        <span class="li__subtitle fit">
+        {{ question.displayable_metadata.handset_type }}
+        {{ question.displayable_metadata.os_version }}
+        {%- if (question.displayable_metadata.handset_type or question.displayable_metadata.os_version) and question.displayable_metadata.operator -%}
+        , {% endif %}
+        {{ question.displayable_metadata.operator }}
+        </span>
+        <span class="li__comments">{{ question.num_answers }}</span>
+      </div>
     </div>
   </a>
 </li>

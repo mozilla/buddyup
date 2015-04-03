@@ -113,11 +113,11 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<li class=\"list-item\">\n  <a href=\"kb.html?slug=";
+output += "<li>\n  <a href=\"kb.html?slug=";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"slug", env.autoesc), env.autoesc);
-output += "\">\n    <p class=\"li__title\">";
+output += "\" class=\"ListItem\">\n    <div class=\"ListItem-inside\">\n      <p class=\"li__title\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "kb_item")),"title", env.autoesc), env.autoesc);
-output += "</p>\n  </a>\n</li>\n";
+output += "</p>\n    </div>\n  </a>\n</li>\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -276,24 +276,23 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<li class=\"list-item\">\n  <a href=\"question.html?id=";
+output += "<li>\n  <a href=\"question.html?id=";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"id", env.autoesc), env.autoesc);
-output += "\">\n    <p class=\"li__title ellipsis\">";
+output += "\" class=\"ListItem\">\n    <div class=\"ListItem-inside\">\n      <p class=\"li__title ellipsis\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"title", env.autoesc), env.autoesc);
-output += "</p>\n    <div class=\"hbox\">\n      <span class=\"li__subtitle fit\">\n      ";
+output += "</p>\n      <div class=\"hbox\">\n        <span class=\"li__subtitle fit\">\n        ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"handset_type", env.autoesc), env.autoesc);
-output += "\n      ";
+output += "\n        ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"os_version", env.autoesc), env.autoesc);
-output += "\n      ";
 if((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"handset_type", env.autoesc) || runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"os_version", env.autoesc)) && runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"operator", env.autoesc)) {
-output += "\n      , ";
+output += ", ";
 ;
 }
-output += "\n      ";
+output += "\n        ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"displayable_metadata", env.autoesc)),"operator", env.autoesc), env.autoesc);
-output += "\n      </span>\n      <span class=\"li__comments\">";
+output += "\n        </span>\n        <span class=\"li__comments\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "question")),"num_answers", env.autoesc), env.autoesc);
-output += "</span>\n    </div>\n  </a>\n</li>\n";
+output += "</span>\n      </div>\n    </div>\n  </a>\n</li>\n";
 cb(null, output);
 ;
 } catch (e) {

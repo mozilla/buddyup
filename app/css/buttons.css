@@ -1,42 +1,9 @@
-/* buttons */
-button {
-    cursor: pointer;
+.skin-organic section[role="region"] > header:first-child a:focus {
+  background-color: rgba(0, 0, 0, 0.07);
 }
-.button-blue,
-.button-gray {
-    display: block;
-    padding: .7rem;
-    border: 1px solid #333;
-    text-align: left;
-    width: 100%;
-}
-.button-blue,
-.button-recommend {
-    background-color: #0095DD;
-    color: white;
-}
-.button-gray {
-    background-color: #edecec;
-}
-.button-blue:link,
-.button-blue:visited {
-    color: white;
-    text-decoration: none;
-}
-.button-gray:link,
-.button-gray:visited {
-    color: #333;
-    text-decoration: none;
-}
-.button-recommend,
-.button-danger {
-    display: inline-block;
-    padding: .7rem;
-    width: 49%;
-    font-size: 1.1rem;
-    text-align: center;
-}
-.button-danger {
-    background-color: #e51e1e;
-    color: white;
+
+button:focus,
+.bb-button:focus {
+  background-color: #b2f2ff;
+  color: #fff;
 }
