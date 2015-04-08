@@ -14,7 +14,7 @@
 
   function load_profile() {
     SumoDB.get_public_user(username, {avatar_size: 100}).then(function(user) {
-      headline.textContent = user.display_name;
+      headline.textContent = user.display_name || user.username;
 
       var profile_html = nunjucks.render(PROFILE_DETAILS_TMPL, {
         user: user

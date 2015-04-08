@@ -48,6 +48,7 @@ function push_notification() {
       var title;
       var icon_info;
       var tag;
+      var actor;
 
       switch(notification.verb) {
         case 'answered':
@@ -57,7 +58,8 @@ function push_notification() {
             QuestionC.question_id == notification.target.id;
           // FIXME Bug 1139899 - We should still mark them as read
           if (!question_displayed) {
-            title = notification.actor.display_name;
+            actor = notification.actor;
+            title = actor.display_name || actor.username;
             title += ' has commented on a question';
             icon_info = '?question_id=' + notification.target.id;
             tag = 'question-' + notification.target.id;
@@ -65,7 +67,9 @@ function push_notification() {
         break;
 
         case 'marked as a solution':
-          title = notification.actor.display_name + ' chose your answer';
+          actor = notification.actor;
+          title = actor.display_name || actor.username;
+          title += ' chose your answer';
           icon_info = '?question_id=' + notification.target.id;
           tag = 'resolved-' + notification.target.id;
         break;
