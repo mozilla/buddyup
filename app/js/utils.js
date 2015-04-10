@@ -219,6 +219,12 @@
     }
   };
 
+  // Prevent default context menu and click the element instead
+  window.addEventListener('contextmenu', function(evt) {
+    evt.preventDefault();
+    evt.target.click();
+  });
+
   exports.Utils = Utils;
 
 })(window);
