@@ -12,3 +12,7 @@ iframe {
   position: absolute;
   width: 100%;
 }
+
+.KBFrame {
+  height: calc(100% - 50px); /* Remove header height */
+}
