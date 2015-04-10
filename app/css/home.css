@@ -38,13 +38,15 @@
   font-size:18px;
   line-height: 22px;
   margin: 0;
-  text-shadow: black 0 0 3px;
 }
 
 .HomeCallout-subtitle {
   font-size: 13px;
   font-style: italic;
   line-height: 16px;
+}
+
+.HomeCallout-shadow {
   text-shadow: black 0 0 3px;
 }
 
