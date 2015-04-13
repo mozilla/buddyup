@@ -191,11 +191,6 @@ output += "</option>\n              ";
 frame = frame.pop();
 output += "\n              </select>\n            </div>\n          </li>\n\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"handset_type\">Device</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"handset_type\"> ";
 output += "\n                ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"handset_type", env.autoesc) == "All") {
-output += "\n                  <option selected=\"selected\">All</option>\n                ";
-;
-}
-output += "\n                ";
 frame = frame.push();
 var t_7 = runtime.contextOrFrameLookup(context, frame, "handsets");
 if(t_7) {var t_6 = t_7.length;
@@ -222,11 +217,6 @@ output += "</option>\n                ";
 }
 frame = frame.pop();
 output += "\n              </select>\n            </div>\n          </li>\n\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"operator\">Operator</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"operator\">\n                ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"operator", env.autoesc) == "All") {
-output += "\n                  <option selected=\"selected\">All</option>\n                ";
-;
-}
-output += "\n                ";
 frame = frame.push();
 var t_11 = runtime.contextOrFrameLookup(context, frame, "operators");
 if(t_11) {var t_10 = t_11.length;

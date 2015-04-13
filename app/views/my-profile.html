@@ -43,9 +43,6 @@
             <label class="QuestionFilters-label" for="handset_type">Device</label>
             <div class="button" data-icon="expand">
               <select id="handset_type"> {# DO I have to take care of the rest? #}
-                {% if user.handset_type == "All" %}
-                  <option selected="selected">All</option>
-                {% endif %}
                 {% for handset in handsets %}
                   <option {% if handset == user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
                 {% endfor %}
@@ -57,9 +54,6 @@
             <label class="QuestionFilters-label" for="operator">Operator</label>
             <div class="button" data-icon="expand">
               <select id="operator">
-                {% if user.operator == "All" %}
-                  <option selected="selected">All</option>
-                {% endif %}
                 {% for operator in operators %}
                   <option {% if operator == user.operator %}selected="selected"{% endif %}>{{ operator }}</option>
                 {% endfor %}
