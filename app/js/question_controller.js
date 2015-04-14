@@ -185,7 +185,8 @@
     evt.preventDefault();
     var comment = question_field.value;
 
-    if (comment === '') {
+    // Disable submit if the comment is blank or with some spaces
+    if ( comment.trim() == '' ) {
       return;
     }
 
