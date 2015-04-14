@@ -167,7 +167,7 @@
     var comment = question_field.value;
 
     // Disable submit if the comment is blank or with some spaces
-    if (comment === '' || comment.replace(/\s/g, '') === '') {
+    if ( comment.trim() == '' ) {
       return;
     }
 
