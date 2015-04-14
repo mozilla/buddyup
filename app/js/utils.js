@@ -127,6 +127,14 @@
       }
       return params;
     },
+
+    get_gecko_version: function() {
+      var gecko = navigator.userAgent.match(/rv:([\d\.]+)/);
+      if (gecko) {
+        return gecko[1];
+      }
+    },
+
     /**
      * Returns meta data gathered from the device to attach to questions
      * for better categorization and filtering.
@@ -134,11 +142,11 @@
     get_user_meta: function() {
       var metas = [];
 
-      var gecko = navigator.userAgent.match(/rv:([\d\.]+)/);
+      var gecko = Utils.get_gecko_version();
       if (gecko) {
         metas.push({
           name: 'os_version',
-          value: gecko[1]
+          value: gecko
         });
       }
 

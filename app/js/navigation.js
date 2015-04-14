@@ -1,13 +1,9 @@
 'use strict';
 
-/* global _, Utils */
+/* global _, LaunchChecks, Utils */
 
 (function(exports) {
   var current_iframe;
-
-  function init() {
-    open_link('home.html', {should_animate: false});
-  }
 
   function iframe_clicked(evt) {
     var elem = evt.target;
@@ -112,9 +108,12 @@
     }
   }
 
-  init();
-
   var Navigation = {
+    init: function() {
+      open_link('home.html', {should_animate: false});
+      LaunchChecks.init();
+    },
+
     go_to_view: function(url) {
       var iframes = [].slice.call(document.querySelectorAll('iframe'));
       current_iframe = iframes.shift();
@@ -123,6 +122,7 @@
       });
       open_link(url, {should_animate: false});
     },
+
     close_current_view: function() {
       close_iframe('close');
     },
@@ -133,4 +133,5 @@
   };
 
   exports.Navigation = Navigation;
+  Navigation.init();
 })(window);
