@@ -33,6 +33,7 @@ To test on an real device, use the WebIDE built into Firefox (https://developer.
 NOTE: You still need to run grunt prior to launching the WebIDE.
 
 # Tests
+## Unit
 To run unit tests, we use the Gaia infrastructure.
 
 You need to fetch gaia and run the test server
@@ -44,4 +45,16 @@ You need to fetch gaia and run the test server
 And in another shell,
 ```bash
 ./scripts/run-unit-tests.sh
+```
+
+## Integration
+You need to follow the same procedure as for unit tests.
+```bash
+./scripts/fetch-gaia.sh
+./scripts/run-integration-tests-server.sh
+```
+
+And in another shell,
+```bash
+./scripts/run-integration-tests.sh
 ```

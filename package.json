@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "es6-promise": "^2.1.0",
     "grunt": ">=0.4.x",
     "grunt-contrib-concat": ">=0.5.x",
     "grunt-contrib-connect": ">=0.8.x",
@@ -17,7 +18,9 @@
     "grunt-contrib-watch": ">=0.6.x",
     "grunt-nunjucks": ">=0.1.x",
     "grunt-processhtml": ">=0.3.x",
-    "jshint": "^2.6.0"
+    "jshint": "^2.6.0",
+    "lodash": "^3.7.0",
+    "marionette-client": "^1.7.3"
   },
   "engine": "node >= 0.10.x",
   "volo": {
