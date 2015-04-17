@@ -1,6 +1,6 @@
 'use strict';
 
-/* global Settings, Utils */
+/* global Event, Settings, Utils */
 
 (function(exports) {
 
@@ -12,8 +12,18 @@
     kb_url += parameters.slug;
     kb_url += '?mobile=1&minimal=1';
 
-    document.getElementById('kb-view').src = kb_url;
-  }
-  init();
+    var kb_view = document.getElementById('kb-view');
+    kb_view.addEventListener('load', function() {
+      var event = new Event('request-complete');
+      document.dispatchEvent(event);
+    });
 
+    var event = new Event('request-start');
+    document.dispatchEvent(event);
+    kb_view.src = kb_url;
+
+
+  }
+
+  window.addEventListener('load', init);
 })(window);
