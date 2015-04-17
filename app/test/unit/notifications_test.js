@@ -138,6 +138,7 @@ suite('notifications', function() {
       function reset_test() {
         navigator.mozSetMessageHandler.reset();
         window.Notification.reset();
+        SumoDB.mark_notification_as_read.reset();
         Notif.init();
         var push_handler_spy = navigator.mozSetMessageHandler.withArgs('push');
         var push_handler = push_handler_spy.firstCall.args[1];
@@ -149,6 +150,13 @@ suite('notifications', function() {
           sinon.assert.calledOnce(window.Notification);
           sinon.assert.calledWithMatch(window.Notification,
             RESOLVED_NOTIF.actor.display_name);
+        }).then(done, done);
+      });
+
+      test('marks the notification as read', function(done) {
+        reset_test().then(() => {
+          sinon.assert.calledWith(SumoDB.mark_notification_as_read,
+           ANSWERED_NOTIF.id);
         }).then(done, done);
       });
 

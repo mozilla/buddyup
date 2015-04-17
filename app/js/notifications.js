@@ -50,6 +50,8 @@ function push_notification() {
       var tag;
       var actor;
 
+      var unknown_type = false;
+
       switch(notification.verb) {
         case 'answered':
           var QuestionC = window.Navigation.current_view.QuestionController;
@@ -75,12 +77,17 @@ function push_notification() {
         break;
 
         default:
+          unknown_type = true;
           console.error('unknown notification type: ', notification.verb);
         break;
         }
 
       if (!title) {
-        return notification.id;
+        if (unknown_type) {
+          return notification.id;
+        } else {
+          return SumoDB.mark_notification_as_read(notification.id);
+        }
       }
 
       return SumoDB.get_question(notification.target.id)
