@@ -1,10 +1,11 @@
 'use strict';
 
-/* global asyncStorage, MockNotif, User, SumoDB */
+/* global asyncStorage, MockNavigation, MockNotif, User, SumoDB */
 
 require('/test/unit/mocks/mock_async_storage.js');
 require('/test/unit/mocks/mock_sumo_db.js');
 require('/test/unit/mocks/mock_notifications.js');
+require('/test/unit/mocks/mock_navigation.js');
 
 require('/js/libs/lodash.custom.min.js');
 
@@ -27,6 +28,7 @@ suite('User', function() {
 
       this.sinon.stub(MockNotif, 'ensure_endpoint');
       this.sinon.stub(MockNotif, 'clear_endpoint').returns(Promise.resolve());
+      this.sinon.spy(MockNavigation, 'everyone_should_refresh');
     });
 
     suite('Good credentials', function() {
@@ -36,6 +38,7 @@ suite('User', function() {
 
       setup(function(done) {
         window.parent.Notif = MockNotif;
+        window.parent.Navigation = MockNavigation;
 
         this.sinon.stub(SumoDB, 'get_token')
           .returns(Promise.resolve(FAKE_TOKEN));
@@ -47,6 +50,10 @@ suite('User', function() {
         User.authenticate_user().then((user) => {
           assert.isTrue(user.last_sync > 0);
         }).then(done, done);
+      });
+
+      test('every frame should refresh next time they are viewed', function() {
+        sinon.assert.called(MockNavigation.everyone_should_refresh);
       });
 
       test('sets user infos in local storage', function() {

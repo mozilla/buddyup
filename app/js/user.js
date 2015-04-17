@@ -180,6 +180,7 @@
       options = _.assign(defaults, options);
 
       return SumoDB.get_token(username, password).then(function(token) {
+        window.parent.Navigation.everyone_should_refresh();
         if (window.parent.Notif) {
           return window.parent.Notif.clear_endpoint().then(function() {
             return token;

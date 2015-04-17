@@ -127,6 +127,13 @@
       close_iframe('close');
     },
 
+    everyone_should_refresh: function() {
+      var iframes = [].slice.call(document.querySelectorAll('iframe'));
+      iframes.forEach(function(iframe) {
+        delete iframe.contentDocument.documentElement.dataset.refreshMode;
+      });
+    },
+
     get current_view() {
       return current_iframe.contentWindow;
     }
