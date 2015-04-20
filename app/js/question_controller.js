@@ -185,6 +185,7 @@
     return li;
   }
 
+  var submit_comment_disabled = false;
   function submit_comment(evt) {
     evt.preventDefault();
     var comment = question_field.value;
@@ -192,6 +193,10 @@
     if (comment.trim() === '') {
       return;
     }
+    if (submit_comment_disabled) {
+      return;
+    }
+    submit_comment_disabled = true;
 
     show_panel(question_thread);
 
@@ -202,7 +207,7 @@
     }
 
     var list_item;
-    User.get_user().then(function(user) {
+    return User.get_user().then(function(user) {
       var is_helper = question_object &&
         user.username !== question_object.creator.username;
 
@@ -231,6 +236,7 @@
       return Promise.all([submit_promise, user]);
     }).then(function([comment, user]) {
       question_field.value = '';
+      submit_comment_disabled = false;
 
       // Only handle first time help message scenario for questions
       if (comment.answers) {
@@ -252,6 +258,8 @@
         user: user
       });
     }).catch(function() {
+      submit_comment_disabled = false;
+
       list_item.classList.add('js-failed');
       list_item.classList.add('is-failed');
       list_item.innerHTML = nunjucks.render('comment.html', {

@@ -81,52 +81,94 @@ suite('QuestionController', function() {
     verb: 'answered'
   };
 
-
-  setup(function(done) {
-    window.parent.Notif = MockNotif;
-
+  setup(function() {
     this.sinon.stub(User, 'get_user').returns(Promise.resolve(FAKE_USER));
-    this.sinon.stub(User, 'is_helper').returns(Promise.resolve(true));
+  });
 
-    this.sinon.stub(Utils, 'get_url_parameters')
-      .returns({id: DISPLAYED_QUESTION_ID});
-    this.sinon.stub(Utils, 'time_since');
-    this.sinon.stub(SumoDB, 'get_question').withArgs(DISPLAYED_QUESTION_ID)
-      .returns(DISPLAYED_QUESTION);
-    this.sinon.stub(SumoDB, 'get_answers_for_question')
-      .withArgs(DISPLAYED_QUESTION_ID)
-      .returns(ANSWERS_FOR_DISPLAYED_QUESTION);
+  suite('realtime', function() {
+    setup(function(done) {
+      window.parent.Notif = MockNotif;
 
-    this.sinon.stub(MockNotif, 'get_realtime_id')
-      .withArgs(DISPLAYED_QUESTION_ID)
-      .returns(Promise.resolve(FAKE_REALTIME_ID));
+      this.sinon.stub(User, 'is_helper').returns(Promise.resolve(true));
 
-    this.sinon.stub(SumoDB, 'get_new_answers').withArgs(FAKE_REALTIME_ID)
-      .returns(Promise.resolve([
-        REALTIME_ANSWER_BEFORE_DISPLAYING,
-        REALTIME_ANSWER_AFTER_DISPLAYING
-      ]));
+      this.sinon.stub(Utils, 'get_url_parameters')
+        .returns({id: DISPLAYED_QUESTION_ID});
+      this.sinon.stub(Utils, 'time_since');
+      this.sinon.stub(SumoDB, 'get_question').withArgs(DISPLAYED_QUESTION_ID)
+        .returns(DISPLAYED_QUESTION);
+      this.sinon.stub(SumoDB, 'get_answers_for_question')
+        .withArgs(DISPLAYED_QUESTION_ID)
+        .returns(ANSWERS_FOR_DISPLAYED_QUESTION);
 
-    this.sinon.spy(MockNotif, 'listen_to_realtime');
-    this.sinon.spy(nunjucks, 'render');
+      this.sinon.stub(MockNotif, 'get_realtime_id')
+        .withArgs(DISPLAYED_QUESTION_ID)
+        .returns(Promise.resolve(FAKE_REALTIME_ID));
 
-    loadBodyHTML('/question.html');
-    require('/js/question_controller.js', function() {
-      QuestionController.init();
-      QuestionController.display_new_answers().then(done);
+      this.sinon.stub(SumoDB, 'get_new_answers').withArgs(FAKE_REALTIME_ID)
+        .returns(Promise.resolve([
+          REALTIME_ANSWER_BEFORE_DISPLAYING,
+          REALTIME_ANSWER_AFTER_DISPLAYING
+        ]));
+
+      this.sinon.spy(MockNotif, 'listen_to_realtime');
+      this.sinon.spy(nunjucks, 'render');
+
+      loadBodyHTML('/question.html');
+
+      require('/js/question_controller.js', function() {
+        QuestionController.init();
+        QuestionController.display_new_answers().then(done);
+      });
+    });
+
+    test('listens for realtime', function() {
+      sinon.assert.calledWith(MockNotif.listen_to_realtime,
+        DISPLAYED_QUESTION_ID);
+    });
+
+    test('gets the list of new answers', function() {
+      sinon.assert.calledWith(SumoDB.get_new_answers, FAKE_REALTIME_ID);
+    });
+
+    test('only display new answers since last time', function() {
+      sinon.assert.calledOnce(nunjucks.render.withArgs('thread.html'));
     });
   });
 
-  test('listens for realtime', function() {
-    sinon.assert.calledWith(MockNotif.listen_to_realtime,
-      DISPLAYED_QUESTION_ID);
+  suite('submit_comment', function() {
+    var submit_button;
+    setup(function(done) {
+      loadBodyHTML('/question.html');
+
+      submit_button = document.getElementById('question_submit_button');
+      this.sinon.spy(submit_button, 'addEventListener');
+
+      require('/js/question_controller.js', function() {
+        QuestionController.init();
+        done();
+      });
+    });
+
+    test('only sends comment if none is in flight', function(done) {
+      document.getElementById('question_field').value = 'foo';
+      this.sinon.stub(SumoDB, 'post_answer')
+      .returns(Promise.resolve(ANSWERS_FOR_DISPLAYED_QUESTION[0]));
+      var submit_comment = submit_button.addEventListener.firstCall.args[1];
+
+      var fake_evt = {preventDefault: () => {}};
+      var promises = [];
+      promises.push(submit_comment(fake_evt));
+      promises.push(submit_comment(fake_evt));
+
+      Promise.all(promises).then(() => {
+        sinon.assert.calledOnce(SumoDB.post_answer);
+      }).then(() => {
+        document.getElementById('question_field').value = 'foo';
+        return submit_comment(fake_evt);
+      }).then(() => {
+        sinon.assert.calledTwice(SumoDB.post_answer);
+      }).then(done, done);
+    });
   });
 
-  test('gets the list of new answers', function() {
-    sinon.assert.calledWith(SumoDB.get_new_answers, FAKE_REALTIME_ID);
-  });
-
-  test('only display new answers since last time', function() {
-    sinon.assert.calledOnce(nunjucks.render.withArgs('thread.html'));
-  });
 });
