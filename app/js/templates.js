@@ -497,7 +497,9 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "</span>\n</div>\n<h3 class=\"QuestionThread-date text-blue\">\n  ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "date_posted"), env.autoesc);
 output += "\n</h3>\n\n";
-output += "\n<ul>\n  <li>\n    <div class=\"button\" data-icon=\"forward\">\n      <select id=\"category_chooser\">\n      ";
+if(runtime.contextOrFrameLookup(context, frame, "viewer_is_helper")) {
+output += "\n  ";
+output += "\n  <ul>\n    <li>\n      <div class=\"button\" data-icon=\"forward\">\n        <select id=\"category_chooser\">\n        ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "categories");
 if(t_3) {var t_1;
@@ -515,16 +517,16 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n        <option value=\"";
+output += "\n          <option value=\"";
 output += runtime.suppressValue(t_4, env.autoesc);
-output += "\"\n          ";
+output += "\"\n            ";
 if(runtime.contextOrFrameLookup(context, frame, "selected_category") == t_4) {
 output += "selected";
 ;
 }
-output += ">\n          ";
+output += ">\n            ";
 output += runtime.suppressValue(t_5, env.autoesc);
-output += "\n        </option>\n      ";
+output += "\n          </option>\n        ";
 ;
 }
 } else {
@@ -542,22 +544,25 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n        <option value=\"";
+output += "\n          <option value=\"";
 output += runtime.suppressValue(t_6, env.autoesc);
-output += "\"\n          ";
+output += "\"\n            ";
 if(runtime.contextOrFrameLookup(context, frame, "selected_category") == t_6) {
 output += "selected";
 ;
 }
-output += ">\n          ";
+output += ">\n            ";
 output += runtime.suppressValue(t_7, env.autoesc);
-output += "\n        </option>\n      ";
+output += "\n          </option>\n        ";
 ;
 }
 }
 }
 frame = frame.pop();
-output += "\n      </select>\n    </div>\n  </li>\n</ul>\n";
+output += "\n        </select>\n      </div>\n    </li>\n  </ul>\n";
+;
+}
+output += "\n";
 cb(null, output);
 ;
 } catch (e) {

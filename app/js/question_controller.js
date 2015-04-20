@@ -140,27 +140,31 @@
   */
   function add_thread_header(question) {
     var date_posted = Utils.time_since(new Date(question.updated));
-    var author = question.creator.display_name || question.creator.username;
 
     var displayable_metadata =
       Utils.convert_metadata_for_display(question.metadata);
 
-    var html = nunjucks.render('thread_header.html', {
-      date_posted: date_posted,
-      displayable_metadata: displayable_metadata,
-      author: author,
-      categories: CATEGORIES,
-      selected_category: question.category
-    });
-    question_thread.insertAdjacentHTML('afterbegin', html);
+    User.is_helper().then(function(is_helper) {
+      var html = nunjucks.render('thread_header.html', {
+        date_posted: date_posted,
+        displayable_metadata: displayable_metadata,
+        viewer_is_helper: is_helper,
+        categories: CATEGORIES,
+        selected_category: question.category
+      });
+      question_thread.insertAdjacentHTML('afterbegin', html);
 
-    var category_chooser = document.getElementById('category_chooser');
-    category_chooser.addEventListener('change', function(evt) {
-      var category = evt.target.value;
-      if (category == question.category) {
+      var category_chooser = document.getElementById('category_chooser');
+      if (!category_chooser) {
         return;
       }
-      SumoDB.set_category_for_question(category, question.id);
+      category_chooser.addEventListener('change', function(evt) {
+        var category = evt.target.value;
+        if (category == question.category) {
+          return;
+        }
+        SumoDB.set_category_for_question(category, question.id);
+      });
     });
   }
 

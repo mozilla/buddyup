@@ -11,18 +11,20 @@
   {{ date_posted }}
 </h3>
 
-{# This <ul><li> is needed to get the right Building block styling for that button #}
-<ul>
-  <li>
-    <div class="button" data-icon="forward">
-      <select id="category_chooser">
-      {% for key, value in categories %}
-        <option value="{{ key }}"
-          {% if selected_category == key %}selected{% endif %}>
-          {{ value }}
-        </option>
-      {% endfor %}
-      </select>
-    </div>
-  </li>
-</ul>
+{% if viewer_is_helper %}
+  {# This <ul><li> is needed to get the right Building block styling for that button #}
+  <ul>
+    <li>
+      <div class="button" data-icon="forward">
+        <select id="category_chooser">
+        {% for key, value in categories %}
+          <option value="{{ key }}"
+            {% if selected_category == key %}selected{% endif %}>
+            {{ value }}
+          </option>
+        {% endfor %}
+        </select>
+      </div>
+    </li>
+  </ul>
+{% endif %}

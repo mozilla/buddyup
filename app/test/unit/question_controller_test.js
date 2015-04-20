@@ -86,6 +86,8 @@ suite('QuestionController', function() {
     window.parent.Notif = MockNotif;
 
     this.sinon.stub(User, 'get_user').returns(Promise.resolve(FAKE_USER));
+    this.sinon.stub(User, 'is_helper').returns(Promise.resolve(true));
+
     this.sinon.stub(Utils, 'get_url_parameters')
       .returns({id: DISPLAYED_QUESTION_ID});
     this.sinon.stub(Utils, 'time_since');
@@ -125,6 +127,6 @@ suite('QuestionController', function() {
   });
 
   test('only display new answers since last time', function() {
-    sinon.assert.calledOnce(nunjucks.render);
+    sinon.assert.calledOnce(nunjucks.render.withArgs('thread.html'));
   });
 });
