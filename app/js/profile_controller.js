@@ -8,11 +8,11 @@
   var HANDSETS = [
     'All',
     'Alcatel',
-    'Flame  ',
+    'Flame',
     'Intex',
     'LG',
     'Spice',
-    'ZTE ',
+    'ZTE',
   ];
   var OPERATORS = [
     'All',
