@@ -77,6 +77,24 @@
     });
   }
 
+  function reload_if_necessary(new_iframe) {
+    var refresh_mode = new_iframe.contentDocument.documentElement // <html>
+      .dataset.refreshMode;
+
+    if (refresh_mode == 'manual') {
+      return Promise.resolve();
+    }
+
+    var defer = Utils.defer();
+    new_iframe.contentWindow.location.reload();
+    new_iframe.addEventListener('load', function newFrameLoad() {
+      new_iframe.removeEventListener('load', newFrameLoad);
+      new_iframe.contentWindow.addEventListener('click', iframe_clicked);
+      defer.resolve();
+    });
+    return defer.promise;
+  }
+
   function close_iframe(action) {
     if (action !== 'back' && action !== 'close') {
       return;
@@ -84,28 +102,19 @@
 
     var new_iframe = current_iframe.previousElementSibling;
 
-    var animation_promise;
-    if (action == 'close') {
-      animation_promise = animate(current_iframe, 'modal-outbound');
-    } else {
-      animate(new_iframe, 'pop-inbound');
-      animation_promise = animate(current_iframe, 'pop-outbound');
-    }
-    animation_promise.then(function() {
+    reload_if_necessary(new_iframe).then(function() {
+      var animation_promise;
+      if (action == 'close') {
+        animation_promise = animate(current_iframe, 'modal-outbound');
+      } else {
+        animate(new_iframe, 'pop-inbound');
+        animation_promise = animate(current_iframe, 'pop-outbound');
+      }
+      return animation_promise;
+    }).then(function() {
       document.body.removeChild(current_iframe);
       current_iframe = new_iframe;
     });
-
-
-    var refresh_mode = new_iframe.contentDocument.documentElement // <html>
-      .dataset.refreshMode;
-    if (refresh_mode != 'manual') {
-      new_iframe.contentWindow.location.reload();
-      new_iframe.addEventListener('load', function newFrameLoad() {
-        new_iframe.removeEventListener('load', newFrameLoad);
-        new_iframe.contentWindow.addEventListener('click', iframe_clicked);
-      });
-    }
   }
 
   var Navigation = {
