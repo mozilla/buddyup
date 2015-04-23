@@ -4,6 +4,8 @@
 }
 
 .SettingsInfo-avatar {
+    background-image: url(ui-images/icon_gray@2x.png);
+    background-size: cover;
     border-radius: 50%;
     height: 100px;
     margin: 15px 15px 0;

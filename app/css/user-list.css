@@ -6,6 +6,8 @@
     margin: 1rem 0.5rem;
 }
 .user-list ul img {
+    background-image: url(ui-images/icon_gray@2x.png);
+    background-size: cover;
     border-radius: 50%;
     display: block;
     height: 48px;

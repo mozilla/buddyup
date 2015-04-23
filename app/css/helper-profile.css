@@ -2,6 +2,8 @@
     margin: 15px;
 }
 .ProfileDetails-avatar {
+    background-image: url(ui-images/icon_gray@2x.png);
+    background-size: cover;
     border-radius: 50%;
     height: 100px;
     width: 100px;

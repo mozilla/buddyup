@@ -88,11 +88,7 @@ var output = "";
 try {
 output += "<img class=\"ProfileDetails-avatar\" src=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"avatar", env.autoesc), env.autoesc);
-output += "\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\" title=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\">\n<div class=\"hbox ProfileDetails-stats\">\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
+output += "\" alt=\"\">\n<div class=\"hbox ProfileDetails-stats\">\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
 output += "</div>\n    <div data-icon=\"tick\"> Questions solved</div>\n  </div>\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc), env.autoesc);
@@ -143,11 +139,7 @@ output += "\">\n    ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
 output += "\n      <img class=\"SettingsInfo-avatar\" src=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"avatar", env.autoesc), env.autoesc);
-output += "\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\" title=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"display_name", env.autoesc), env.autoesc);
-output += "\">\n    ";
+output += "\" alt=\"\">\n    ";
 ;
 }
 output += "\n    <div class=\"fit vbox\">\n      <input type=\"text\" name=\"display_name\" id=\"display_name\" value=\"";
@@ -597,11 +589,7 @@ output += "\n    <li>\n      <a href=\"helper_profile.html?username=";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"username", env.autoesc), env.autoesc);
 output += "\" data-modal=\"true\">\n        <img src=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"avatar", env.autoesc), env.autoesc);
-output += "\" title=\"";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"display_name", env.autoesc), env.autoesc);
-output += "\" alt=\"";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"display_name", env.autoesc), env.autoesc);
-output += "\" />\n      </a>\n    </li>\n  ";
+output += "\" alt=\"\" />\n      </a>\n    </li>\n  ";
 ;
 }
 }

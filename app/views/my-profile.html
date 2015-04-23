@@ -1,7 +1,7 @@
 <form name="profile" id="profile">
   <div class="hbox SettingsInfo {% if is_helper %}is-helper{% endif %}">
     {% if is_helper %}
-      <img class="SettingsInfo-avatar" src="{{ user.avatar }}" alt="{{ user.display_name }}" title="{{ user.display_name }}">
+      <img class="SettingsInfo-avatar" src="{{ user.avatar }}" alt="">
     {% endif %}
     <div class="fit vbox">
       <input type="text" name="display_name" id="display_name" value="{{ user.display_name }}" class="SettingsInfo-name" required />

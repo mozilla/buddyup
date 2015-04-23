@@ -2,7 +2,7 @@
   {% for user in users %}
     <li>
       <a href="helper_profile.html?username={{ user.username }}" data-modal="true">
-        <img src="{{ user.avatar }}" title="{{ user.display_name }}" alt="{{ user.display_name }}" />
+        <img src="{{ user.avatar }}" alt="" />
       </a>
     </li>
   {% endfor %}
