@@ -42,7 +42,9 @@
     color: #00caf2;
     font-size: 13px;
     font-style: italic;
-    padding-left: 5px;
+    margin: -10px -10px -10px -5px;
+    outline: none;
+    padding: 10px;
 }
 
 .Comment-vote::before {

@@ -3,6 +3,7 @@
   "name": "BuddyUp",
   "description": "Realtime help system for FirefoxOS",
   "launch_path": "/index.html",
+  "orientation": ["portrait-primary"],
   "icons": {
     "16": "/media/icons/icon16x16.png",
     "32": "/media/icons/icon32x32.png",
