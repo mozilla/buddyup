@@ -30,9 +30,17 @@
     text-align: center;
     width: 64px;
 }
-.QuestionSubmitButton::before {
-    line-height: 36px;
+.QuestionSubmitButton-click-area {
+  bottom: -5px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: -5px;
 }
+.QuestionSubmitButton-click-area::before {
+    line-height: 45px;
+}
+
 .StartAskingMessage {
     align-items: center;
     color: #4d4d4d;

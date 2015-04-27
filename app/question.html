@@ -54,7 +54,9 @@
       <footer class="QuestionFooter">
         <form id="question_form" class="hbox">
           <textarea id="question_field" class="QuestionField" rows="1" placeholder="Write your message&hellip;"></textarea>
-          <a href="#" role="button" id="question_submit_button" class="QuestionSubmitButton vbox" data-icon="send"></a>
+          <div class="QuestionSubmitButton">
+            <a href="#" role="button" data-icon="send" id="question_submit_button" class="QuestionSubmitButton-click-area"></a>
+          </div>
         </form>
         <div id="sign-in-link" class="SignInLink hide">
           <a href="authentication.html" data-modal="true" class="bb-button recommend">Sign in to reply</a>
