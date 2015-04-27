@@ -9,7 +9,7 @@ iframe {
   background: white;
   border: 0;
   height: 100%;
-  position: absolute;
+  position: fixed;
   width: 100%;
 }
 
