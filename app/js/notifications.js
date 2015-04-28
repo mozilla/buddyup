@@ -58,11 +58,11 @@ function push_notification() {
           var question_displayed = !document.hidden &&
             QuestionC &&
             QuestionC.question_id == notification.target.id;
-          // FIXME Bug 1139899 - We should still mark them as read
+
           if (!question_displayed) {
             actor = notification.actor;
             title = actor.display_name || actor.username;
-            title += ' has commented on a question';
+            title += ' left a comment on';
             icon_info = '?question_id=' + notification.target.id;
             tag = 'question-' + notification.target.id;
           }
