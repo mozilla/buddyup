@@ -6,7 +6,7 @@ try {
 output += "<div class=\"Comment-content\">\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"title", env.autoesc)) {
 output += "\n    ";
-output += runtime.suppressValue(env.getFilter("escape").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"title", env.autoesc)), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"title", env.autoesc), env.autoesc);
 output += "\n  ";
 ;
 }
@@ -35,11 +35,15 @@ output += "\n  ";
 }
 else {
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"failed", env.autoesc)) {
-output += "\n    <span>Failed</span>\n  ";
+output += "\n    <span>";
+output += runtime.suppressValue((lineno = 18, colno = 12, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Failed"])), env.autoesc);
+output += "</span>\n  ";
 ;
 }
 else {
-output += "\n    <span>Sending…</span>\n  ";
+output += "\n    <span>";
+output += runtime.suppressValue((lineno = 20, colno = 12, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Sending…"])), env.autoesc);
+output += "</span>\n  ";
 ;
 }
 ;
@@ -48,13 +52,17 @@ output += "\n</div>\n\n";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
 output += "\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"id", env.autoesc) == runtime.contextOrFrameLookup(context, frame, "solution_id")) {
-output += "\n    <p class=\"Comment-solution Comment-solutionBox\">Solution ✓</p>\n  ";
+output += "\n    <p class=\"Comment-solution Comment-solutionBox\">";
+output += runtime.suppressValue((lineno = 26, colno = 54, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Solution ✓"])), env.autoesc);
+output += "</p>\n  ";
 ;
 }
 else {
 output += "\n    ";
 if(runtime.contextOrFrameLookup(context, frame, "is_my_question") && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"username", env.autoesc) != runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"creator", env.autoesc)),"username", env.autoesc)) {
-output += "\n      <a class=\"js-solve Comment-markSolution Comment-solutionBox\">This solved my question</a>\n    ";
+output += "\n      <a class=\"js-solve Comment-markSolution Comment-solutionBox\">";
+output += runtime.suppressValue((lineno = 29, colno = 69, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["This solved my question"])), env.autoesc);
+output += "</a>\n    ";
 ;
 }
 output += "\n  ";
@@ -80,7 +88,13 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<form id=\"generic_error\" role=\"dialog\" data-type=\"confirm\">\n  <section>\n    <h1>Whoops!</h1>\n    <p>There was a problem with Buddy Up, please try again.</p>\n  </section>\n  <menu>\n    <button class=\"recommend\">OK</button>\n  </menu>\n</form>\n";
+output += "<form id=\"generic_error\" role=\"dialog\" data-type=\"confirm\">\n  <section>\n    <h1>";
+output += runtime.suppressValue((lineno = 2, colno = 10, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Whoops!"])), env.autoesc);
+output += "</h1>\n    <p>";
+output += runtime.suppressValue((lineno = 3, colno = 9, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["There was a problem with Buddy Up, please try again."])), env.autoesc);
+output += "</p>\n  </section>\n  <menu>\n    <button class=\"recommend\">";
+output += runtime.suppressValue((lineno = 6, colno = 32, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["OK"])), env.autoesc);
+output += "</button>\n  </menu>\n</form>\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -99,11 +113,11 @@ var output = "";
 try {
 output += "<img class=\"ProfileDetails-avatar\" src=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"avatar", env.autoesc), env.autoesc);
-output += "\" alt=\"\">\n<div class=\"hbox ProfileDetails-stats\">\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
-output += "</div>\n    <div data-icon=\"tick\"> Questions solved</div>\n  </div>\n  <div class=\"fit vbox\">\n    <div class=\"ProfileDetails-statcounts\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc), env.autoesc);
-output += "</div>\n    <div data-icon=\"feedback\"> Helpful upvotes</div>\n  </div>\n</div>\n";
+output += "\" alt=\"\">\n<div class=\"hbox ProfileDetails-stats\">\n  <div class=\"fit vbox\">\n    ";
+output += runtime.suppressValue(env.getFilter("safe").call(context, (lineno = 3, colno = 12, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_plural"), "_plural", ["<div {countattr}>{n}</div><div {textattr}> question solved</div>","<div {countattr}>{n}</div><div {textattr}> questions solved</div>",runtime.makeKeywordArgs({"countattr": "class=\"ProfileDetails-statcounts\"","textattr": "data-icon=\"tick\"","n": runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc)})]))), env.autoesc);
+output += "\n  </div>\n  <div class=\"fit vbox\">\n    ";
+output += runtime.suppressValue(env.getFilter("safe").call(context, (lineno = 11, colno = 12, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_plural"), "_plural", ["<div {countattr}>{n}</div><div {textattr}> helpful vote</div>","<div {countattr}>{n}</div><div {textattr}> helpful votes</div>",runtime.makeKeywordArgs({"countattr": "class=\"ProfileDetails-statcounts\"","textattr": "data-icon=\"feedback\"","n": runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc)})]))), env.autoesc);
+output += "\n  </div>\n</div>\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -158,15 +172,19 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "\" class=\"SettingsInfo-name\" required />\n      ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
 output += "\n        <ul class=\"SettingsInfo-achievements\">\n          <li data-icon=\"tick\">\n            ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc), env.autoesc);
-output += " Questions solved\n          </li>\n          <li data-icon=\"feedback\">\n            ";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc), env.autoesc);
-output += " Helpful upvotes\n          </li>\n        </ul>\n      ";
+output += runtime.suppressValue((lineno = 10, colno = 20, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_plural"), "_plural", ["{n} question solved","{n} questions solved",runtime.makeKeywordArgs({"n": runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"solution_count", env.autoesc)})])), env.autoesc);
+output += "\n          </li>\n          <li data-icon=\"feedback\">\n            ";
+output += runtime.suppressValue((lineno = 13, colno = 20, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_plural"), "_plural", ["{n} helpful vote","{n} helpful votes",runtime.makeKeywordArgs({"n": runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"helpfulness", env.autoesc)})])), env.autoesc);
+output += "\n          </li>\n        </ul>\n      ";
 ;
 }
 output += "\n    </div>\n  </div>\n\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n\n    <fieldset>\n      <header>\n        <h2>My preferences</h2>\n      </header>\n      <section class=\"QuestionFilters\">\n        <p class=\"QuestionFilters-description\">Too many questions? Use the settings below to narrow down the \"Answer a Question\" list.</p>\n\n        <ul>\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"locale\">Language</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"locale\">\n              ";
+output += "\n\n    <fieldset>\n      <header>\n        <h2>";
+output += runtime.suppressValue((lineno = 24, colno = 14, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["My preferences"])), env.autoesc);
+output += "</h2>\n      </header>\n      <section class=\"QuestionFilters\">\n        <p class=\"QuestionFilters-description\">\n          ";
+output += runtime.suppressValue((lineno = 28, colno = 12, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Too many questions? Use the settings below to narrow down the \"Answer a Question\" list."])), env.autoesc);
+output += "\n        </p>\n\n        <ul>\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"locale\">Language</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"locale\">\n              ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "locales");
 if(t_3) {var t_2 = t_3.length;
@@ -249,7 +267,11 @@ output += "\n              </select>\n            </div>\n          </li>\n     
 ;
 }
 else {
-output += "\n    <header>\n      <h2>Answer questions</h2>\n    </header>\n    <section class=\"QuestionFilters\">\n      <p class=\"QuestionFilters-description\">Sign in to answer questions from the Mozilla community.</p>\n      <a href=\"authentication.html\" class=\"bb-button recommend\" data-modal=\"true\">Create account or sign in</a>\n    </section>\n  ";
+output += "\n    <header>\n      <h2>Answer questions</h2>\n    </header>\n    <section class=\"QuestionFilters\">\n      <p class=\"QuestionFilters-description\">\n        ";
+output += runtime.suppressValue((lineno = 73, colno = 10, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Sign in to answer questions from the Mozilla community."])), env.autoesc);
+output += "\n      </p>\n      <a href=\"authentication.html\" class=\"bb-button recommend\" data-modal=\"true\">\n        ";
+output += runtime.suppressValue((lineno = 76, colno = 10, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Create account or sign in"])), env.autoesc);
+output += "\n      </a>\n    </section>\n  ";
 ;
 }
 output += "\n\n</form>\n";
@@ -411,7 +433,11 @@ output += "</p>\n  ";
 ;
 }
 else {
-output += "\n    <section class=\"NoQuestionsMessage vbox fit\">\n      <strong>No active questions</strong>\n      Go to the New tab to answer some questions. We'll keep track of them here.\n    </section>\n  ";
+output += "\n    <section class=\"NoQuestionsMessage vbox fit\">\n      <strong>";
+output += runtime.suppressValue((lineno = 16, colno = 16, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["No active questions"])), env.autoesc);
+output += "</strong>\n      ";
+output += runtime.suppressValue((lineno = 17, colno = 8, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "_"), "_", ["Go to the New tab to answer some questions. We'll keep track of them here."])), env.autoesc);
+output += "\n    </section>\n  ";
 ;
 }
 output += "\n";

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, Utils, nunjucks  */
+/* global SumoDB, Utils, nunjucksEnv */
 
 (function(exports) {
   var MSG_NO_QUESTIONS = 'No questions found';
@@ -16,7 +16,7 @@
     SumoDB.get_public_user(username, {avatar_size: 100}).then(function(user) {
       headline.textContent = user.display_name || user.username;
 
-      var profile_html = nunjucks.render(PROFILE_DETAILS_TMPL, {
+      var profile_html = nunjucksEnv.render(PROFILE_DETAILS_TMPL, {
         user: user
       });
 
@@ -36,12 +36,12 @@
             Utils.convert_metadata_for_display(results[i].metadata);
         }
 
-        html = nunjucks.render(QUESTION_LIST_TMPL, {
+        html = nunjucksEnv.render(QUESTION_LIST_TMPL, {
           next: response.next,
           results: results
         });
       } else {
-        html = nunjucks.render(QUESTION_LIST_TMPL, {
+        html = nunjucksEnv.render(QUESTION_LIST_TMPL, {
           message: MSG_NO_QUESTIONS
         });
       }
