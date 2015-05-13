@@ -155,7 +155,9 @@ output += " Helpful upvotes\n          </li>\n        </ul>\n      ";
 }
 output += "\n    </div>\n  </div>\n\n  ";
 if(runtime.contextOrFrameLookup(context, frame, "is_helper")) {
-output += "\n\n    <fieldset>\n      <header>\n        <h2>My preferences</h2>\n      </header>\n      <section class=\"QuestionFilters\">\n        <p class=\"QuestionFilters-description\">Too many questions? Use the settings below to narrow down the \"Answer a Question\" list.</p>\n\n        <ul>\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"locale\">Language</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"locale\">\n              ";
+output += "\n\n    <fieldset>\n      <header>\n        <h2>My preferences</h2>\n      </header>\n      <section class=\"QuestionFilters\">\n        <p class=\"QuestionFilters-description\">";
+output += runtime.suppressValue((lineno = 27, colno = 55, runtime.callWrap(runtime.contextOrFrameLookup(context, frame, "gettext"), "gettext", ["Too many questions? Use the settings below to narrow down the \"Answer a Question\" list."])), env.autoesc);
+output += "</p>\n\n        <ul>\n          <li>\n            <label class=\"QuestionFilters-label\" for=\"locale\">Language</label>\n            <div class=\"button\" data-icon=\"expand\">\n              <select id=\"locale\">\n              ";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "locales");
 if(t_3) {var t_2 = t_3.length;

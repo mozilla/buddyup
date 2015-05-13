@@ -59,8 +59,19 @@ module.exports = function(grunt) {
                 files: ['js/app.js', 'app/views/*'],
                 tasks: ['nunjucks']
             }
-        }
+        },
+        extract: {
+            templates: {
+                src: 'app/views/*',
+                dest: 'locale/templates/LC_MESSAGES/buddyup.pot',
+                options: {
+                    format: 'nunjucks',
+                }
+            }
+        },
     });
+
+    grunt.loadTasks('tasks');
 
     grunt.loadNpmTasks('grunt-nunjucks');
     grunt.loadNpmTasks('grunt-contrib-connect');
