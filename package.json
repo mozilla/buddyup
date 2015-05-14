@@ -20,7 +20,8 @@
     "grunt-css": "^0.5.4",
     "grunt-nunjucks": ">=0.1.x",
     "grunt-processhtml": ">=0.3.x",
-    "jshint": "^2.6.0"
+    "jshint": "^2.6.0",
+    "moment": "^2.10.3"
   },
   "engine": "node >= 0.10.x",
   "volo": {
