@@ -53,7 +53,14 @@ module.exports = function(grunt) {
 
   function extractNunjucks(filepath) {
     var contents = grunt.file.read(filepath);
-    var parseTree = nunjucksParser.parse(contents);
+    try {
+      var parseTree = nunjucksParser.parse(contents);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      grunt.fail.warn('Error while parsing ' +
+                      filepath + ':' + err.lineno + ':' + err.colno +
+                      '\n' + err.toString());
+    }
 
     return parseTree.findAll(nunjucksNodes.FunCall)
     .filter(function(node) {
@@ -124,10 +131,14 @@ module.exports = function(grunt) {
 
     function parse(filepath) {
       var contents = grunt.file.read(filepath);
-      var ast = acorn.parse(contents, {
-        locations: true,
-        ecmaVersion: 6,
-      });
+      try {
+        var ast = acorn.parse(contents, {
+          locations: true,
+          ecmaVersion: 6,
+        });
+      } catch (err) {
+        grunt.fail.warn('Error while parsing ' + filepath + '\n' + err.toString());
+      }
       return ast;
     }
 
