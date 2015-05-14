@@ -61,12 +61,9 @@ module.exports = function(grunt) {
             }
         },
         extract: {
-            templates: {
-                src: 'app/views/*',
+            buddyup: {
+                src: ['app/views/*.html', 'app/js/*.js'],
                 dest: 'locale/templates/LC_MESSAGES/buddyup.pot',
-                options: {
-                    format: 'nunjucks',
-                }
             }
         },
     });

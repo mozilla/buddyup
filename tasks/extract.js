@@ -1,16 +1,11 @@
+var path = require('path');
 var fs = require('fs');
+
+var acorn = require('acorn');
+var acornWalk = require('../node_modules/acorn/dist/walk');
 var moment = require('moment');
 var nunjucksParser = require('nunjucks').parser;
 var nunjucksNodes = require('../node_modules/nunjucks/src/nodes');
-
-var nowStr = '';
-var now = new Date();
-nowStr += now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-nowStr += ' ' + now.getHours() + ':' + now.getMinutes();
-var offset = now.getTimezoneOffset() / -60;
-var hoursOff = Math.floor(offset);
-var minutesOff = Math.floor((offset - hoursOff) * 60);
-nowStr += hoursOff + minutesOff;
 
 var PO_HEADER = [
   'msgid ""',
@@ -31,22 +26,25 @@ var PO_HEADER = [
 
 
 module.exports = function(grunt) {
-  var extractors = {
-    nunjucks: extractNunjucks,
+  var extensionToExtractors = {
+    '.html': extractNunjucks,
+    '.js': extractJavasript,
   };
 
   grunt.registerMultiTask('extract', 'Extract strings for l10n', function() {
-    var options = this.options({
-      format: 'nunjucks',
-    });
-
-    var extractor = extractors[options.format];
-    if (extractor === undefined) {
-      grunt.fail.fatal('Unknown extract format ' + this.options.format);
-    }
-
     this.files.map(function(file) {
-      var stringSets = file.src.map(extractor);
+      var stringSets = file.src.map(function(filepath) {
+        var extension = path.extname(filepath)
+        var extractor = extensionToExtractors[extension];
+
+        if (extractor === undefined) {
+          grunt.fail.fatal('No extraction method defined for extension ' + extension + ' (' + filepath + ')');
+          return [];
+        }
+
+        return extractor(filepath);
+      });
+
       // flatten stringSets
       var extractedStrings = Array.prototype.concat.apply([], stringSets);
       writePotFile(extractedStrings, file.dest);
@@ -63,7 +61,7 @@ module.exports = function(grunt) {
       return (
         node.name &&
         node.name instanceof nunjucksNodes.Symbol &&
-        (node.name.value === '_' || node.name.value === '_plural')
+        ['_', '_plural', 'gettext', 'ngettext'].indexOf(node.name.value) !== -1
       );
     })
     .map(function(node) {
@@ -117,10 +115,84 @@ module.exports = function(grunt) {
     .filter(function(string) {
       return string !== null;
     });
+  }
 
-    // TODO: parse.
-    // https://github.com/mozilla/commonplace/blob/master/lib/commonplace.js
-    // https://github.com/mozilla/commonplace/blob/master/lib/extract_l10n.js
+  function extractJavasript(filepath) {
+    return walk(parse(filepath))
+    .filter(filterCalls)
+    .map(makeString);
+
+    function parse(filepath) {
+      var contents = grunt.file.read(filepath);
+      var ast = acorn.parse(contents, {
+        locations: true,
+        ecmaVersion: 6,
+      });
+      return ast;
+    }
+
+    function walk(ast) {
+      var nodes = [];
+      acornWalk.simple(ast, {
+        CallExpression: function(node) {
+          nodes.push(node);
+        },
+      });
+      return nodes;
+    }
+
+    function filterCalls(callExpr) {
+      return (
+        callExpr.callee.type === 'Identifier' &&
+        ['gettext', 'ngettext'].indexOf(callExpr.callee.name) != -1
+      );
+    }
+
+    function makeString(callExpr) {
+      var errorLocation = filepath + ':' + callExpr.loc.start.line;
+
+      switch (callExpr.callee.name) {
+        case 'gettext':
+          if (callExpr.arguments.length < 1) {
+            grunt.fail.warn('Empty gettext call at ' + errorLocation);
+            return null;
+          }
+
+          if (callExpr.arguments[0].type !== 'Literal') {
+            grunt.fail.warn('Cannot localize non-literal at ' + errorLocation);
+            return null;
+          }
+
+          return {
+            filepath: filepath,
+            lineno: callExpr.loc.start.line,
+            msgid: callExpr.arguments[0].value,
+          };
+
+        case 'nggettext':
+          if (callExpr.arguments.length < 2) {
+            grunt.fail.warn('Incomplete ngettext call at ' + errorLocation);
+            return null;
+          }
+
+          if (callExpr.arguments[0].type !== 'Literal' ||
+              callExpr.arguments[1].type !== 'Literal') {
+            grunt.fail.warn('Cannot localize non-literal at ' + errorLocation);
+            return null;
+          }
+
+          return {
+            filepath: filepath,
+            lineno: callExpr.loc.start.line,
+            msgid: callExpr.arguments[0].value,
+            msgid_plural: callExpr.arguments[1].value,
+          };
+
+        default:
+          grunt.fail.warn('Unknown type of localization at ' + errorLocation);
+          return null;
+      }
+    }
   }
 
   function writePotFile(strings, destpath) {

@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "acorn": "^1.1.0",
     "es6-promises": "^1.0.10",
     "grunt": ">=0.4.x",
     "grunt-contrib-concat": ">=0.5.x",
