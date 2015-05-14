@@ -10,18 +10,18 @@
       </a>
     {% endif %}
   {% elif comment.failed %}
-    <span>Failed</span>
+    <span>{{ _('Failed') }}</span>
   {% else %}
-    <span>Sending…</span>
+    <span>{{ _('Sending…') }}</span>
   {% endif %}
 </div>
 
 {% if comment.updated %}
   {% if comment.id == solution_id %}
-    <p class="Comment-solution Comment-solutionBox">Solution ✓</p>
+    <p class="Comment-solution Comment-solutionBox">{{ _('Solution ✓') }}</p>
   {% else %}
     {% if is_my_question and user.username != comment.creator.username  %}
-      <a class="js-solve Comment-markSolution Comment-solutionBox">This solved my question</a>
+      <a class="js-solve Comment-markSolution Comment-solutionBox">{{ _('This solved my question') }}</a>
     {% endif %}
   {% endif %}
 {% endif %}

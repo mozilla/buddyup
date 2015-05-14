@@ -9,23 +9,23 @@
    * new tags.
    */
   var CATEGORIES = {
-    '': 'Choose a category',
-    'email': 'Email/Calendar',
-    'clock': 'Clock/Alarm',
-    'camera': 'Camera/Gallery/Video',
-    'audio': 'Audio/Music/FMRadio',
-    'performance': 'Performance',
-    'radios': 'Cellular Data/WiFi/Bluetooth',
-    'sms': 'SMS/MMS',
-    'calls': 'Dialer/Contacts',
-    'browser': 'Browser/Download',
-    'storage': 'Storage/SD card',
-    'geolocation': 'Maps/GPS',
-    'keyboard': 'Keyboard',
-    'system-updates': 'System Updates',
-    'language': 'Language',
-    'marketplace': 'Marketplace/Apps Install',
-    'other': 'Other'
+    '': gettext('Choose a category'),
+    'email': gettext('Email/Calendar'),
+    'clock': gettext('Clock/Alarm'),
+    'camera': gettext('Camera/Gallery/Video'),
+    'audio': gettext('Audio/Music/FMRadio'),
+    'performance': gettext('Performance'),
+    'radios': gettext('Cellular Data/WiFi/Bluetooth'),
+    'sms': gettext('SMS/MMS'),
+    'calls': gettext('Dialer/Contacts'),
+    'browser': gettext('Browser/Download'),
+    'storage': gettext('Storage/SD card'),
+    'geolocation': gettext('Maps/GPS'),
+    'keyboard': gettext('Keyboard'),
+    'system-updates': gettext('System Updates'),
+    'language': gettext('Language'),
+    'marketplace': gettext('Marketplace/Apps Install'),
+    'other': gettext('Other')
   };
 
   var question_thread;
@@ -104,7 +104,7 @@
       }
       SumoDB.solve_question(question_id, answer_id).then(function(response) {
         var p = document.createElement('p');
-        p.textContent = 'Solution ✓';
+        p.textContent = gettext('Solution ✓');
         p.classList.add('Comment-solution');
         p.classList.add('Comment-solutionBox');
         elem.parentNode.replaceChild(p, elem);
@@ -530,5 +530,3 @@
   QuestionController.init();
 
 })(window);
-
-

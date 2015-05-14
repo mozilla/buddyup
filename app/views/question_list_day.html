@@ -14,8 +14,8 @@
     <p class="margin-10">{{ message }}</p>
   {% else %}
     <section class="NoQuestionsMessage vbox fit">
-      <strong>No active questions</strong>
-      Go to the New tab to answer some questions. We'll keep track of them here.
+      <strong>{{ _('No active questions') }}</strong>
+      {{ _("Go to the New tab to answer some questions. We'll keep track of them here.") }}
     </section>
   {% endif %}
 {% endif %}
