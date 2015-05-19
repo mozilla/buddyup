@@ -18,7 +18,7 @@
     }).catch(function(response) {
       Utils.refresh_error_list(
         document.getElementById('pw_reset_errors'),
-        ['User not found.']);
+        [gettext('User not found.')]);
     });
   }
 

@@ -91,7 +91,7 @@
       promises.push(User.is_helper());
       promises.push(User.get_user());
       Promise.all(promises).then(function([is_helper, user]) {
-        var html = nunjucks.render('my-profile.html', {
+        var html = nunjucksEnv.render('my-profile.html', {
           user: user,
           locales: LOCALES,
           handsets: HANDSETS,

@@ -156,12 +156,12 @@
         load_more_button.classList.add('hide');
       }
 
-      html = nunjucks.render(QUESTION_LIST_TMPL, {
+      html = nunjucksEnv.render(QUESTION_LIST_TMPL, {
         next: response.next,
         results: results
       });
     } else {
-      html = nunjucks.render(QUESTION_LIST_TMPL, {
+      html = nunjucksEnv.render(QUESTION_LIST_TMPL, {
         message: container.dataset.emptyMessage
       });
     }
@@ -200,8 +200,6 @@
         load_more_active_questions_button.addEventListener('click',
             load_more_questions);
       }
-
-      nunjucks.configure({ autoescape: true });
 
       add_tab_widget_handler();
       display_sign_in_if_needed();
