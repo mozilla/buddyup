@@ -2,3 +2,4 @@
 /node_modules/
 package.json.local
 app/mock
+app/js/templates.js
