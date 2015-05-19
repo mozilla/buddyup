@@ -145,7 +145,7 @@
       Utils.convert_metadata_for_display(question.metadata);
 
     User.is_helper().then(function(is_helper) {
-      var html = nunjucks.render('thread_header.html', {
+      var html = nunjucksEnv.render('thread_header.html', {
         date_posted: date_posted,
         displayable_metadata: displayable_metadata,
         viewer_is_helper: is_helper,
@@ -211,7 +211,7 @@
       var is_helper = question_object &&
         user.username !== question_object.creator.username;
 
-      var fake_comment = nunjucks.render('comment.html',
+      var fake_comment = nunjucksEnv.render('comment.html',
         {comment: {content: comment}});
       var list = document.getElementById('comment-list');
 
@@ -252,7 +252,7 @@
       }
 
       comment = format_answer(comment);
-      list_item.innerHTML = nunjucks.render('comment.html', {
+      list_item.innerHTML = nunjucksEnv.render('comment.html', {
         comment: comment,
         is_my_question: question_object.creator.username === user.username,
         user: user
@@ -262,7 +262,7 @@
 
       list_item.classList.add('js-failed');
       list_item.classList.add('is-failed');
-      list_item.innerHTML = nunjucks.render('comment.html', {
+      list_item.innerHTML = nunjucksEnv.render('comment.html', {
         comment: {content: comment, failed: true},
       });
     });
@@ -342,7 +342,7 @@
 
     add_thread_header(question);
     User.get_user().then(function(user) {
-      var html = nunjucks.render('thread.html', {
+      var html = nunjucksEnv.render('thread.html', {
         author: question.creator.display_name || question.creator.username,
         user: user,
         is_my_question: question.creator.username === user.username,
@@ -409,14 +409,14 @@
       }
 
       var kb_items = response.documents.map(function(kb_item) {
-        return nunjucks.render('kb_item.html', {
+        return nunjucksEnv.render('kb_item.html', {
           kb_item: kb_item
         });
       });
       var question_items = response.questions.map(function(question_item) {
         question_item.displayable_metadata =
           Utils.convert_metadata_for_display(question_item.metadata);
-        return nunjucks.render('question.html', {
+        return nunjucksEnv.render('question.html', {
           question: question_item
         });
       });
@@ -510,7 +510,7 @@
             id: answer.id
           });
 
-          list_item.innerHTML = nunjucks.render('comment.html', {
+          list_item.innerHTML = nunjucksEnv.render('comment.html', {
             comment: answer,
             is_my_question: question_object.creator.username === user.username,
             user: user

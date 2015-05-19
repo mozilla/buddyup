@@ -1,4 +1,4 @@
-<div class="Comment-content">{{ comment.content }}</div>
+<div class="Comment-content">{{ comment.content|safe }}</div>
 
 <div class="Comment-meta hbox">
   {% if comment.updated %}

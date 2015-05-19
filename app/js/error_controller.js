@@ -11,7 +11,7 @@
 
       document.addEventListener('network-error', function() {
         if (!generic_error) {
-          var html = nunjucks.render('generic_error.html');
+          var html = nunjucksEnv.render('generic_error.html');
           document.body.insertAdjacentHTML('beforeend', html);
 
           generic_error = document.getElementById('generic_error');

@@ -15,7 +15,7 @@
         return;
       }
 
-      var html = nunjucks.render(USERS_LIST_TMPL, {
+      var html = nunjucksEnv.render(USERS_LIST_TMPL, {
         users: users.slice(0, 5)
       });
 
@@ -26,10 +26,7 @@
 
   var HomeController = {
     init: function() {
-      nunjucks.configure({ autoescape: true });
-
       top_helpers_container = document.getElementById('tophelpers');
-
       load_top_helpers();
     }
   };
