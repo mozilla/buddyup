@@ -1,4 +1,10 @@
-<div class="Comment-content">{{ comment.content }}</div>
+<div class="Comment-content">
+  {% if comment.title %}
+    {{ comment.title | escape }}
+  {% else %}
+    {{ comment.content | safe }}
+  {% endif %}
+</div>
 
 <div class="Comment-meta hbox">
   {% if comment.updated %}

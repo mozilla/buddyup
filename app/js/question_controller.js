@@ -229,7 +229,6 @@
 
           add_thread_header(comment);
 
-          comment.content = comment.title;
           return comment;
         });
       }
@@ -334,7 +333,6 @@
 
     display_sign_in_if_needed(question);
 
-    question.content = question.title;
     answers.push(question);
     answers.reverse();
 

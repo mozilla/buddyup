@@ -3,9 +3,20 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<div class=\"Comment-content\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc), env.autoesc);
-output += "</div>\n\n<div class=\"Comment-meta hbox\">\n  ";
+output += "<div class=\"Comment-content\">\n  ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"title", env.autoesc)) {
+output += "\n    ";
+output += runtime.suppressValue(env.getFilter("escape").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"title", env.autoesc)), env.autoesc);
+output += "\n  ";
+;
+}
+else {
+output += "\n    ";
+output += runtime.suppressValue(env.getFilter("safe").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"content", env.autoesc)), env.autoesc);
+output += "\n  ";
+;
+}
+output += "\n</div>\n\n<div class=\"Comment-meta hbox\">\n  ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"updated", env.autoesc)) {
 output += "\n    <span class=\"fit ellipsis\">";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"created", env.autoesc), env.autoesc);
