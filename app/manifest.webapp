@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.0.1",
   "name": "BuddyUp",
   "description": "Realtime help system for FirefoxOS",
   "launch_path": "/index.html",
