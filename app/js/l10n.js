@@ -4,7 +4,7 @@
       return string;
     }
 
-    return string.replace(/{[^}]+}/, function(input) {
+    return string.replace(/{[^}]+}/g, function(input) {
       var name = input.slice(1, -1);
       return formatKwargs[name];
     });
