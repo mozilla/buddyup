@@ -29,7 +29,7 @@
     } else {
       string = plural;
     }
-    return gettext(string, formatKwargs);
+    return format(window._getTranslation(string), formatKwargs);
   }
 
   window.gettext = gettext;
