@@ -5,6 +5,8 @@
 (function(exports) {
   var current_iframe;
 
+  var navigation_in_progress = false;
+
   function iframe_clicked(evt) {
     var elem = evt.target;
     while (elem) {
@@ -17,12 +19,22 @@
       return;
     }
 
-    if (elem.dataset.action) {
-      close_iframe(elem.dataset.action);
-    } else if (elem.href) {
-      open_link(elem.href, {modal: elem.dataset.modal});
-    }
     evt.preventDefault();
+
+    if (navigation_in_progress) {
+      return;
+    }
+    navigation_in_progress = true;
+
+    var navigation_done;
+    if (elem.dataset.action) {
+      navigation_done = close_iframe(elem.dataset.action);
+    } else if (elem.href) {
+      navigation_done = open_link(elem.href, {modal: elem.dataset.modal});
+    }
+    navigation_done.then(function() {
+      navigation_in_progress = false;
+    });
   }
 
   function animate(element, animation_class) {
@@ -55,17 +67,19 @@
     document.body.appendChild(new_iframe);
     new_iframe.contentWindow.addEventListener('click', iframe_clicked);
 
+    var navigation_done;
     if (options.should_animate) {
       current_iframe.classList.add('animation-paused');
       new_iframe.classList.add('animation-paused');
       if (options.modal) {
-        animate(new_iframe, 'modal-inbound');
+        navigation_done = animate(new_iframe, 'modal-inbound');
       } else {
         animate(current_iframe, 'push-outbound');
-        animate(new_iframe, 'push-inbound');
+        navigation_done = animate(new_iframe, 'push-inbound');
       }
     } else {
       current_iframe = new_iframe;
+      navigation_done = Promise.resolve();
     }
 
     new_iframe.addEventListener('load', function loaaaaad() {
@@ -75,6 +89,8 @@
 
       current_iframe = new_iframe;
     });
+
+    return navigation_done;
   }
 
   function reload_if_necessary(new_iframe) {
@@ -97,12 +113,12 @@
 
   function close_iframe(action) {
     if (action !== 'back' && action !== 'close') {
-      return;
+      return Promise.resolve();
     }
 
     var new_iframe = current_iframe.previousElementSibling;
 
-    reload_if_necessary(new_iframe).then(function() {
+    return reload_if_necessary(new_iframe).then(function() {
       var animation_promise;
       if (action == 'close') {
         animation_promise = animate(current_iframe, 'modal-outbound');
