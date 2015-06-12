@@ -327,28 +327,61 @@
       close_question();
     }
 
-    if (answers.length) {
-      last_displayed_answer = answers[0].id;
+    if (answers.results.length) {
+      last_displayed_answer = answers.results[0].id;
     }
 
     display_sign_in_if_needed(question);
 
-    answers.push(question);
-    answers.reverse();
-
-    answers = answers.map(format_answer);
-
     add_thread_header(question);
-    User.get_user().then(function(user) {
-      var html = nunjucks.render('thread.html', {
-        author: question.creator.display_name || question.creator.username,
-        user: user,
-        is_my_question: question.creator.username === user.username,
-        solution_id: solution_id,
-        results: answers
-      });
+
+    format_thread_html(answers, question).then(function(html) {
       var list = document.getElementById('comment-list');
       list.insertAdjacentHTML('beforeend', html);
+    });
+  }
+
+  function load_more_answers(evt) {
+    if (!evt.target.dataset.next) {
+      return;
+    }
+
+    SumoDB.fetch_json(evt.target.dataset.next)
+    .then(format_thread_html)
+    .then(function(html) {
+      // Replace load more button
+      evt.target.parentNode.outerHTML = html;
+    });
+  }
+
+  function format_thread_html(answers, question) {
+    var next;
+    if (answers.next) {
+      next = answers.next;
+    }
+
+    answers = answers.results;
+    answers.reverse();
+
+    if (question) {
+      question = format_answer(question);
+    }
+
+    var author = question_object.creator.display_name ||
+      question_object.creator.username;
+
+    answers = answers.map(format_answer);
+    return User.get_user().then(function(user) {
+
+      return nunjucks.render('thread.html', {
+        author: author,
+        user: user,
+        is_my_question: question_object.creator.username === user.username,
+        solution_id: solution_id,
+        results: answers,
+        next: next,
+        question: question
+      });
     });
   }
 
@@ -459,6 +492,7 @@
 
       question_thread = document.getElementById('question-thread');
       question_thread.addEventListener('click', handle_event);
+      question_thread.addEventListener('click', load_more_answers);
       suggestions = document.getElementById('suggestions');
       thread_introduction = document.getElementById('thread-introduction');
 

@@ -434,23 +434,19 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-frame = frame.push();
-var t_3 = runtime.contextOrFrameLookup(context, frame, "results");
-if(t_3) {var t_2 = t_3.length;
-for(var t_1=0; t_1 < t_3.length; t_1++) {
-var t_4 = t_3[t_1];
-frame.set("comment", t_4);
-frame.set("loop.index", t_1 + 1);
-frame.set("loop.index0", t_1);
-frame.set("loop.revindex", t_2 - t_1);
-frame.set("loop.revindex0", t_2 - t_1 - 1);
-frame.set("loop.first", t_1 === 0);
-frame.set("loop.last", t_1 === t_2 - 1);
-frame.set("loop.length", t_2);
+if(runtime.contextOrFrameLookup(context, frame, "question")) {
+output += "\n  ";
+var t_1;
+t_1 = runtime.contextOrFrameLookup(context, frame, "question");
+frame.set("comment", t_1, true);
+if(!frame.parent) {
+context.setVariable("comment", t_1);
+context.addExport("comment");
+}
 output += "\n  <li\n  data-id=\"";
-output += runtime.suppressValue(runtime.memberLookup((t_4),"id", env.autoesc), env.autoesc);
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"id", env.autoesc), env.autoesc);
 output += "\"\n  class=\"Comment vbox\n  ";
-if(runtime.memberLookup((t_4),"author", env.autoesc) != runtime.contextOrFrameLookup(context, frame, "author")) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "comment")),"author", env.autoesc) != runtime.contextOrFrameLookup(context, frame, "author")) {
 output += "\n    Comment--helper\n  ";
 ;
 }
@@ -459,11 +455,56 @@ output += "\n    Comment--helpee\n  ";
 ;
 }
 output += "\">\n    ";
-env.getTemplate("comment.html", function(t_7,t_5) {
-if(t_7) { cb(t_7); return; }
-t_5.render(context.getVariables(), frame.push(), function(t_8,t_6) {
-if(t_8) { cb(t_8); return; }
-output += t_6
+env.getTemplate("comment.html", function(t_4,t_2) {
+if(t_4) { cb(t_4); return; }
+t_2.render(context.getVariables(), frame.push(), function(t_5,t_3) {
+if(t_5) { cb(t_5); return; }
+output += t_3
+output += "\n  </li>\n";
+})});
+}
+output += "\n\n";
+if(runtime.contextOrFrameLookup(context, frame, "next")) {
+output += "\n  <li class=\"QuestionLoadMore\">\n    <a role=\"button\" data-next=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "next"), env.autoesc);
+output += "\" href=\"#\" class=\"QuestionLoadMore-button\">Load more</a>\n  </li>\n";
+;
+}
+output += "\n\n";
+frame = frame.push();
+var t_8 = runtime.contextOrFrameLookup(context, frame, "results");
+if(t_8) {var t_7 = t_8.length;
+for(var t_6=0; t_6 < t_8.length; t_6++) {
+var t_9 = t_8[t_6];
+frame.set("comment", t_9);
+frame.set("loop.index", t_6 + 1);
+frame.set("loop.index0", t_6);
+frame.set("loop.revindex", t_7 - t_6);
+frame.set("loop.revindex0", t_7 - t_6 - 1);
+frame.set("loop.first", t_6 === 0);
+frame.set("loop.last", t_6 === t_7 - 1);
+frame.set("loop.length", t_7);
+output += "\n  <!-- ";
+output += runtime.suppressValue(runtime.memberLookup((t_9),"author", env.autoesc), env.autoesc);
+output += " - ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author"), env.autoesc);
+output += " -->\n  <li\n  data-id=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_9),"id", env.autoesc), env.autoesc);
+output += "\"\n  class=\"Comment vbox\n  ";
+if(runtime.memberLookup((t_9),"author", env.autoesc) != runtime.contextOrFrameLookup(context, frame, "author")) {
+output += "\n    Comment--helper\n  ";
+;
+}
+else {
+output += "\n    Comment--helpee\n  ";
+;
+}
+output += "\">\n    ";
+env.getTemplate("comment.html", function(t_12,t_10) {
+if(t_12) { cb(t_12); return; }
+t_10.render(context.getVariables(), frame.push(), function(t_13,t_11) {
+if(t_13) { cb(t_13); return; }
+output += t_11
 output += "\n  </li>\n";
 })});
 }
