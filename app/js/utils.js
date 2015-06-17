@@ -108,6 +108,9 @@
      * @param {String|Date} time before/after the currentDate.
      */
     time_since: function(time) {
+      if (Date.now() - time < 0 ) {
+        time = Date.now();
+      }
       var mozl10n = new navigator.mozL10n.DateTimeFormat();
 
       /* FIXME : We need to wait for L10N ready events */
