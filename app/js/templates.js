@@ -80,7 +80,7 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "<form id=\"generic_error\" role=\"dialog\" data-type=\"confirm\">\n  <section>\n    <h1>Whoops!</h1>\n    <p>There was a problem with Buddy Up, please try again.</p>\n  </section>\n  <menu>\n    <button class=\"recommend\">OK</button>\n  </menu>\n</form>\n";
+output += "<form id=\"generic_error\" role=\"dialog\" data-type=\"confirm\">\n  <section>\n    <h1>Whoops!</h1>\n    <p class=\"js-generic-msg hide\">There was a problem with Buddy Up, please try again.</p>\n    <p class=\"js-offline-msg hide\">You are not online, please check your connection.</p>\n  </section>\n  <menu>\n    <button class=\"recommend\">OK</button>\n  </menu>\n</form>\n";
 cb(null, output);
 ;
 } catch (e) {
