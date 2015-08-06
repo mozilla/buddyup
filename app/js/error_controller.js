@@ -21,6 +21,11 @@
           });
         }
 
+        var generic_msg = generic_error.querySelector('.js-generic-msg');
+        var offline_msg = generic_error.querySelector('.js-offline-msg');
+        generic_msg.classList.toggle('hide', !navigator.onLine);
+        offline_msg.classList.toggle('hide', navigator.onLine);
+
         generic_error.classList.remove('hide');
       });
     }

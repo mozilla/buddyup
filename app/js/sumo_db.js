@@ -248,18 +248,17 @@
       });
     },
 
-    get_question_list: function(url) {
+    fetch_json: function(url) {
       return request(url, 'GET').then(JSON.parse);
     },
 
     get_answers_for_question: function(question_id) {
       var endpoint = API_V2_BASE + 'answer/';
       endpoint += '?question=' + question_id;
+      endpoint += '&ordering=-created';
       endpoint += '&format=json'; // TODO bug 1088014
 
-      return request(endpoint, 'GET').then(function(response) {
-        return JSON.parse(response).results;
-      });
+      return SumoDB.fetch_json(endpoint);
     },
 
     get_unanswered_questions: function(locale) {
