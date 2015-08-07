@@ -4,7 +4,16 @@
 
 (function(exports) {
 
-  var LOCALES = ['en-US', 'fr', 'de', 'es', 'it', 'pt-BR', 'ro', 'tr'];
+  var LOCALES = [
+    ['de', 'Deutsch'],
+    ['en-US', 'English'],
+    ['fr', 'Français'],
+    ['es', 'Español'],
+    ['it', 'Italiano'],
+    ['pt-BR', 'Português (do Brasil)'],
+    ['ro', 'română'],
+    ['tr', 'Türkçe']
+  ];
   var HANDSETS = [
     'All',
     'Alcatel',

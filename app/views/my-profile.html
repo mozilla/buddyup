@@ -33,7 +33,7 @@
             <div class="button" data-icon="expand">
               <select id="locale">
               {% for locale in locales %}
-                <option {% if locale == user.locale %}selected="selected"{% endif %}>{{ locale }}</option>
+                <option {% if locale[0] == user.locale %}selected="selected"{% endif %} value="{{ locale[0] }}">{{ locale[1] }}</option>
               {% endfor %}
               </select>
             </div>

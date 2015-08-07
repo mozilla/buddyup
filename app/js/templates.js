@@ -181,12 +181,14 @@ frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
 output += "\n                <option ";
-if(t_4 == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"locale", env.autoesc)) {
+if(runtime.memberLookup((t_4),0, env.autoesc) == runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "user")),"locale", env.autoesc)) {
 output += "selected=\"selected\"";
 ;
 }
-output += ">";
-output += runtime.suppressValue(t_4, env.autoesc);
+output += " value=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),0, env.autoesc), env.autoesc);
+output += "\">";
+output += runtime.suppressValue(runtime.memberLookup((t_4),1, env.autoesc), env.autoesc);
 output += "</option>\n              ";
 ;
 }
