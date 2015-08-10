@@ -1,6 +1,7 @@
 'use strict';
 
 /* global _, SumoDB, asyncStorage */
+/* global _, SumoDB, asyncStorage */
 
 (function(exports) {
   var USER_CREDENTIALS_KEY = 'user_credentials';

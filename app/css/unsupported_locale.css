@@ -1,0 +1,16 @@
+.UnsupportedLocaleMessage {
+    position: relative;
+}
+.UnsupportedLocaleMessage p {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 15px 30px;
+}
+.gaia-footer--pinned {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+#language {
+    font-weight: bold;
+}
