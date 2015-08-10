@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="SUMO real time support app for FirefoxOS" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Welcome to BuddyUP</title>
+
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/layout.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/headers.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/input_areas.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/buttons.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/building_blocks/progress_activity.css" media="screen" />
+
+  <link rel="stylesheet" type="text/css" href="css/fira.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/base.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/unsupported_locale.css" media="screen" />
+
+  <!-- localization -->
+  <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+  <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
+  <script src="js/libs/l10n.js" defer></script>
+  <script src="js/libs/l10n_date.js" defer></script>
+</head>
+<body class="skin-organic">
+<section role="region">
+  <header>
+    <h1>Unsupported Language</h1>
+  </header>
+</section>
+<main id="unsupported_locale_container" class="UnsupportedLocaleMessage fit scroll">
+  <p>
+    BuddyUp currently doesn't support "<span id="language"></span>".
+  </p>
+  <p>
+    Please ask your questions in English, or go to
+    <a href="http://support.mozilla.org">http://support.mozilla.org</a>
+    for more help.
+  </p>
+  <div class="gaia-footer gaia-footer--pinned">
+    <button id="continue_button">Continue</button>
+    <button class="danger" id="cancel_button">Quit</button>
+  </div>
+</main>
+
+<script src="js/libs/font_size_utils.js" defer></script>
+<script src="js/utils.js" defer></script>
+
+<script src="js/libs/lodash.custom.min.js"></script>
+<script src="js/libs/async_storage.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/sumo_db.js"></script>
+<script src="js/unsupported_locale_controller.js"></script>
+</body>
+</html>

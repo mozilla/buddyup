@@ -1,19 +1,9 @@
 'use strict';
 
-/* global User, nunjucks  */
+/* global User, nunjucks, Settings  */
 
 (function(exports) {
 
-  var LOCALES = [
-    ['de', 'Deutsch'],
-    ['en-US', 'English'],
-    ['fr', 'Français'],
-    ['es', 'Español'],
-    ['it', 'Italiano'],
-    ['pt-BR', 'Português (do Brasil)'],
-    ['ro', 'română'],
-    ['tr', 'Türkçe']
-  ];
   var HANDSETS = [
     'All',
     'Alcatel',
@@ -102,7 +92,7 @@
       Promise.all(promises).then(function([is_helper, user]) {
         var html = nunjucks.render('my-profile.html', {
           user: user,
-          locales: LOCALES,
+          locales: Settings.LOCALES,
           handsets: HANDSETS,
           operators: OPERATORS,
           is_helper: is_helper
