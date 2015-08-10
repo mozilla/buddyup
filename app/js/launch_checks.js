@@ -15,7 +15,7 @@
           return;
         }
 
-        // asyncStorage.setItem('has_launched', true);
+        asyncStorage.setItem('has_launched', true);
 
         var gecko = parseInt(Utils.get_gecko_version(), 10);
         if (gecko < 32) {
