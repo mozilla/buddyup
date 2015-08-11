@@ -41,6 +41,13 @@
       </header>
       <main id="my-profile" class="fit scroll"></main>
     </section>
+
+    <script>
+      var url = 'translations/' + navigator.language + '.js';
+      // I'm sorry.
+      document.write('<script src="' + url + '"><' + '/script>');
+    </script>
+
     <script src="js/settings.js"></script>
     <script src="js/libs/lodash.custom.min.js"></script>
     <script src="js/libs/async_storage.js"></script>
