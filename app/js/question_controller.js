@@ -1,6 +1,6 @@
 'use strict';
 
-/* global _, asyncStorage, SumoDB, Utils, User, nunjucks */
+/* global _, asyncStorage, gettext, SumoDB, Utils, User, nunjucksEnv */
 
 (function(exports) {
   /**
@@ -9,23 +9,23 @@
    * new tags.
    */
   var CATEGORIES = {
-    '': 'Choose a category',
-    'email': 'Email/Calendar',
-    'clock': 'Clock/Alarm',
-    'camera': 'Camera/Gallery/Video',
-    'audio': 'Audio/Music/FMRadio',
-    'performance': 'Performance',
-    'radios': 'Cellular Data/WiFi/Bluetooth',
-    'sms': 'SMS/MMS',
-    'calls': 'Dialer/Contacts',
-    'browser': 'Browser/Download',
-    'storage': 'Storage/SD card',
-    'geolocation': 'Maps/GPS',
-    'keyboard': 'Keyboard',
-    'system-updates': 'System Updates',
-    'language': 'Language',
-    'marketplace': 'Marketplace/Apps Install',
-    'other': 'Other'
+    '': gettext('Choose a category'),
+    'email': gettext('Email/Calendar'),
+    'clock': gettext('Clock/Alarm'),
+    'camera': gettext('Camera/Gallery/Video'),
+    'audio': gettext('Audio/Music/FMRadio'),
+    'performance': gettext('Performance'),
+    'radios': gettext('Cellular Data/WiFi/Bluetooth'),
+    'sms': gettext('SMS/MMS'),
+    'calls': gettext('Dialer/Contacts'),
+    'browser': gettext('Browser/Download'),
+    'storage': gettext('Storage/SD card'),
+    'geolocation': gettext('Maps/GPS'),
+    'keyboard': gettext('Keyboard'),
+    'system-updates': gettext('System Updates'),
+    'language': gettext('Language'),
+    'marketplace': gettext('Marketplace/Apps Install'),
+    'other': gettext('Other')
   };
 
   var question_thread;
@@ -104,7 +104,7 @@
       }
       SumoDB.solve_question(question_id, answer_id).then(function(response) {
         var p = document.createElement('p');
-        p.textContent = 'Solution ✓';
+        p.textContent = gettext('Solution ✓');
         p.classList.add('Comment-solution');
         p.classList.add('Comment-solutionBox');
         elem.parentNode.replaceChild(p, elem);
@@ -145,7 +145,7 @@
       Utils.convert_metadata_for_display(question.metadata);
 
     User.is_helper().then(function(is_helper) {
-      var html = nunjucks.render('thread_header.html', {
+      var html = nunjucksEnv.render('thread_header.html', {
         date_posted: date_posted,
         displayable_metadata: displayable_metadata,
         viewer_is_helper: is_helper,
@@ -211,7 +211,7 @@
       var is_helper = question_object &&
         user.username !== question_object.creator.username;
 
-      var fake_comment = nunjucks.render('comment.html',
+      var fake_comment = nunjucksEnv.render('comment.html',
         {comment: {content: comment}});
       var list = document.getElementById('comment-list');
 
@@ -251,7 +251,7 @@
       }
 
       comment = format_answer(comment);
-      list_item.innerHTML = nunjucks.render('comment.html', {
+      list_item.innerHTML = nunjucksEnv.render('comment.html', {
         comment: comment,
         is_my_question: question_object.creator.username === user.username,
         user: user
@@ -261,7 +261,7 @@
 
       list_item.classList.add('js-failed');
       list_item.classList.add('is-failed');
-      list_item.innerHTML = nunjucks.render('comment.html', {
+      list_item.innerHTML = nunjucksEnv.render('comment.html', {
         comment: {content: comment, failed: true},
       });
     });
@@ -372,8 +372,7 @@
 
     answers = answers.map(format_answer);
     return User.get_user().then(function(user) {
-
-      return nunjucks.render('thread.html', {
+      return nunjucksEnv.render('thread.html', {
         author: author,
         user: user,
         is_my_question: question_object.creator.username === user.username,
@@ -440,14 +439,14 @@
       }
 
       var kb_items = response.documents.map(function(kb_item) {
-        return nunjucks.render('kb_item.html', {
+        return nunjucksEnv.render('kb_item.html', {
           kb_item: kb_item
         });
       });
       var question_items = response.questions.map(function(question_item) {
         question_item.displayable_metadata =
           Utils.convert_metadata_for_display(question_item.metadata);
-        return nunjucks.render('question.html', {
+        return nunjucksEnv.render('question.html', {
           question: question_item
         });
       });
@@ -542,7 +541,7 @@
             id: answer.id
           });
 
-          list_item.innerHTML = nunjucks.render('comment.html', {
+          list_item.innerHTML = nunjucksEnv.render('comment.html', {
             comment: answer,
             is_my_question: question_object.creator.username === user.username,
             user: user
@@ -562,5 +561,3 @@
   QuestionController.init();
 
 })(window);
-
-

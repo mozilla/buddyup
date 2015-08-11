@@ -1,11 +1,19 @@
 <img class="ProfileDetails-avatar" src="{{ user.avatar }}" alt="">
 <div class="hbox ProfileDetails-stats">
   <div class="fit vbox">
-    <div class="ProfileDetails-statcounts">{{ user.solution_count }}</div>
-    <div data-icon="tick"> Questions solved</div>
+    {{ _plural(
+      '<div {countattr}>{n}</div><div {textattr}> question solved</div>',
+      '<div {countattr}>{n}</div><div {textattr}> questions solved</div>',
+      countattr='class="ProfileDetails-statcounts"',
+      textattr='data-icon="tick"',
+      n=user.solution_count)|safe }}
   </div>
   <div class="fit vbox">
-    <div class="ProfileDetails-statcounts">{{ user.helpfulness }}</div>
-    <div data-icon="feedback"> Helpful upvotes</div>
+    {{ _plural(
+      '<div {countattr}>{n}</div><div {textattr}> helpful vote</div>',
+      '<div {countattr}>{n}</div><div {textattr}> helpful votes</div>',
+      countattr='class="ProfileDetails-statcounts"',
+      textattr='data-icon="feedback"',
+      n=user.helpfulness)|safe }}
   </div>
 </div>

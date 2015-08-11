@@ -8,10 +8,10 @@
       {% if is_helper %}
         <ul class="SettingsInfo-achievements">
           <li data-icon="tick">
-            {{ user.solution_count }} Questions solved
+            {{ _plural('{n} question solved', '{n} questions solved', n=user.solution_count) }}
           </li>
           <li data-icon="feedback">
-            {{ user.helpfulness }} Helpful upvotes
+            {{ _plural('{n} helpful vote', '{n} helpful votes', n=user.helpfulness) }}
           </li>
         </ul>
       {% endif %}
@@ -22,10 +22,12 @@
 
     <fieldset>
       <header>
-        <h2>My preferences</h2>
+        <h2>{{ _('My preferences') }}</h2>
       </header>
       <section class="QuestionFilters">
-        <p class="QuestionFilters-description">Too many questions? Use the settings below to narrow down the "Answer a Question" list.</p>
+        <p class="QuestionFilters-description">
+          {{ _('Too many questions? Use the settings below to narrow down the "Answer a Question" list.') }}
+        </p>
 
         <ul>
           <li>
@@ -42,7 +44,7 @@
           <li>
             <label class="QuestionFilters-label" for="handset_type">Device</label>
             <div class="button" data-icon="expand">
-              <select id="handset_type"> {# DO I have to take care of the rest? #}
+              <select id="handset_type"> {# Do I have to take care of the rest? #}
                 {% for handset in handsets %}
                   <option {% if handset == user.handset_type %}selected="selected"{% endif %}>{{ handset }}</option>
                 {% endfor %}
@@ -68,8 +70,12 @@
       <h2>Answer questions</h2>
     </header>
     <section class="QuestionFilters">
-      <p class="QuestionFilters-description">Sign in to answer questions from the Mozilla community.</p>
-      <a href="authentication.html" class="bb-button recommend" data-modal="true">Create account or sign in</a>
+      <p class="QuestionFilters-description">
+        {{ _('Sign in to answer questions from the Mozilla community.') }}
+      </p>
+      <a href="authentication.html" class="bb-button recommend" data-modal="true">
+        {{ _('Create account or sign in') }}
+      </a>
     </section>
   {% endif %}
 

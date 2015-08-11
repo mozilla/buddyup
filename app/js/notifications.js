@@ -1,6 +1,6 @@
 'use strict';
 
-/* global asyncStorage, Navigation, Notification, SumoDB, Utils */
+/* global asyncStorage, gettext, Navigation, Notification, SumoDB, Utils */
 
 (function(exports) {
 var ENDPOINT_ID_KEY = 'endpoint';
@@ -61,8 +61,9 @@ function push_notification() {
 
           if (!question_displayed) {
             actor = notification.actor;
-            title = actor.display_name || actor.username;
-            title += ' left a comment on';
+            title = gettext('{user} left a comment on your question', {
+              user: actor.display_name || actor.username,
+            });
             icon_info = '?question_id=' + notification.target.id;
             tag = 'question-' + notification.target.id;
           }
@@ -70,8 +71,9 @@ function push_notification() {
 
         case 'marked as a solution':
           actor = notification.actor;
-          title = actor.display_name || actor.username;
-          title += ' chose your answer';
+          title = gettext('{user} chose your answer as a solution', {
+            user: actor.display_name || actor.username,
+          });
           icon_info = '?question_id=' + notification.target.id;
           tag = 'resolved-' + notification.target.id;
         break;

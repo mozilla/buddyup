@@ -1,6 +1,6 @@
 'use strict';
 
-/* global SumoDB, Utils */
+/* global gettext, SumoDB, Utils */
 
 (function(exports) {
   function request_password_reset(evt) {
@@ -18,7 +18,7 @@
     }).catch(function(response) {
       Utils.refresh_error_list(
         document.getElementById('pw_reset_errors'),
-        ['User not found.']);
+        [gettext('User not found.')]);
     });
   }
 
