@@ -95,6 +95,12 @@
       </menu>
     </form>
 
+    <script>
+        var url = 'translations/' + navigator.language + '.js';
+      // I'm sorry.
+      document.write('<script src="' + url + '"><' + '/script>');
+    </script>
+
     <script src="js/settings.js"></script>
     <script src="js/libs/async_storage.js" defer></script>
     <script src="js/libs/nunjucks-slim.js" defer></script>

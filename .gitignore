@@ -1,4 +1,4 @@
-.DS_Store
 /node_modules/
-package.json.local
-app/mock
+/app/mock
+/app/translations
+/locale
