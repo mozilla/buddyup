@@ -58,3 +58,15 @@ And in another shell,
 ```bash
 ./scripts/run-integration-tests.sh
 ```
+
+# Localization
+Localizations are not included by default, but are pulled from Verbatim,
+via Sumo. To download the translations, run
+
+```bash
+grunt get_localization
+```
+
+If all goes well, you should have one js file in `app/translations/` for
+each supported locale. For example, the French localizations would be
+stored in `app/translations/fr.js`.
