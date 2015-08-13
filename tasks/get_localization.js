@@ -25,24 +25,18 @@ module.exports = function(grunt) {
       }
     }
 
-    var ignorePatterns = [/^\./, /^en_US$/, /^compendia$/, /^templates$/];
-    var locales = fs.readdirSync('locale')
-    .filter(function(name) {
-      var stat = fs.statSync(path.join('locale', name));
-      // is a directory, and it matches none of the ignore patterns.
-      if (!stat.isDirectory()) {
-        return false;
-      }
-      for (var i = 0; i < ignorePatterns.length; i++) {
-        if (ignorePatterns[i].exec(name)) {
-          return false;
-        }
-      }
-      return true;
-    })
-    .map(function(name) {
-      return name.replace('_', '-');
-    });
+    var locales = [
+      "af", "ak", "ar", "as", "ast", "az", "bg", "bn-BD", "bn-IN", "bs",
+      "ca", "cs", "da", "de", "dsb", "ee", "el", "eo", "es", "et", "eu",
+      "fa", "ff", "fi", "fr", "fur", "fy-NL", "ga", "ga-IE", "gd", "gl",
+      "gu-IN", "ha", "he", "hi-IN", "hr", "hsb", "hu", "hy-AM", "id",
+      "ig", "is", "it", "ja", "kk", "km", "kn", "ko", "ln", "lt", "mk",
+      "ml", "mn", "mr", "ms", "my", "nb-NO", "nl", "no", "oc", "pa-IN",
+      "pl", "pt-BR", "pt-PT", "rm", "ro", "ru", "rw", "sah", "si", "sk",
+      "sl", "sq", "sr-Cyrl", "sr-LATN", "sv", "sv-SE", "sw", "ta",
+      "ta-LK", "te", "th", "tr", "uk", "vi", "wo", "xh", "xx-testing",
+      "yo", "zh-CN", "zh-TW", "zu",
+    ];
 
     var count = 0;
 
