@@ -25,7 +25,8 @@
     "jshint": "^2.6.0",
     "lodash": "^3.7.0",
     "marionette-client": "^1.7.3",
-    "moment": "^2.10.3"
+    "moment": "^2.10.3",
+    "nunjucks": "1.2.x"
   },
   "engine": "node >= 0.10.x",
   "volo": {
