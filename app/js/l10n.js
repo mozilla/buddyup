@@ -1,4 +1,3 @@
-console.log('l10n.js loaded');
 'use strict';
 
 (function() {
