@@ -23,15 +23,6 @@
     <!-- localization -->
     <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
     <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
-
-    <script>
-      var url = 'translations/' + navigator.language + '.js';
-      // I'm sorry.
-      document.write('<script src="' + url + '"><' + '/script>');
-    </script>
-
-    <script src="js/libs/l10n.js" defer></script>
-    <script src="js/libs/l10n_date.js" defer></script>
   </head>
   <body class="skin-organic">
     <section role="region" class="vbox fit">
@@ -72,12 +63,7 @@
       </main>
     </section>
 
-    <script>
-      var url = 'translations/' + navigator.language + '.js';
-      // I'm sorry.
-      document.write('<script src="' + url + '"><' + '/script>');
-    </script>
-
+    <script src="js/load_translations.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/libs/lodash.custom.min.js"></script>
     <script src="js/libs/async_storage.js"></script>
