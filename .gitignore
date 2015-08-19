@@ -1,4 +1,5 @@
 /node_modules/
 /app/mock
 /app/translations
+/app/js/templates.js
 /locale
