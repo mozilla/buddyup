@@ -7,13 +7,8 @@
 var Settings = {
   BASE_SERVER: 'https://support.allizom.org',
   LOCALES: [
-    ['de', 'Deutsch'],
     ['en-US', 'English'],
-    ['fr', 'Français'],
     ['es', 'Español'],
-    ['it', 'Italiano'],
     ['pt-BR', 'Português (do Brasil)'],
-    ['ro', 'română'],
-    ['tr', 'Türkçe']
   ]
 };
