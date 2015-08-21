@@ -9,6 +9,6 @@ var Settings = {
   LOCALES: [
     ['en-US', 'English'],
     ['es', 'Español'],
-    ['pt-BR', 'Português (do Brasil)'],
+    ['pt-BR', 'Português (do Brasil)']
   ]
 };
