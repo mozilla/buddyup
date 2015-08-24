@@ -24,39 +24,25 @@
   <script src="js/libs/l10n_date.js" defer></script>
 </head>
 <body class="skin-organic">
-<section role="region" class="vbox fit">
-  <header>
-    <a href="index.html" class="bb-button" id="close" data-icon="close" data-action="close">
-      <span class="visuallyhidden">Close</span>
-    </a>
-    <h1 id="headline"></h1>
-  </header>
-  <main id="helper-profile" class="fit scroll">
-    <section id="profile-details" class="vbox center ProfileDetails"></section>
-    <section id="questions" class="hide">
-      <header>
-        <h2>Answered Questions</h2>
-      </header>
-    </section>
-  </main>
-</section>
+  <section role="region" class="vbox fit" data-template="main/helper_profile.html"></section>
 
-<script src="js/load_translations.js"></script>
+  <script src="js/load_translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/libs/async_storage.js"></script>
+  <script src="js/libs/lodash.custom.min.js" defer></script>
+  <script src="js/libs/nunjucks-slim.js" defer></script>
+  <script src="js/templates.js" defer></script>
+  <script src="js/nunjucks_env.js" defer></script>
+  <script src="js/l10n.js" defer></script>
+  <script src="js/libs/font_size_utils.js" defer></script>
+  <script src="js/loader.js" defer></script>
 
-<script src="js/settings.js"></script>
-<script src="js/libs/async_storage.js"></script>
-<script src="js/libs/lodash.custom.min.js" defer></script>
-<script src="js/libs/nunjucks-slim.js" defer></script>
-<script src="js/templates.js" defer></script>
-<script src="js/nunjucks_env.js" defer></script>
-<script src="js/l10n.js" defer></script>
-<script src="js/libs/font_size_utils.js" defer></script>
-
-<script src="js/utils.js" defer></script>
-<script src="js/sumo_db.js" defer></script>
-<script src="js/error_controller.js" defer></script>
-<script src="js/loading_indicator.js" defer></script>
-<script src="js/user.js" defer></script>
-<script src="js/helper_profile_controller.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/sumo_db.js" defer></script>
+  <script src="js/error_controller.js" defer></script>
+  <script src="js/loading_indicator.js" defer></script>
+  <script src="js/user.js" defer></script>
+  <script src="js/helper_profile_controller.js" defer></script>
 </body>
 </html>

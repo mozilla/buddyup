@@ -1,0 +1,67 @@
+<section role="region" class="vbox fit">
+  <header>
+    <a href="index.html" id="back" data-icon="back-light" data-action="back">
+      <span class="visuallyhidden">{{ _('Close') }}</span>
+    </a>
+    <menu type="toolbar">
+      <a href="profile.html" id="settings" class="settings-icon" data-icon="settings" data-modal="true">
+        <span class="visuallyhidden">{{ _('Settings') }}</span>
+      </a>
+    </menu>
+    <h1>{{ _('My Question') }}</h1>
+  </header>
+  <main id="thread-scroll" class="fit scroll">
+    <section id="thread-introduction" class="StartAskingMessage vbox">
+      <span>{{ _('We can help<br>Ask us anything!') }}</span>
+    </section>
+    <section id="suggestions" class="hide">
+      <ul>
+      </ul>
+    </section>
+    <section id="question-thread" class="QuestionThread hide">
+      <ul id="comment-list" class="vbox"></ul>
+    </section>
+  </main>
+  <footer class="QuestionFooter">
+    <form id="question_form" class="hbox">
+      <textarea id="question_field" class="QuestionField" rows="1" placeholder="{{ _('Write your message&hellip;') }}"></textarea>
+      <div class="QuestionSubmitButton">
+        <a href="#" role="button" data-icon="send" id="question_submit_button" class="QuestionSubmitButton-click-area"></a>
+      </div>
+    </form>
+    <div id="sign-in-link" class="SignInLink hide">
+      <a href="authentication.html" data-modal="true" class="bb-button recommend">{{ _('Sign in to reply') }}</a>
+    </div>
+  </footer>
+</section>
+
+<form id="first_question_help" role="dialog" data-type="confirm" class="hide">
+  <section>
+    <h1>{{ _('Thank you for your question!') }}</h1>
+    <p>{{ _("You'll get a notification as soon as a Buddy jumps in to the rescue.") }}</p>
+  </section>
+  <menu>
+    <button id="confirm" class="recommend">{{ _('OK') }}</button>
+  </menu>
+</form>
+
+<form id="already_taken" role="dialog" data-type="confirm" class="hide">
+  <section>
+    <h1>{{ _('Previously Answered') }}</h1>
+    <p>{{ _('Another helper has answered this question, please choose another.') }}</p>
+  </section>
+  <menu>
+    <button class="recommend">{{ _('OK') }}</button>
+  </menu>
+</form>
+
+<form id="confirm_solve" role="dialog" data-type="confirm" class="hide">
+  <section>
+    <h1>{{ _('Has your question been solved?') }}</h1>
+    <p>{{ _('This will close the question and let your buddy know you no longer need help.') }}</p>
+  </section>
+  <menu>
+    <button>{{ _('Cancel') }}</button>
+    <button class="recommend">{{ _('Ok') }}</button>
+  </menu>
+</form>

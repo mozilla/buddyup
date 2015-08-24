@@ -28,54 +28,10 @@
     <script src="js/libs/l10n_date.js" defer></script>
   </head>
   <body class="skin-organic">
-    <section role="region" class="vbox fit">
-      <header>
-        <a href="index.html" id="back" data-icon="back-light" data-action="back">
-          <span class="visuallyhidden">Close</span>
-        </a>
-        <menu type="toolbar">
-          <a href="profile.html" id="settings" class="settings-icon" data-icon="settings" data-modal="true">
-            <span class="visuallyhidden">Settings</span>
-          </a>
-        </menu>
-        <h1 id="main_heading">Answer a Question</h1>
-      </header>
-      <main class="fit scroll">
-        <section class="tabbed-section" role="region">
-          <div id="sign-in-link" class="ql-signIn hide">
-            <p class="ql-signIn-label">Sign in to answer questions from Firefox OS users.</p>
-            <a href="authentication.html" data-modal="true" class="bb-button recommend">Create account or sign in</a>
-          </div>
-          <ul id="new-active-tabs" role="tablist" class="bb-tablist" data-type="filter">
-            <li id="new" role="presentation">
-              <a id="tab1" href="#panel_new" role="tab" aria-controls="panel_new" aria-selected="true">New</a>
-            </li>
-            <li id="active" role="presentation">
-              <a id="tab2" href="#panel_active" role="tab" aria-controls="panel_active" aria-selected="false">My list</a>
-            </li>
-          </ul>
-
-          <div id="panel_new" class="bb-tabpanel questionList" role="tabpanel" aria-labelledby="tab1">
-            <section id="myquestions" class="questions js-question-container all" data-all="true"></section>
-            <a href="#" role="button" id="load-more-my-questions" data-icon="download" class="ql-loadMore hide">Load more</a>
-            <div id="refresh-toolbar" class="ql-bottomToolbar hide">
-              <a href="#" role="button" id="refresh-my-questions" class="ql-refresh" data-icon="sync"></a>
-              <span>Last sync:
-                <time id="last-refreshed-time">x hours ago</time>
-              </span>
-            </div>
-          </div>
-
-          <div id="panel_active" class="bb-tabpanel hide" role="tabpanel" aria-labelledby="tab2">
-            <section id="activequestions" class="questions js-question-container active" data-type="buddyup-list"></section>
-            <a href="#" role="button" id="load-more-active-questions" data-icon="download" class="ql-loadMore hide">Load more</a>
-          </div>
-
-        </section>
-      </main>
-    </section>
+    <section role="region" class="vbox fit" data-template="main/question_list_helper.html"></section>
 
     <script src="js/load_translations.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/libs/lodash.custom.min.js"></script>
     <script src="js/libs/async_storage.js" defer></script>
@@ -84,6 +40,7 @@
     <script src="js/nunjucks_env.js" defer></script>
     <script src="js/l10n.js" defer></script>
     <script src="js/libs/font_size_utils.js" defer></script>
+    <script src="js/loader.js" defer></script>
 
     <script src="js/utils.js" defer></script>
     <script src="js/user.js" defer></script>

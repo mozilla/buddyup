@@ -13,5 +13,8 @@
   };
 
   exports.OldVersionsController = OldVersionsController;
-  OldVersionsController.init();
+
+  document.addEventListener('initialize', function() {
+    OldVersionsController.init();
+  });
 })(window);

@@ -1,0 +1,17 @@
+<section role="region">
+  <header>
+    <h1>{{ _('Unsupported Language') }}</h1>
+  </header>
+</section>
+<main id="unsupported_locale_container" class="UnsupportedLocaleMessage fit scroll">
+  <p>
+    {{ _('BuddyUp currently doesn\'t support "<span id="language"></span>".') }}
+  </p>
+  <p>
+    {{ _('Please ask your questions in English, or go to <a href="http://support.mozilla.org">http://support.mozilla.org</a> for more help.') }}
+  </p>
+  <div class="gaia-footer gaia-footer--pinned">
+    <button id="continue_button">{{ _('Continue') }}</button>
+    <button class="danger" id="cancel_button">{{ _('Quit') }}</button>
+  </div>
+</main>

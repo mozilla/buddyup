@@ -24,28 +24,15 @@
   <script src="js/libs/l10n_date.js" defer></script>
 </head>
 <body class="skin-organic">
-<section role="region">
-  <header>
-    <h1>Unsupported Language</h1>
-  </header>
-</section>
-<main id="unsupported_locale_container" class="UnsupportedLocaleMessage fit scroll">
-  <p>
-    BuddyUp currently doesn't support "<span id="language"></span>".
-  </p>
-  <p>
-    Please ask your questions in English, or go to
-    <a href="http://support.mozilla.org">http://support.mozilla.org</a>
-    for more help.
-  </p>
-  <div class="gaia-footer gaia-footer--pinned">
-    <button id="continue_button">Continue</button>
-    <button class="danger" id="cancel_button">Quit</button>
-  </div>
-</main>
+<div data-template="main/unsupported_locale.html"></div>
 
+<script src="js/load_translations.js"></script>
+<script src="js/i18n.js.js" defer></script>
+<script src="js/libs/nunjucks.js" defer></script>
+<script src="js/templates.js" defer></script>
 <script src="js/libs/font_size_utils.js" defer></script>
 <script src="js/utils.js" defer></script>
+<script src="js/loader.js" defer></script>
 
 <script src="js/libs/lodash.custom.min.js"></script>
 <script src="js/libs/async_storage.js"></script>

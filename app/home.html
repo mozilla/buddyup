@@ -25,45 +25,10 @@
     <link rel="prefetch" type="application/l10n" href="data/date/date.ini" />
   </head>
   <body class="skin-organic">
-    <section role="region" class="vbox fit">
-      <header>
-        <menu type="toolbar">
-          <a href="profile.html" id="settings" class="settings-icon" data-icon="settings" data-modal="true">
-            <span class="visuallyhidden">Settings</span>
-          </a>
-        </menu>
-        <h1>Support</h1>
-      </header>
-      <main class="fit scroll">
-        <section class="HomeCallout HomeCallout--ask vbox">
-          <h2 class="HomeCallout-title HomeCallout-shadow">Have Questions?</h2>
-          <p class="HomeCallout-subtitle HomeCallout-shadow">Get a Buddy to help you with your device</p>
-          <a href="question.html" class="bb-button HomeCallout-button">Ask a Question</a>
-        </section>
-        <section class="HomeCallout HomeCallout--answer vbox">
-          <h2 class="HomeCallout-title">Have Answers?</h2>
-          <p class="HomeCallout-subtitle">Help other users around the world</p>
-          <a href="question_list_helper.html?role=helper" class="bb-button recommend HomeCallout-button">Answer Questions</a>
-        </section>
-        <section id="tophelpers" class="user-list hide">
-          <header>
-            <h2>Top Helpers this Week</h2>
-          </header>
-        </section>
-        <section id="myquestions" class="questions" data-empty-message="No questions">
-          <header>
-            <h2>My Questions</h2>
-          </header>
-        </section>
-        <a id="all_questions_button" href="question_list_helpee.html" class="ListItem hide">
-          <div class="ListItem-inside li__title" data-icon-after="forward-light" >
-            All My Questions
-          </div>
-        </a>
-      </main>
-    </section>
+    <section role="region" class="vbox fit" data-template="main/home.html"></section>
 
     <script src="js/load_translations.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/libs/lodash.custom.min.js"></script>
     <script src="js/libs/async_storage.js"></script>
@@ -76,6 +41,7 @@
 
     <script src="js/l10n.js" defer></script>
     <script src="js/libs/font_size_utils.js" defer></script>
+    <script src="js/loader.js" defer></script>
 
     <script src="js/utils.js" defer></script>
     <script src="js/sumo_db.js" defer></script>
@@ -83,5 +49,5 @@
     <script src="js/loading_indicator.js" defer></script>
     <script src="js/home_controller.js" defer></script>
     <script src="js/questions_controller.js" defer></script>
-</body>
+  </body>
 </html>

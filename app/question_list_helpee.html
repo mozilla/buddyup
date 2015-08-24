@@ -24,24 +24,10 @@
     <script src="js/libs/l10n_date.js" defer></script>
   </head>
   <body class="skin-organic">
-    <section role="region" class="vbox fit">
-      <header>
-        <button id="back" data-icon="back-light" data-action="back">
-          <span class="visuallyhidden">Close</span>
-        </button>
-        <menu type="toolbar">
-          <a href="profile.html" id="settings" class="settings-icon" data-icon="settings" data-modal="true">
-            <span class="visuallyhidden">Settings</span>
-          </a>
-        </menu>
-        <h1 id="main_heading">My Questions</h1>
-      </header>
-      <main class="fit scroll">
-        <section id="myquestions" class="questions all" data-all="true"></section>
-      </main>
-    </section>
+    <section role="region" class="vbox fit" data-template="main/question_list_helpee.html"></section>
 
     <script src="js/load_translations.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/libs/lodash.custom.min.js"></script>
     <script src="js/libs/async_storage.js" defer></script>
@@ -50,6 +36,7 @@
     <script src="js/nunjucks_env.js" defer></script>
     <script src="js/l10n.js" defer></script>
     <script src="js/libs/font_size_utils.js" defer></script>
+    <script src="js/loader.js" defer></script>
 
     <script src="js/utils.js" defer></script>
     <script src="js/user.js" defer></script>

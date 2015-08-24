@@ -32,5 +32,8 @@
   };
 
   exports.ErrorController = ErrorController;
-  ErrorController.init();
+
+  document.addEventListener('initialize', function() {
+    ErrorController.init();
+  });
 })(window);

@@ -64,5 +64,8 @@
   };
 
   exports.EmailConfirmationController = EmailConfirmationController;
-  EmailConfirmationController.init();
+
+  document.addEventListener('initialize', function() {
+    EmailConfirmationController.init();
+  });
 })(window);

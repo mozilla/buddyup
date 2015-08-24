@@ -105,6 +105,9 @@
   };
 
   exports.ProfileController = ProfileController;
-  ProfileController.init();
+
+  document.addEventListener('initialize', function() {
+    ProfileController.init();
+  });
 
 })(window);

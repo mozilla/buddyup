@@ -44,6 +44,8 @@
   };
 
   exports.AuthenticationController = AuthenticationController;
-  AuthenticationController.init();
 
+  document.addEventListener('initialize', function() {
+    AuthenticationController.init();
+  });
 })(window);

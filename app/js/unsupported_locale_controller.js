@@ -1,7 +1,5 @@
 'use strict';
 
-/* global Use */
-
 (function(exports) {
 
   var UnsupportedLocaleController = {
@@ -22,5 +20,8 @@
   };
 
   exports.UnsupportedLocaleController = UnsupportedLocaleController;
-  UnsupportedLocaleController.init();
+
+  document.addEventListener('initialize', function() {
+    UnsupportedLocaleController.init();
+  });
 })(window);
