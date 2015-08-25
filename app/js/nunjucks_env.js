@@ -1,8 +1,12 @@
 'use strict';
 
-/* global nunjucks */
+/* global gettext, nunjucks */
 
-(function() {
+(function(exports) {
   var loader = new nunjucks.WebLoader('/views');
-  window.nunjucksEnv = new nunjucks.Environment(loader, {autoescape: true});
-})();
+
+  var nunjucksEnv = new nunjucks.Environment(loader, {autoescape: true});
+  nunjucksEnv.addGlobal('_', gettext);
+
+  exports.nunjucksEnv = nunjucksEnv;
+})(window);

@@ -34,9 +34,5 @@
   };
 
   exports.PasswordResetController = PasswordResetController;
-
-  document.addEventListener('initialize', function() {
-    PasswordResetController.init();
-  });
-
+  PasswordResetController.init();
 })(window);

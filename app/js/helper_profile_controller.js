@@ -66,8 +66,5 @@
   };
 
   exports.HelperProfileController = HelperProfileController;
-
-  document.addEventListener('initialize', function() {
-    HelperProfileController.init();
-  });
+  HelperProfileController.init();
 })(window);

@@ -32,8 +32,5 @@
   };
 
   exports.HomeController = HomeController;
-
-  document.addEventListener('initialize', function() {
-    HomeController.init();
-  });
+  HomeController.init();
 })(window);

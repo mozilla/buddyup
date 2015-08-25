@@ -558,9 +558,5 @@
     }
   };
   exports.QuestionController = QuestionController;
-
-  document.addEventListener('initialize', function() {
-    QuestionController.init();
-  });
-
+  QuestionController.init();
 })(window);

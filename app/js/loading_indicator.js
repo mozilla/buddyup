@@ -41,8 +41,5 @@
   };
 
   exports.LoadingIndicator = LoadingIndicator;
-
-  document.addEventListener('initialize', function() {
-    LoadingIndicator.init();
-  });
+  LoadingIndicator.init();
 })(window);

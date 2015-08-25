@@ -49,9 +49,5 @@
   };
 
   exports.RegisterationController = RegistrationController;
-
-  document.addEventListener('initialize', function() {
-    RegistrationController.init();
-  });
-
+  RegistrationController.init();
 })(window);

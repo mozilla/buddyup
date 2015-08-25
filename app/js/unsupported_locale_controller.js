@@ -20,8 +20,5 @@
   };
 
   exports.UnsupportedLocaleController = UnsupportedLocaleController;
-
-  document.addEventListener('initialize', function() {
-    UnsupportedLocaleController.init();
-  });
+  UnsupportedLocaleController.init();
 })(window);

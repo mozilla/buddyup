@@ -221,9 +221,5 @@
   };
 
   exports.QuestionsController = QuestionsController;
-
-  document.addEventListener('initialize', function() {
-    QuestionsController.init();
-  });
-
+  QuestionsController.init();
 })(window);
