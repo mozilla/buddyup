@@ -106,5 +106,4 @@
 
   exports.ProfileController = ProfileController;
   ProfileController.init();
-
 })(window);

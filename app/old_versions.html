@@ -23,15 +23,13 @@
   <script src="js/libs/l10n_date.js" defer></script>
 </head>
 <body class="skin-organic">
-  <form id="unsupported-device" role="dialog" data-type="confirm">
-    <section>
-      <h1>Incompatible version</h1>
-      <p>We're sorry, but BuddyUp can't be installed on your version of Firefox OS. Please close this window to return to your home screen.</p>
-    </section>
-    <menu>
-      <button id="close_button">Close</button>
-    </menu>
-  </form>
+  <form id="unsupported-device" role="dialog" data-type="confirm" data-template="main/old_versions.html"></form>
+
+  <script src="js/load_translations.js"></script>
+  <script src="js/libs/nunjucks-slim.js" defer></script>
+  <script src="js/templates.js" defer></script>
+  <script src="js/nunjucks_env.js" defer></script>
+  <script src="js/loader.js"></script>
   <script src="js/old_versions_controller.js"></script>
 </body>
 </html>

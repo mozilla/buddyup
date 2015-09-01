@@ -222,5 +222,4 @@
 
   exports.QuestionsController = QuestionsController;
   QuestionsController.init();
-
 })(window);

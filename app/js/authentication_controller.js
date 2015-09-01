@@ -45,5 +45,4 @@
 
   exports.AuthenticationController = AuthenticationController;
   AuthenticationController.init();
-
 })(window);

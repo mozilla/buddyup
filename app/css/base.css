@@ -32,6 +32,11 @@ hr {
 }
 
 /* Makes the vertical boxes scrollable */
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .vbox {
   min-height: 0;
 }

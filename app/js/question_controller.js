@@ -559,5 +559,4 @@
   };
   exports.QuestionController = QuestionController;
   QuestionController.init();
-
 })(window);

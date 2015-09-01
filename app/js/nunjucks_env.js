@@ -2,7 +2,10 @@
 
 /* global nunjucks */
 
-(function() {
+(function(exports) {
   var loader = new nunjucks.WebLoader('/views');
-  window.nunjucksEnv = new nunjucks.Environment(loader, {autoescape: true});
-})();
+
+  var nunjucksEnv = new nunjucks.Environment(loader, {autoescape: true});
+
+  exports.nunjucksEnv = nunjucksEnv;
+})(window);

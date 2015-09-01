@@ -21,18 +21,16 @@
     <script src="js/libs/l10n.js" defer></script>
   </head>
   <body class="skin-organic">
-    <section role="region" class="vbox fit">
-      <header>
-        <a href="index.html" class="bb-button" id="back" data-icon="back-light" data-action="back">
-          <span class="visuallyhidden">Close</span>
-        </a>
-        <h1>Help Article</h1>
-      </header>
-      <iframe id="kb-view" class="KBFrame">
-      </iframe>
-    </section>
+    <section role="region" class="vbox fit" data-template="main/kb.html"></section>
+
+    <script src="js/load_translations.js"></script>
+    <script src="js/libs/nunjucks-slim.js" defer></script>
+    <script src="js/templates.js" defer></script>
+    <script src="js/nunjucks_env.js" defer></script>
+    <script src="js/l10n.js" defer></script>
     <script src="js/libs/font_size_utils.js" defer></script>
     <script src="js/settings.js"></script>
+    <script src="js/loader.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/loading_indicator.js"></script>
     <script src="js/kb_controller.js"></script>

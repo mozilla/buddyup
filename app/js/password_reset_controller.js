@@ -35,5 +35,4 @@
 
   exports.PasswordResetController = PasswordResetController;
   PasswordResetController.init();
-
 })(window);

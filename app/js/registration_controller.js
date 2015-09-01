@@ -50,5 +50,4 @@
 
   exports.RegisterationController = RegistrationController;
   RegistrationController.init();
-
 })(window);

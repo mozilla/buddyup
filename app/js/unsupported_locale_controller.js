@@ -1,7 +1,5 @@
 'use strict';
 
-/* global Use */
-
 (function(exports) {
 
   var UnsupportedLocaleController = {

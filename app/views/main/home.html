@@ -1,0 +1,35 @@
+<header>
+  <menu type="toolbar">
+    <a href="profile.html" id="settings" class="settings-icon" data-icon="settings" data-modal="true">
+      <span class="visuallyhidden">{{ _('Settings') }}</span>
+    </a>
+  </menu>
+  <h1>{{ _('Support') }}</h1>
+</header>
+<main class="fit scroll">
+  <section class="HomeCallout HomeCallout--ask vbox">
+    <h2 class="HomeCallout-title HomeCallout-shadow">{{ _('Have Questions?') }}</h2>
+    <p class="HomeCallout-subtitle HomeCallout-shadow">{{ _('Get a Buddy to help you with your device') }}</p>
+    <a href="question.html" class="bb-button HomeCallout-button">{{ _('Ask a Question') }}</a>
+  </section>
+  <section class="HomeCallout HomeCallout--answer vbox">
+    <h2 class="HomeCallout-title">{{ _('Have Answers?') }}</h2>
+    <p class="HomeCallout-subtitle">{{ _('Help other users around the world') }}</p>
+    <a href="question_list_helper.html?role=helper" class="bb-button recommend HomeCallout-button">{{ _('Answer Questions') }}</a>
+  </section>
+  <section id="tophelpers" class="user-list hide">
+    <header>
+      <h2>{{ _('Top Helpers this Week') }}</h2>
+    </header>
+  </section>
+  <section id="myquestions" class="questions" data-empty-message="No questions">
+    <header>
+      <h2>{{ _('My Questions') }}</h2>
+    </header>
+  </section>
+  <a id="all_questions_button" href="question_list_helpee.html" class="ListItem hide">
+    <div class="ListItem-inside li__title" data-icon-after="forward-light" >
+      {{ _('All My Questions') }}
+    </div>
+  </a>
+</main>
