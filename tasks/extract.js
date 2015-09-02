@@ -12,7 +12,7 @@ var PO_HEADER = [
   'msgstr ""',
   '"Project-Id-Version: PACKAGE VERSION\\n"',
   '"Report-Msgid-Bugs-To: \\n"',
-  '"POT-Creation-Date: ' + moment().format('%yyyy-%mm-%d %I:%M%Z') + '\\n"',
+  '"POT-Creation-Date: ' + moment().format('YYYY-MM-DD HH:MMZZ') + '\\n"',
   '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"',
   '"Last-Translator: Automatically generated\\n"',
   '"Language-Team: none\\n"',
@@ -47,6 +47,7 @@ module.exports = function(grunt) {
 
       // flatten stringSets
       var extractedStrings = Array.prototype.concat.apply([], stringSets);
+      extractedStrings = dedupeStrings(extractedStrings);
       writePotFile(extractedStrings, file.dest);
     });
   });
@@ -91,8 +92,7 @@ module.exports = function(grunt) {
           }
 
           return {
-            filepath: filepath,
-            lineno: node.lineno,
+            locations: [{filepath: filepath, lineno: node.lineno}],
             msgid: stringNode.value,
           };
 
@@ -111,8 +111,7 @@ module.exports = function(grunt) {
           }
 
           return {
-            filepath: filepath,
-            lineno: node.lineno,
+            locations: [{filepath: filepath, lineno: node.lineno}],
             msgid: singularNode.value,
             msgid_plural: pluralNode.value,
           };
@@ -179,8 +178,7 @@ module.exports = function(grunt) {
           }
 
           return {
-            filepath: filepath,
-            lineno: callExpr.loc.start.line,
+            locations: [{filepath: filepath, lineno: callExpr.loc.start.line}],
             msgid: callExpr.arguments[0].value,
           };
 
@@ -197,8 +195,7 @@ module.exports = function(grunt) {
           }
 
           return {
-            filepath: filepath,
-            lineno: callExpr.loc.start.line,
+            locations: [{filepath: filepath, lineno: callExpr.loc.start.line}],
             msgid: callExpr.arguments[0].value,
             msgid_plural: callExpr.arguments[1].value,
           };
@@ -210,15 +207,37 @@ module.exports = function(grunt) {
     }
   }
 
+  function dedupeStrings(strings) {
+    // Object<msgid, string>
+    var seen = {};
+    strings.forEach(function(str) {
+      if (str.msgid in seen) {
+        seen[str.msgid].locations = seen[str.msgid].locations.concat(str.locations);
+      } else {
+        seen[str.msgid] = str;
+      }
+    });
+    var acc = [];
+    for (var key in seen) {
+      acc.push(seen[key]);
+    }
+    return acc;
+  }
+
+  function wrapInQuotes(str) {
+    return '"' + str.replace(/"/g, '\\"') + '"';
+  }
+
   function writePotFile(strings, destpath) {
     var poFragments = strings.map(function(string) {
-      var parts = [
-        '#: ' + string.filepath + ':' + string.lineno,
-        'msgid "' + string.msgid + '"',
-      ];
+      var parts = string.locations.map(function(loc) {
+        return '#: ' + loc.filepath + ':' + loc.lineno;
+      });
+      parts.push('msgid ' + wrapInQuotes(string.msgid));
+
       if (string.msgid_plural) {
         parts = parts.concat([
-          'msgid_plural: "' + string.msgid_plural + '"',
+          'msgid_plural ' + wrapInQuotes(string.msgid_plural),
           'msgstr[0] ""',
           'msgstr[1] ""',
         ]);

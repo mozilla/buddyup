@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         },
         extract: {
             buddyup: {
-                src: ['app/views/*.html', 'app/js/*.js'],
+                src: ['app/views/**/*.html', 'app/js/**/*.js'],
                 dest: 'locale/templates/LC_MESSAGES/buddyup.pot',
             }
         },
