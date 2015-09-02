@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['js/app.js', 'app/views/*'],
+                files: ['js/app.js', 'app/views/**'],
                 tasks: ['nunjucks']
             }
         },
