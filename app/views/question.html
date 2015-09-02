@@ -4,6 +4,9 @@
       <p class="li__title ellipsis">{{ question.title }}</p>
       <div class="hbox">
         <span class="li__subtitle fit">
+        {{ question.updated }}
+        {%- if (question.displayable_metadata.handset_type or question.displayable_metadata.os_version) or question.displayable_metadata.operator -%}
+        , {% endif %}
         {{ question.displayable_metadata.handset_type }}
         {{ question.displayable_metadata.os_version }}
         {%- if (question.displayable_metadata.handset_type or question.displayable_metadata.os_version) and question.displayable_metadata.operator -%}
