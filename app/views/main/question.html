@@ -12,7 +12,7 @@
   </header>
   <main id="thread-scroll" class="fit scroll">
     <section id="thread-introduction" class="StartAskingMessage vbox">
-      <span>{{ _('We can help<br>Ask us anything!') }}</span>
+      <span>{{ _('We can help<br>Ask us anything!')|safe }}</span>
     </section>
     <section id="suggestions" class="hide">
       <ul>
@@ -24,7 +24,7 @@
   </main>
   <footer class="QuestionFooter">
     <form id="question_form" class="hbox">
-      <textarea id="question_field" class="QuestionField" rows="1" placeholder="{{ _('Write your message&hellip;') }}"></textarea>
+      <textarea id="question_field" class="QuestionField" rows="1" placeholder="{{ _('Write your message…') }}"></textarea>
       <div class="QuestionSubmitButton">
         <a href="#" role="button" data-icon="send" id="question_submit_button" class="QuestionSubmitButton-click-area"></a>
       </div>
