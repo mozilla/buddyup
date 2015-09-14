@@ -6,6 +6,7 @@ require('/test/unit/mocks/mock_async_storage.js');
 require('/test/unit/mocks/mock_navigation.js');
 require('/test/unit/mocks/mock_sumo_db.js');
 
+require('/js/l10n.js');
 require('/js/utils.js');
 require('/js/notifications.js');
 
