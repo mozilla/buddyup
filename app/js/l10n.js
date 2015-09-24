@@ -34,7 +34,9 @@
     if (!('n' in formatKwargs)) {
       throw 'nggettext calls must have a kwarg "n" for arity.';
     }
-    return format(window._getPluralTranslation(singular, plural, formatKwargs.n), formatKwargs);
+    return format(
+      window._getPluralTranslation(singular, plural, formatKwargs.n),
+      formatKwargs);
   }
 
   if (window.gettext) {
@@ -51,6 +53,8 @@
   window.gettext = gettext;
   window.ngettext = ngettext;
 
-  window.nunjucksEnv.addGlobal('_', window.gettext);
-  window.nunjucksEnv.addGlobal('_plural', window.ngettext);
+  if (window.nunjucksEnv) {
+    window.nunjucksEnv.addGlobal('_', window.gettext);
+    window.nunjucksEnv.addGlobal('_plural', window.ngettext);
+  }
 })();
