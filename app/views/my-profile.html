@@ -31,7 +31,7 @@
 
         <ul>
           <li>
-            <label class="QuestionFilters-label" for="locale">Language</label>
+            <label class="QuestionFilters-label" for="locale">{{ _('Language') }}</label>
             <div class="button" data-icon="expand">
               <select id="locale">
               {% for locale in locales %}
@@ -42,7 +42,7 @@
           </li>
 
           <li>
-            <label class="QuestionFilters-label" for="handset_type">Device</label>
+            <label class="QuestionFilters-label" for="handset_type">{{ _('Device') }}</label>
             <div class="button" data-icon="expand">
               <select id="handset_type"> {# Do I have to take care of the rest? #}
                 {% for handset in handsets %}
@@ -53,7 +53,7 @@
           </li>
 
           <li>
-            <label class="QuestionFilters-label" for="operator">Operator</label>
+            <label class="QuestionFilters-label" for="operator">{{ _('Operator') }}</label>
             <div class="button" data-icon="expand">
               <select id="operator">
                 {% for operator in operators %}
@@ -67,7 +67,7 @@
     </fieldset>
   {% else %}
     <header>
-      <h2>Answer questions</h2>
+      <h2>{{ _('Answer questions') }}</h2>
     </header>
     <section class="QuestionFilters">
       <p class="QuestionFilters-description">
