@@ -125,12 +125,17 @@
     post_question: function(text, user_meta) {
       var endpoint = API_V2_BASE + 'question/';
       endpoint += '?format=json'; // TODO bug 1088014
+
+      var supported_locale = _.find(Settings.LOCALES, function(locale) {
+        return locale[0] == user_meta.lang;
+      });
+
       var data = {
         title: text,
         product: 'firefox-os',
         content: ' ',
         topic: 'basic-features',
-        locale: user_meta.lang
+        locale: supported_locale ? user_meta.lang : 'en-US'
       };
       // we need to create the question before we can set the metadata as we
       // need the questions's id
