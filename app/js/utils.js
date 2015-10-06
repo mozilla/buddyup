@@ -92,6 +92,13 @@
       model: 'Open II' },
   ];
 
+  const LOCALIZED_ERRORS = {
+    'This field is required.': gettext('This field is required.'),
+    'Unable to login with provided credentials.': gettext('Unable to login with provided credentials.'),
+    'A user with that email address already exists.': gettext('A user with that email address already exists.'),
+    'A user with that username exists': gettext('A user with that username exists'),
+  };
+
   function useragent_to_device(useragent) {
     var device = DEVICES.find(function(device) {
       return useragent.toLowerCase().startsWith(device.useragent.toLowerCase());
@@ -227,8 +234,14 @@
       list.innerHTML = '';
       if (errors) {
         for (var i in errors) {
+          var localizedError;
+          if (errors[i] in LOCALIZED_ERRORS) {
+            localizedError = LOCALIZED_ERRORS[errors[i]];
+          } else {
+            localizedError = gettext('Unknown error: "{error}"', {error: errors[i]});
+          }
           var error = document.createElement('li');
-          error.appendChild(document.createTextNode(errors[i]));
+          error.appendChild(document.createTextNode(localizedError));
           list.appendChild(error);
         }
       }
