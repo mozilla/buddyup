@@ -182,7 +182,7 @@ module.exports = function(grunt) {
             msgid: callExpr.arguments[0].value,
           };
 
-        case 'nggettext':
+        case 'ngettext':
           if (callExpr.arguments.length < 2) {
             grunt.fail.warn('Incomplete ngettext call at ' + errorLocation);
             return null;
