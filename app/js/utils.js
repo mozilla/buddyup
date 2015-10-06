@@ -104,17 +104,38 @@
 
   var Utils = {
     /**
-     * Display a human-readable relative timestamp.
-     * @param {String|Date} time before/after the currentDate.
+     * Display a human-readable relative timestamp. Times in the future
+     * are reported as "just now".
+     *
+     * Localizes its output.
+     *
+     * @param {String|Date} time before the current time.
      */
     time_since: function(time) {
-      if (Date.now() - time < 0 ) {
-        time = Date.now();
-      }
-      var mozl10n = new navigator.mozL10n.DateTimeFormat();
+      var now = new Date();
+      var delta = now - time;
+      // delta is the number of milliseconds between the events.
+      // convert delta to minutes
+      delta = Math.round(delta / 60 / 1000);
 
-      /* FIXME : We need to wait for L10N ready events */
-      return mozl10n.fromNow(time);
+      if (delta <= 0) {
+        return gettext('just now');
+      }
+
+      if (delta < 60) {
+        return ngettext('{n} minute ago', '{n} minutes ago', {n: delta});
+      }
+
+      //convert delta to hours
+      delta = Math.round(delta / 60);
+      if (delta < 24) {
+        return ngettext('{n} hour ago', '{n} hours ago', {n: delta});
+      }
+
+      // convert delta to days
+      delta = Math.round(delta / 24);
+      // Don't use units larger than days
+      return ngettext('{n} day ago', '{n} days ago', {n: delta});
     },
     /**
      * Retrieves url parameters and returns the key/value pairs as an object.
