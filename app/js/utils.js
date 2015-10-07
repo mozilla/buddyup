@@ -248,6 +248,16 @@
       });
 
       return deferred;
+    },
+
+    get_supported_device_language() {
+      var user_meta = Utils.get_user_meta();
+      for (var i = 0; i < Settings.LOCALES.length; i++) {
+        if (Settings.LOCALES[i][0] == user_meta.lang) {
+          return user_meta.lang;
+        }
+      }
+      return Settings.LOCALES[0][0];
     }
   };
 

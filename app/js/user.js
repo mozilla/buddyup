@@ -55,11 +55,16 @@
     });
   }
 
+  var _create_user_promise = null;
   /**
    * Create and store new user.
    */
   function create_user() {
-    return SumoDB.create_user().then(function(response) {
+    if (_create_user_promise !== null) {
+      return _create_user_promise;
+    }
+
+    return _create_user_promise = SumoDB.create_user().then(function(response) {
       var promises = [];
 
       var is_helper = false;
@@ -68,7 +73,17 @@
 
       promises.push(sync_user(response.user));
 
-      return Promise.all(promises).then(function([credentials, user]) {
+      // If the device is using a supported locale, set the profile of
+      // the created user to use that locale.
+      promises.push(User.update_user({
+        user: {
+          username: response.user.username,
+          locale: Utils.get_supported_device_language(),
+        },
+        settings: {},
+      }));
+
+      return Promise.all(promises).then(function([credentials, outdated_user, user]) {
         return user;
       });
     });
