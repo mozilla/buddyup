@@ -97,6 +97,10 @@
     'Unable to login with provided credentials.': gettext('Unable to login with provided credentials.'),
     'A user with that email address already exists.': gettext('A user with that email address already exists.'),
     'A user with that username exists': gettext('A user with that username exists'),
+    "Can't change this field.": gettext("Can't change this field."),
+    'Usernames may only be letters, numbers, "." and "-".': gettext('Usernames may only be letters, numbers, "." and "-".'),
+    'No matching user setting found.': gettext('No matching user setting found.'),
+    'Unable to generate username.': gettext('Unable to generate username.'),
   };
 
   function useragent_to_device(useragent) {
