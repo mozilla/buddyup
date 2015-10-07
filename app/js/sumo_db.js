@@ -305,7 +305,8 @@
       var data = {
         username: username,
         password: password,
-        email: email
+        email: email,
+        locale: Utils.get_supported_device_language(),
       };
       return request(endpoint, 'POST', data).then(JSON.parse);
     },
