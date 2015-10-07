@@ -92,6 +92,17 @@
       model: 'Open II' },
   ];
 
+  const LOCALIZED_ERRORS = {
+    'This field is required.': gettext('This field is required.'),
+    'Unable to login with provided credentials.': gettext('Unable to login with provided credentials.'),
+    'A user with that email address already exists.': gettext('A user with that email address already exists.'),
+    'A user with that username exists': gettext('A user with that username exists'),
+    "Can't change this field.": gettext("Can't change this field."),
+    'Usernames may only be letters, numbers, "." and "-".': gettext('Usernames may only be letters, numbers, "." and "-".'),
+    'No matching user setting found.': gettext('No matching user setting found.'),
+    'Unable to generate username.': gettext('Unable to generate username.'),
+  };
+
   function useragent_to_device(useragent) {
     var device = DEVICES.find(function(device) {
       return useragent.toLowerCase().startsWith(device.useragent.toLowerCase());
@@ -227,8 +238,14 @@
       list.innerHTML = '';
       if (errors) {
         for (var i in errors) {
+          var localizedError;
+          if (errors[i] in LOCALIZED_ERRORS) {
+            localizedError = LOCALIZED_ERRORS[errors[i]];
+          } else {
+            localizedError = gettext('Unknown error: "{error}"', {error: errors[i]});
+          }
           var error = document.createElement('li');
-          error.appendChild(document.createTextNode(errors[i]));
+          error.appendChild(document.createTextNode(localizedError));
           list.appendChild(error);
         }
       }
