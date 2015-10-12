@@ -101,6 +101,8 @@
     'Usernames may only be letters, numbers, "." and "-".': gettext('Usernames may only be letters, numbers, "." and "-".'),
     'No matching user setting found.': gettext('No matching user setting found.'),
     'Unable to generate username.': gettext('Unable to generate username.'),
+    'User account is disabled': gettext('User account is disabled'),
+    'Enter a valid email address': gettext('Enter a valid email address'),
   };
 
   function useragent_to_device(useragent) {
