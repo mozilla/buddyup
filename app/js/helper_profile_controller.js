@@ -3,7 +3,7 @@
 /* global SumoDB, Utils, nunjucksEnv */
 
 (function(exports) {
-  var MSG_NO_QUESTIONS = 'No questions found';
+  var MSG_NO_QUESTIONS = _('No questions found');
   var PROFILE_DETAILS_TMPL = 'helper_profile.html';
   var QUESTION_LIST_TMPL = 'question_list_day.html';
 
