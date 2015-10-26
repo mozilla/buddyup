@@ -228,6 +228,9 @@ var Notif = {
     navigator.mozSetMessageHandler('push', push_handler);
     navigator.mozSetMessageHandler('push-register', function(evt) {
       // TODO Implement in bug 1132526
+      console.warn('WARNING! SimplePush has asked for re-registration, but ' +
+                   'BuddyUp cannot re-register. No more notifications will ' +
+                   'be recieved. See bug 1132526.');
     });
 
     navigator.mozSetMessageHandler('notification', notification_clicked);
