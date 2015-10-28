@@ -94,15 +94,15 @@
 
   const LOCALIZED_ERRORS = {
     'This field is required.': gettext('This field is required.'),
-    'Unable to login with provided credentials.': gettext('Unable to login with provided credentials.'),
+    'Unable to log in with provided credentials.': gettext('Unable to log in with provided credentials.'),
     'A user with that email address already exists.': gettext('A user with that email address already exists.'),
     'A user with that username exists': gettext('A user with that username exists'),
     "Can't change this field.": gettext("Can't change this field."),
     'Usernames may only be letters, numbers, "." and "-".': gettext('Usernames may only be letters, numbers, "." and "-".'),
     'No matching user setting found.': gettext('No matching user setting found.'),
     'Unable to generate username.': gettext('Unable to generate username.'),
-    'User account is disabled': gettext('User account is disabled'),
-    'Enter a valid email address': gettext('Enter a valid email address'),
+    'User account is disabled.': gettext('User account is disabled.'),
+    'Enter a valid email address.': gettext('Enter a valid email address.'),
   };
 
   function useragent_to_device(useragent) {
