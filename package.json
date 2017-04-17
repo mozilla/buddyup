@@ -21,6 +21,7 @@
     "grunt-css": "^0.5.4",
     "grunt-nunjucks": ">=0.1.x",
     "grunt-processhtml": ">=0.3.x",
+    "http-request": "^0.7.0",
     "jshint": "^2.6.0",
     "lodash": "^3.7.0",
     "marionette-client": "^1.7.3",

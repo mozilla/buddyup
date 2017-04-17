@@ -130,7 +130,7 @@
     var container = load_more_button.parentElement
         .getElementsByClassName('js-question-container')[0];
     if (container) {
-      SumoDB.get_question_list(url).then(function(response) {
+      SumoDB.fetch_json(url).then(function(response) {
         display_questions(response, container, load_more_button);
       });
     }

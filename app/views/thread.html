@@ -1,4 +1,25 @@
+{% if question %}
+  {% set comment = question %}
+  <li
+  data-id="{{ comment.id }}"
+  class="Comment vbox
+  {% if comment.author != author %}
+    Comment--helper
+  {% else %}
+    Comment--helpee
+  {% endif %}">
+    {% include 'comment.html' %}
+  </li>
+{% endif %}
+
+{% if next %}
+  <li class="QuestionLoadMore">
+    <a role="button" data-next="{{ next }}" href="#" class="QuestionLoadMore-button">Load more</a>
+  </li>
+{% endif %}
+
 {% for comment in results %}
+  <!-- {{ comment.author }} - {{ author }} -->
   <li
   data-id="{{ comment.id }}"
   class="Comment vbox

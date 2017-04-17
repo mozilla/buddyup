@@ -1,7 +1,8 @@
 <form id="generic_error" role="dialog" data-type="confirm">
   <section>
     <h1>{{ _('Whoops!') }}</h1>
-    <p>{{ _('There was a problem with Buddy Up, please try again.') }}</p>
+    <p class="js-generic-msg hide">{{ _('There was a problem with Buddy Up, please try again.') }}</p>
+    <p class="js-offline-msg hide">{{ _('You are not online, please check your connection.') }}</p>
   </section>
   <menu>
     <button class="recommend">{{ _('OK') }}</button>

@@ -40,6 +40,13 @@
     </section>
   </main>
 </section>
+
+<script>
+  var url = 'translations/' + navigator.language + '.js';
+  // I'm sorry.
+  document.write('<script src="' + url + '"><' + '/script>');
+</script>
+
 <script src="js/settings.js"></script>
 <script src="js/libs/async_storage.js"></script>
 <script src="js/libs/lodash.custom.min.js" defer></script>
